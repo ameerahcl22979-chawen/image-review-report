@@ -1,0 +1,1755 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>图生图-硬装替换效果测试</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #1f2933;
+      --muted: #6b7280;
+      --line: #d8dee8;
+      --paper: #f6f7f9;
+      --panel: #ffffff;
+      --accent: #1f6feb;
+      --accent-soft: #e8f1ff;
+      --ok: #0f7b4f;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+    }
+    header.page-head {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255,255,255,.95);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+    }
+    .wrap {
+      width: min(1680px, calc(100vw - 40px));
+      margin: 0 auto;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 18px 0;
+    }
+    h1 {
+      margin: 0 0 6px;
+      font-size: 24px;
+      letter-spacing: 0;
+    }
+    .sub {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .statbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .stat {
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .filters {
+      display: flex;
+      gap: 8px;
+      padding: 0 0 14px;
+      overflow-x: auto;
+    }
+    button {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      border-radius: 8px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font: inherit;
+      white-space: nowrap;
+    }
+    button.active {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: #0b4eb3;
+    }
+    main {
+      padding: 22px 0 56px;
+    }
+    .case-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      margin: 0 0 18px;
+      overflow: hidden;
+    }
+    .case-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 18px;
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--line);
+    }
+    .eyebrow {
+      margin: 0 0 4px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    h2 {
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: 0;
+    }
+    .metrics {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      max-width: 760px;
+    }
+    .metrics span {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 6px 9px;
+      color: var(--muted);
+      font-size: 12px;
+      background: #fbfcfe;
+    }
+    .image-grid {
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) minmax(180px, .85fr) minmax(260px, 1.25fr);
+      gap: 12px;
+      padding: 14px;
+      align-items: stretch;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      align-content: start;
+    }
+    .image-block {
+      margin: 0;
+      min-width: 0;
+    }
+    .image-button {
+      display: block;
+      width: 100%;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      border-radius: 0;
+      cursor: zoom-in;
+    }
+    figcaption {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      min-height: 28px;
+      color: var(--muted);
+      font-size: 12px;
+      align-items: center;
+    }
+    figcaption a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    img {
+      display: block;
+      width: 100%;
+      max-height: 720px;
+      object-fit: contain;
+      background: #eef1f5;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .product-grid img {
+      max-height: 240px;
+    }
+    .material-note {
+      margin: 7px 0 0;
+      padding: 7px 8px;
+      min-height: 30px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fbfcfe;
+      color: var(--ink);
+      font-size: 18px;
+      line-height: 1.45;
+    }
+    .missing-box {
+      min-height: 220px;
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+      background: #fafafa;
+    }
+    details {
+      border-top: 1px solid var(--line);
+      padding: 12px 18px 16px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.75;
+    }
+    summary {
+      cursor: pointer;
+      color: var(--ink);
+      font-weight: 700;
+    }
+    details p {
+      margin: 10px 0 0;
+      font-size: 17px;
+    }
+    @media (max-width: 980px) {
+      .topbar,
+      .case-head {
+        display: block;
+      }
+      .metrics {
+        justify-content: flex-start;
+        margin-top: 12px;
+      }
+      .image-grid {
+        grid-template-columns: 1fr;
+      }
+      .wrap {
+        width: min(100vw - 24px, 1680px);
+      }
+    }
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: grid;
+      place-items: center;
+      padding: 28px;
+      background: rgba(10, 18, 30, .86);
+    }
+    .lightbox[hidden] {
+      display: none;
+    }
+    .lightbox img {
+      width: auto;
+      max-width: min(96vw, 1800px);
+      max-height: 92vh;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+    }
+    .lightbox-close {
+      position: fixed;
+      top: 14px;
+      right: 18px;
+      width: 42px;
+      height: 42px;
+      padding: 0;
+      border-radius: 50%;
+      border-color: rgba(255,255,255,.35);
+      background: rgba(255,255,255,.12);
+      color: #fff;
+      font-size: 26px;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body>
+  <header class="page-head">
+    <div class="wrap">
+      <div class="topbar">
+        <div>
+          <h1>图生图-硬装替换效果测试</h1>
+        </div>
+      </div>
+      <nav class="filters" aria-label="场景筛选">
+        <button class="active" data-filter="all">全部</button>
+        <button data-filter="materials:1">单材质</button>
+        <button data-filter="materials:2">双材质</button>
+        <button data-filter="materials:3">三材质</button>
+        <button data-filter="卧室">卧室</button><button data-filter="卫生间">卫生间</button><button data-filter="厨房">厨房</button><button data-filter="客餐厅">客餐厅</button>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap">
+    
+            <article class="case-card" data-scene="卫生间" data-material-count="1">
+              <header class="case-head">
+                <div>
+                  <h2>卫生间-1</h2>
+                </div>
+                <div class="metrics">
+                  <span>整体耗时 53.98s</span>
+                  <span>提示词耗时 6.04s</span>
+                  <span>生图耗时 47.94s</span>
+                </div>
+              </header>
+              <section class="image-grid">
+                
+    <figure class="image-block main-visual">
+      <figcaption>原始场景图</figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_1_scene.jpg" aria-label="放大查看原始场景图">
+        <img src="assets/卫生间_1_scene.jpg" alt="原始场景图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+                <div class="product-grid">
+                  
+    <figure class="image-block product-block">
+      <figcaption>材质图 1</figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_1_product_1.jpg" aria-label="放大查看材质图 1">
+        <img src="assets/卫生间_1_product_1.jpg" alt="材质图 1" loading="lazy">
+      </button>
+      <p class="material-note">连纹砖 | 抛釉 | 900*2700mm</p>
+    </figure>
+    
+                </div>
+                
+    <figure class="image-block main-visual">
+      <figcaption>生成效果图 <a href="assets/卫生间_1_effect.jpg" target="_blank" rel="noreferrer" download>下载效果图</a></figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_1_effect.jpg" aria-label="放大查看生成效果图">
+        <img src="assets/卫生间_1_effect.jpg" alt="生成效果图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+              </section>
+              <details>
+                <summary>提示词</summary>
+                <p>以图1房屋原图为基础，保持原场景空间结构、墙体位置、门窗以及软装不变，仅对图1标签区域进行材质替换。清除图1画面所有标签与水印，将标签1的瓷砖墙面和瓷砖地面替换为图2的900×2700mm大理石连纹瓷砖，呈现出抛釉质感。1:1还原参考材质的纹理走向、颜色深浅以及细节特征。铺贴需符合真实室内施工逻辑，砖缝、分块和透视关系自然准确，连纹砖纹理沿空间进深方向连续贯通，无断纹错位。保持原场景光影关系一致，替换后效果真实自然。仅替换目标区域的材质表现，不改变非目标区域内容与位置。不出现纹理模糊、不出现纹理拉伸，不出现边缘溢出，不出现透视错误，不出现色差异常，不出现拼贴感，不出现明显AI合成痕迹。清除全部标签、标记图标与水印，生成真实自然的高质量家居效果图。</p>
+              </details>
+            </article>
+            
+            <article class="case-card" data-scene="卫生间" data-material-count="1">
+              <header class="case-head">
+                <div>
+                  <h2>卫生间-2</h2>
+                </div>
+                <div class="metrics">
+                  <span>整体耗时 48.20s</span>
+                  <span>提示词耗时 9.06s</span>
+                  <span>生图耗时 39.14s</span>
+                </div>
+              </header>
+              <section class="image-grid">
+                
+    <figure class="image-block main-visual">
+      <figcaption>原始场景图</figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_2_scene.jpg" aria-label="放大查看原始场景图">
+        <img src="assets/卫生间_2_scene.jpg" alt="原始场景图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+                <div class="product-grid">
+                  
+    <figure class="image-block product-block">
+      <figcaption>材质图 1</figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_2_product_1.jpg" aria-label="放大查看材质图 1">
+        <img src="assets/卫生间_2_product_1.jpg" alt="材质图 1" loading="lazy">
+      </button>
+      <p class="material-note">连纹砖 | 哑光 | 300*300mm</p>
+    </figure>
+    
+                </div>
+                
+    <figure class="image-block main-visual">
+      <figcaption>生成效果图 <a href="assets/卫生间_2_effect.jpg" target="_blank" rel="noreferrer" download>下载效果图</a></figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_2_effect.jpg" aria-label="放大查看生成效果图">
+        <img src="assets/卫生间_2_effect.jpg" alt="生成效果图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+              </section>
+              <details>
+                <summary>提示词</summary>
+                <p>以图1房屋原图为基础，保持原场景空间结构、墙体位置、门窗以及软装不变，仅对图1标签区域进行材质替换。清除图1画面所有标签与水印，将标签1的瓷砖地面替换为图2的300×300mm连纹花砖，呈现出哑光质感。1:1还原参考材质的纹理走向、颜色深浅以及细节特征。铺贴需符合真实室内施工逻辑，砖缝、分块和透视关系自然准确，连纹砖纹理沿空间进深方向连续贯通，无断纹错位。保持原场景光影关系一致，替换后效果真实自然。仅替换目标区域的材质表现，不改变非目标区域内容与位置。不出现纹理模糊、不出现纹理拉伸，不出现边缘溢出，不出现透视错误，不出现色差异常，不出现拼贴感，不出现明显AI合成痕迹。清除全部标签、标记图标与水印，生成真实自然的高质量家居效果图。</p>
+              </details>
+            </article>
+            
+            <article class="case-card" data-scene="卫生间" data-material-count="1">
+              <header class="case-head">
+                <div>
+                  <h2>卫生间-3</h2>
+                </div>
+                <div class="metrics">
+                  <span>整体耗时 45.54s</span>
+                  <span>提示词耗时 6.50s</span>
+                  <span>生图耗时 39.04s</span>
+                </div>
+              </header>
+              <section class="image-grid">
+                
+    <figure class="image-block main-visual">
+      <figcaption>原始场景图</figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_3_scene.jpg" aria-label="放大查看原始场景图">
+        <img src="assets/卫生间_3_scene.jpg" alt="原始场景图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+                <div class="product-grid">
+                  
+    <figure class="image-block product-block">
+      <figcaption>材质图 1</figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_3_product_1.jpg" aria-label="放大查看材质图 1">
+        <img src="assets/卫生间_3_product_1.jpg" alt="材质图 1" loading="lazy">
+      </button>
+      <p class="material-note">连纹砖 | 抛釉 | 900*2700mm</p>
+    </figure>
+    
+                </div>
+                
+    <figure class="image-block main-visual">
+      <figcaption>生成效果图 <a href="assets/卫生间_3_effect.jpg" target="_blank" rel="noreferrer" download>下载效果图</a></figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_3_effect.jpg" aria-label="放大查看生成效果图">
+        <img src="assets/卫生间_3_effect.jpg" alt="生成效果图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+              </section>
+              <details>
+                <summary>提示词</summary>
+                <p>以图1房屋原图为基础，保持原场景空间结构、墙体位置、门窗以及软装不变，仅对图1标签区域进行材质替换。清除图1画面所有标签与水印，将标签1的水泥地面替换为图2的900×2700mm大理石连纹瓷砖，呈现出抛釉质感。1:1还原参考材质的纹理走向、颜色深浅以及细节特征。铺贴需符合真实室内施工逻辑，砖缝、分块和透视关系自然准确，连纹砖纹理沿空间进深方向连续贯通，无断纹错位。保持原场景光影关系一致，替换后效果真实自然。仅替换目标区域的材质表现，不改变非目标区域内容与位置。不出现纹理模糊、不出现纹理拉伸，不出现边缘溢出，不出现透视错误，不出现色差异常，不出现拼贴感，不出现明显AI合成痕迹。清除全部标签、标记图标与水印，生成真实自然的高质量家居效果图。</p>
+              </details>
+            </article>
+            
+            <article class="case-card" data-scene="卫生间" data-material-count="1">
+              <header class="case-head">
+                <div>
+                  <h2>卫生间-4</h2>
+                </div>
+                <div class="metrics">
+                  <span>整体耗时 54.78s</span>
+                  <span>提示词耗时 6.65s</span>
+                  <span>生图耗时 48.13s</span>
+                </div>
+              </header>
+              <section class="image-grid">
+                
+    <figure class="image-block main-visual">
+      <figcaption>原始场景图</figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_4_scene.jpg" aria-label="放大查看原始场景图">
+        <img src="assets/卫生间_4_scene.jpg" alt="原始场景图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+                <div class="product-grid">
+                  
+    <figure class="image-block product-block">
+      <figcaption>材质图 1</figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_4_product_1.jpg" aria-label="放大查看材质图 1">
+        <img src="assets/卫生间_4_product_1.jpg" alt="材质图 1" loading="lazy">
+      </button>
+      <p class="material-note">连纹砖 | 抛釉 | 2400*2700mm</p>
+    </figure>
+    
+                </div>
+                
+    <figure class="image-block main-visual">
+      <figcaption>生成效果图 <a href="assets/卫生间_4_effect.jpg" target="_blank" rel="noreferrer" download>下载效果图</a></figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_4_effect.jpg" aria-label="放大查看生成效果图">
+        <img src="assets/卫生间_4_effect.jpg" alt="生成效果图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+              </section>
+              <details>
+                <summary>提示词</summary>
+                <p>以图1房屋原图为基础，保持原场景空间结构、墙体位置、门窗以及软装不变，仅对图1标签区域进行材质替换。清除图1画面所有标签与水印，将标签1的墙面区域替换为图2的2400×2700mm大理石连纹瓷砖，呈现出抛釉质感。1:1还原参考材质的纹理走向、颜色深浅以及细节特征。铺贴需符合真实室内施工逻辑，砖缝、分块和透视关系自然准确，连纹砖纹理沿空间进深方向连续贯通，无断纹错位。保持原场景光影关系一致，替换后效果真实自然。仅替换目标区域的材质表现，不改变非目标区域内容与位置。不出现纹理模糊、不出现纹理拉伸，不出现边缘溢出，不出现透视错误，不出现色差异常，不出现拼贴感，不出现明显AI合成痕迹。清除全部标签、标记图标与水印，生成真实自然的高质量家居效果图。</p>
+              </details>
+            </article>
+            
+            <article class="case-card" data-scene="卫生间" data-material-count="2">
+              <header class="case-head">
+                <div>
+                  <h2>卫生间-5</h2>
+                </div>
+                <div class="metrics">
+                  <span>整体耗时 73.57s</span>
+                  <span>提示词耗时 23.41s</span>
+                  <span>生图耗时 50.16s</span>
+                </div>
+              </header>
+              <section class="image-grid">
+                
+    <figure class="image-block main-visual">
+      <figcaption>原始场景图</figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_5_scene.jpg" aria-label="放大查看原始场景图">
+        <img src="assets/卫生间_5_scene.jpg" alt="原始场景图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+                <div class="product-grid">
+                  
+    <figure class="image-block product-block">
+      <figcaption>材质图 1</figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_5_product_1.jpg" aria-label="放大查看材质图 1">
+        <img src="assets/卫生间_5_product_1.jpg" alt="材质图 1" loading="lazy">
+      </button>
+      <p class="material-note">连纹砖 | 柔光 | 900*2700mm</p>
+    </figure>
+    
+
+    <figure class="image-block product-block">
+      <figcaption>材质图 2</figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_5_product_2.jpg" aria-label="放大查看材质图 2">
+        <img src="assets/卫生间_5_product_2.jpg" alt="材质图 2" loading="lazy">
+      </button>
+      <p class="material-note">非连纹砖 | 抛釉</p>
+    </figure>
+    
+                </div>
+                
+    <figure class="image-block main-visual">
+      <figcaption>生成效果图 <a href="assets/卫生间_5_effect.jpg" target="_blank" rel="noreferrer" download>下载效果图</a></figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_5_effect.jpg" aria-label="放大查看生成效果图">
+        <img src="assets/卫生间_5_effect.jpg" alt="生成效果图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+              </section>
+              <details>
+                <summary>提示词</summary>
+                <p>以图1房屋原图为基础，保持原场景空间结构、墙体位置、门窗以及软装不变，仅对图1标签区域进行材质替换。清除图1画面所有标签与水印，将标签1的瓷砖墙面替换为图2的900×2700mm大理石连纹瓷砖，呈现出柔光质感；将标签2的瓷砖地面替换为图3的浅灰色瓷砖，呈现出抛釉质感。1:1还原参考材质的纹理走向、颜色深浅以及细节特征。铺贴需符合真实室内施工逻辑，砖缝、分块和透视关系自然准确，连纹砖纹理沿空间进深方向连续贯通，无断纹错位。保持原场景光影关系一致，替换后效果真实自然。仅替换目标区域的材质表现，不改变非目标区域内容与位置。不出现纹理模糊、不出现纹理拉伸，不出现边缘溢出，不出现透视错误，不出现色差异常，不出现拼贴感，不出现明显AI合成痕迹。清除全部标签、标记图标与水印，生成真实自然的高质量家居效果图。</p>
+              </details>
+            </article>
+            
+            <article class="case-card" data-scene="卫生间" data-material-count="2">
+              <header class="case-head">
+                <div>
+                  <h2>卫生间-6</h2>
+                </div>
+                <div class="metrics">
+                  <span>整体耗时 75.99s</span>
+                  <span>提示词耗时 30.06s</span>
+                  <span>生图耗时 45.92s</span>
+                </div>
+              </header>
+              <section class="image-grid">
+                
+    <figure class="image-block main-visual">
+      <figcaption>原始场景图</figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_6_scene.jpg" aria-label="放大查看原始场景图">
+        <img src="assets/卫生间_6_scene.jpg" alt="原始场景图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+                <div class="product-grid">
+                  
+    <figure class="image-block product-block">
+      <figcaption>材质图 1</figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_6_product_1.jpg" aria-label="放大查看材质图 1">
+        <img src="assets/卫生间_6_product_1.jpg" alt="材质图 1" loading="lazy">
+      </button>
+      <p class="material-note">非连纹砖 | 抛釉 | 2400*2700mm</p>
+    </figure>
+    
+
+    <figure class="image-block product-block">
+      <figcaption>材质图 2</figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_6_product_2.jpg" aria-label="放大查看材质图 2">
+        <img src="assets/卫生间_6_product_2.jpg" alt="材质图 2" loading="lazy">
+      </button>
+      <p class="material-note">非连纹砖 | 哑光 | 1200*2700</p>
+    </figure>
+    
+                </div>
+                
+    <figure class="image-block main-visual">
+      <figcaption>生成效果图 <a href="assets/卫生间_6_effect.jpg" target="_blank" rel="noreferrer" download>下载效果图</a></figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_6_effect.jpg" aria-label="放大查看生成效果图">
+        <img src="assets/卫生间_6_effect.jpg" alt="生成效果图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+              </section>
+              <details>
+                <summary>提示词</summary>
+                <p>以图1房屋原图为基础，保持原场景空间结构、墙体位置、门窗以及软装不变，仅对图1标签区域进行材质替换。清除图1画面所有标签与水印，将标签1的瓷砖地面替换为图2的2400×2700mm大理石瓷砖，呈现出抛釉质感；将标签2的瓷砖墙面替换为图3的1200×2700mm浅米色大理石瓷砖，呈现出哑光质感。1:1还原参考材质的纹理走向、颜色深浅以及细节特征。铺贴需符合真实室内施工逻辑，砖缝、分块和透视关系自然准确。保持原场景光影关系一致，替换后效果真实自然。仅替换目标区域的材质表现，不改变非目标区域内容与位置。不出现纹理模糊、不出现纹理拉伸，不出现边缘溢出，不出现透视错误，不出现色差异常，不出现拼贴感，不出现明显AI合成痕迹。清除全部标签、标记图标与水印，生成真实自然的高质量家居效果图。</p>
+              </details>
+            </article>
+            
+            <article class="case-card" data-scene="卫生间" data-material-count="2">
+              <header class="case-head">
+                <div>
+                  <h2>卫生间-7</h2>
+                </div>
+                <div class="metrics">
+                  <span>整体耗时 64.53s</span>
+                  <span>提示词耗时 14.78s</span>
+                  <span>生图耗时 49.74s</span>
+                </div>
+              </header>
+              <section class="image-grid">
+                
+    <figure class="image-block main-visual">
+      <figcaption>原始场景图</figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_7_scene.jpg" aria-label="放大查看原始场景图">
+        <img src="assets/卫生间_7_scene.jpg" alt="原始场景图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+                <div class="product-grid">
+                  
+    <figure class="image-block product-block">
+      <figcaption>材质图 1</figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_7_product_1.jpg" aria-label="放大查看材质图 1">
+        <img src="assets/卫生间_7_product_1.jpg" alt="材质图 1" loading="lazy">
+      </button>
+      <p class="material-note">连纹砖 | 柔光 | 900*2700mm</p>
+    </figure>
+    
+
+    <figure class="image-block product-block">
+      <figcaption>材质图 2</figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_7_product_2.jpg" aria-label="放大查看材质图 2">
+        <img src="assets/卫生间_7_product_2.jpg" alt="材质图 2" loading="lazy">
+      </button>
+      <p class="material-note">非连纹砖 | 哑光</p>
+    </figure>
+    
+                </div>
+                
+    <figure class="image-block main-visual">
+      <figcaption>生成效果图 <a href="assets/卫生间_7_effect.jpg" target="_blank" rel="noreferrer" download>下载效果图</a></figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_7_effect.jpg" aria-label="放大查看生成效果图">
+        <img src="assets/卫生间_7_effect.jpg" alt="生成效果图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+              </section>
+              <details>
+                <summary>提示词</summary>
+                <p>以图1房屋原图为基础，保持原场景空间结构、墙体位置、门窗以及软装不变，仅对图1标签区域进行材质替换。清除图1画面所有标签与水印，将标签1的地面区域替换为图2的900×2700mm大理石连纹瓷砖，呈现出柔光质感；将标签2的墙面区域替换为图3的浅蓝瓷砖，呈现出哑光质感。1:1还原参考材质的纹理走向、颜色深浅以及细节特征。铺贴需符合真实室内施工逻辑，砖缝、分块和透视关系自然准确，连纹砖纹理沿空间进深方向连续贯通，无断纹错位。保持原场景光影关系一致，替换后效果真实自然。仅替换目标区域的材质表现，不改变非目标区域内容与位置。不出现纹理模糊、不出现纹理拉伸，不出现边缘溢出，不出现透视错误，不出现色差异常，不出现拼贴感，不出现明显AI合成痕迹。清除全部标签、标记图标与水印，生成真实自然的高质量家居效果图。</p>
+              </details>
+            </article>
+            
+            <article class="case-card" data-scene="卫生间" data-material-count="2">
+              <header class="case-head">
+                <div>
+                  <h2>卫生间-9</h2>
+                </div>
+                <div class="metrics">
+                  <span>整体耗时 69.15s</span>
+                  <span>提示词耗时 15.70s</span>
+                  <span>生图耗时 53.45s</span>
+                </div>
+              </header>
+              <section class="image-grid">
+                
+    <figure class="image-block main-visual">
+      <figcaption>原始场景图</figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_9_scene.jpg" aria-label="放大查看原始场景图">
+        <img src="assets/卫生间_9_scene.jpg" alt="原始场景图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+                <div class="product-grid">
+                  
+    <figure class="image-block product-block">
+      <figcaption>材质图 1</figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_9_product_1.jpg" aria-label="放大查看材质图 1">
+        <img src="assets/卫生间_9_product_1.jpg" alt="材质图 1" loading="lazy">
+      </button>
+      <p class="material-note">连纹砖 | 柔光 | 900*2700mm</p>
+    </figure>
+    
+
+    <figure class="image-block product-block">
+      <figcaption>材质图 2</figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_9_product_2.jpg" aria-label="放大查看材质图 2">
+        <img src="assets/卫生间_9_product_2.jpg" alt="材质图 2" loading="lazy">
+      </button>
+      <p class="material-note">非连纹砖 | 哑光 | 900*1800mm</p>
+    </figure>
+    
+                </div>
+                
+    <figure class="image-block main-visual">
+      <figcaption>生成效果图 <a href="assets/卫生间_9_effect.jpg" target="_blank" rel="noreferrer" download>下载效果图</a></figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_9_effect.jpg" aria-label="放大查看生成效果图">
+        <img src="assets/卫生间_9_effect.jpg" alt="生成效果图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+              </section>
+              <details>
+                <summary>提示词</summary>
+                <p>以图1房屋原图为基础，保持原场景空间结构、墙体位置、门窗以及软装不变，仅对图1标签区域进行材质替换。清除图1画面所有标签与水印，将标签1的水泥墙面替换为图2的900×2700mm大理石连纹瓷砖，呈现出柔光质感；将标签2的水泥地面替换为图3的900×1800mm浅米色瓷砖，呈现出哑光质感。1:1还原参考材质的纹理走向、颜色深浅以及细节特征。铺贴需符合真实室内施工逻辑，砖缝、分块和透视关系自然准确，连纹砖纹理沿空间进深方向连续贯通，无断纹错位。保持原场景光影关系一致，替换后效果真实自然。仅替换目标区域的材质表现，不改变非目标区域内容与位置。不出现纹理模糊、不出现纹理拉伸，不出现边缘溢出，不出现透视错误，不出现色差异常，不出现拼贴感，不出现明显AI合成痕迹。清除全部标签、标记图标与水印，生成真实自然的高质量家居效果图。</p>
+              </details>
+            </article>
+            
+            <article class="case-card" data-scene="卫生间" data-material-count="3">
+              <header class="case-head">
+                <div>
+                  <h2>卫生间-10</h2>
+                </div>
+                <div class="metrics">
+                  <span>整体耗时 81.56s</span>
+                  <span>提示词耗时 22.62s</span>
+                  <span>生图耗时 58.94s</span>
+                </div>
+              </header>
+              <section class="image-grid">
+                
+    <figure class="image-block main-visual">
+      <figcaption>原始场景图</figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_10_scene.jpg" aria-label="放大查看原始场景图">
+        <img src="assets/卫生间_10_scene.jpg" alt="原始场景图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+                <div class="product-grid">
+                  
+    <figure class="image-block product-block">
+      <figcaption>材质图 1</figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_10_product_1.jpg" aria-label="放大查看材质图 1">
+        <img src="assets/卫生间_10_product_1.jpg" alt="材质图 1" loading="lazy">
+      </button>
+      <p class="material-note">非连纹砖 | 哑光 | 1200*2700mm</p>
+    </figure>
+    
+
+    <figure class="image-block product-block">
+      <figcaption>材质图 2</figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_10_product_2.jpg" aria-label="放大查看材质图 2">
+        <img src="assets/卫生间_10_product_2.jpg" alt="材质图 2" loading="lazy">
+      </button>
+      <p class="material-note">连纹砖 | 抛釉 | 900*1800mm</p>
+    </figure>
+    
+
+    <figure class="image-block product-block">
+      <figcaption>材质图 3</figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_10_product_3.jpg" aria-label="放大查看材质图 3">
+        <img src="assets/卫生间_10_product_3.jpg" alt="材质图 3" loading="lazy">
+      </button>
+      <p class="material-note">非连纹砖 | 柔光</p>
+    </figure>
+    
+                </div>
+                
+    <figure class="image-block main-visual">
+      <figcaption>生成效果图 <a href="assets/卫生间_10_effect.jpg" target="_blank" rel="noreferrer" download>下载效果图</a></figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_10_effect.jpg" aria-label="放大查看生成效果图">
+        <img src="assets/卫生间_10_effect.jpg" alt="生成效果图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+              </section>
+              <details>
+                <summary>提示词</summary>
+                <p>以图1房屋原图为基础，保持原场景空间结构、墙体位置、门窗以及软装不变，仅对图1标签区域进行材质替换。清除图1画面所有标签与水印，将标签1的瓷砖地面替换为图2的1200×2700mm水磨石，呈现出哑光质感；将标签2的水磨石墙面和水磨石地面替换为图3的900×1800mm灰色大理石连纹瓷砖，呈现出抛釉质感；将标签3的背景墙区域替换为图4的浅米色瓷砖，呈现出柔光质感。1:1还原参考材质的纹理走向、颜色深浅以及细节特征。铺贴需符合真实室内施工逻辑，砖缝、分块和透视关系自然准确，连纹砖纹理沿空间进深方向连续贯通，无断纹错位。保持原场景光影关系一致，替换后效果真实自然。仅替换目标区域的材质表现，不改变非目标区域内容与位置。不出现纹理模糊、不出现纹理拉伸，不出现边缘溢出，不出现透视错误，不出现色差异常，不出现拼贴感，不出现明显AI合成痕迹。清除全部标签、标记图标与水印，生成真实自然的高质量家居效果图。</p>
+              </details>
+            </article>
+            
+            <article class="case-card" data-scene="卫生间" data-material-count="3">
+              <header class="case-head">
+                <div>
+                  <h2>卫生间-11</h2>
+                </div>
+                <div class="metrics">
+                  <span>整体耗时 64.13s</span>
+                  <span>提示词耗时 10.71s</span>
+                  <span>生图耗时 53.42s</span>
+                </div>
+              </header>
+              <section class="image-grid">
+                
+    <figure class="image-block main-visual">
+      <figcaption>原始场景图</figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_11_scene.jpg" aria-label="放大查看原始场景图">
+        <img src="assets/卫生间_11_scene.jpg" alt="原始场景图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+                <div class="product-grid">
+                  
+    <figure class="image-block product-block">
+      <figcaption>材质图 1</figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_11_product_1.jpg" aria-label="放大查看材质图 1">
+        <img src="assets/卫生间_11_product_1.jpg" alt="材质图 1" loading="lazy">
+      </button>
+      <p class="material-note">连纹砖 | 柔光 | 900*2700mm</p>
+    </figure>
+    
+
+    <figure class="image-block product-block">
+      <figcaption>材质图 2</figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_11_product_2.jpg" aria-label="放大查看材质图 2">
+        <img src="assets/卫生间_11_product_2.jpg" alt="材质图 2" loading="lazy">
+      </button>
+      <p class="material-note">连纹砖 | 抛釉 | 1200*2700mm</p>
+    </figure>
+    
+
+    <figure class="image-block product-block">
+      <figcaption>材质图 3</figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_11_product_3.jpg" aria-label="放大查看材质图 3">
+        <img src="assets/卫生间_11_product_3.jpg" alt="材质图 3" loading="lazy">
+      </button>
+      <p class="material-note">非连纹砖 | 柔光</p>
+    </figure>
+    
+                </div>
+                
+    <figure class="image-block main-visual">
+      <figcaption>生成效果图 <a href="assets/卫生间_11_effect.jpg" target="_blank" rel="noreferrer" download>下载效果图</a></figcaption>
+      <button class="image-button" type="button" data-full="assets/卫生间_11_effect.jpg" aria-label="放大查看生成效果图">
+        <img src="assets/卫生间_11_effect.jpg" alt="生成效果图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+              </section>
+              <details>
+                <summary>提示词</summary>
+                <p>以图1房屋原图为基础，保持原场景空间结构、墙体位置、门窗以及软装不变，仅对图1标签区域进行材质替换。清除图1画面所有标签与水印，将标签1的瓷砖地面替换为图2的900×2700mm大理石连纹瓷砖，呈现出柔光质感；将标签2的淋浴房地面替换为图3的1200×2700mm大理石连纹瓷砖，呈现出抛釉质感；将标签3的瓷砖墙面替换为图4的浅蓝色瓷砖，呈现出柔光质感。1:1还原参考材质的纹理走向、颜色深浅以及细节特征。铺贴需符合真实室内施工逻辑，砖缝、分块和透视关系自然准确，连纹砖纹理沿空间进深方向连续贯通，无断纹错位。保持原场景光影关系一致，替换后效果真实自然。仅替换目标区域的材质表现，不改变非目标区域内容与位置。不出现纹理模糊、不出现纹理拉伸，不出现边缘溢出，不出现透视错误，不出现色差异常，不出现拼贴感，不出现明显AI合成痕迹。清除全部标签、标记图标与水印，生成真实自然的高质量家居效果图。</p>
+              </details>
+            </article>
+            
+            <article class="case-card" data-scene="厨房" data-material-count="1">
+              <header class="case-head">
+                <div>
+                  <h2>厨房-1</h2>
+                </div>
+                <div class="metrics">
+                  <span>整体耗时 41.36s</span>
+                  <span>提示词耗时 6.14s</span>
+                  <span>生图耗时 35.22s</span>
+                </div>
+              </header>
+              <section class="image-grid">
+                
+    <figure class="image-block main-visual">
+      <figcaption>原始场景图</figcaption>
+      <button class="image-button" type="button" data-full="assets/厨房_1_scene.jpg" aria-label="放大查看原始场景图">
+        <img src="assets/厨房_1_scene.jpg" alt="原始场景图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+                <div class="product-grid">
+                  
+    <figure class="image-block product-block">
+      <figcaption>材质图 1</figcaption>
+      <button class="image-button" type="button" data-full="assets/厨房_1_product_1.jpg" aria-label="放大查看材质图 1">
+        <img src="assets/厨房_1_product_1.jpg" alt="材质图 1" loading="lazy">
+      </button>
+      <p class="material-note">连纹砖 | 抛釉</p>
+    </figure>
+    
+                </div>
+                
+    <figure class="image-block main-visual">
+      <figcaption>生成效果图 <a href="assets/厨房_1_effect.jpg" target="_blank" rel="noreferrer" download>下载效果图</a></figcaption>
+      <button class="image-button" type="button" data-full="assets/厨房_1_effect.jpg" aria-label="放大查看生成效果图">
+        <img src="assets/厨房_1_effect.jpg" alt="生成效果图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+              </section>
+              <details>
+                <summary>提示词</summary>
+                <p>以图1房屋原图为基础，保持原场景空间结构、墙体位置、门窗以及软装不变，仅对图1标签区域进行材质替换。清除图1画面所有标签与水印，将标签1的木地板地面替换为图2的大理石连纹瓷砖，呈现出抛釉质感。1:1还原参考材质的纹理走向、颜色深浅以及细节特征。铺贴需符合真实室内施工逻辑，砖缝、分块和透视关系自然准确，连纹砖纹理沿空间进深方向连续贯通，无断纹错位。保持原场景光影关系一致，替换后效果真实自然。仅替换目标区域的材质表现，不改变非目标区域内容与位置。不出现纹理模糊、不出现纹理拉伸，不出现边缘溢出，不出现透视错误，不出现色差异常，不出现拼贴感，不出现明显AI合成痕迹。清除全部标签、标记图标与水印，生成真实自然的高质量家居效果图。</p>
+              </details>
+            </article>
+            
+            <article class="case-card" data-scene="厨房" data-material-count="1">
+              <header class="case-head">
+                <div>
+                  <h2>厨房-2</h2>
+                </div>
+                <div class="metrics">
+                  <span>整体耗时 49.89s</span>
+                  <span>提示词耗时 9.51s</span>
+                  <span>生图耗时 40.38s</span>
+                </div>
+              </header>
+              <section class="image-grid">
+                
+    <figure class="image-block main-visual">
+      <figcaption>原始场景图</figcaption>
+      <button class="image-button" type="button" data-full="assets/厨房_2_scene.jpg" aria-label="放大查看原始场景图">
+        <img src="assets/厨房_2_scene.jpg" alt="原始场景图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+                <div class="product-grid">
+                  
+    <figure class="image-block product-block">
+      <figcaption>材质图 1</figcaption>
+      <button class="image-button" type="button" data-full="assets/厨房_2_product_1.jpg" aria-label="放大查看材质图 1">
+        <img src="assets/厨房_2_product_1.jpg" alt="材质图 1" loading="lazy">
+      </button>
+      <p class="material-note">连纹砖 | 柔光</p>
+    </figure>
+    
+                </div>
+                
+    <figure class="image-block main-visual">
+      <figcaption>生成效果图 <a href="assets/厨房_2_effect.jpg" target="_blank" rel="noreferrer" download>下载效果图</a></figcaption>
+      <button class="image-button" type="button" data-full="assets/厨房_2_effect.jpg" aria-label="放大查看生成效果图">
+        <img src="assets/厨房_2_effect.jpg" alt="生成效果图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+              </section>
+              <details>
+                <summary>提示词</summary>
+                <p>以图1房屋原图为基础，保持原场景空间结构、墙体位置、门窗以及软装不变，仅对图1标签区域进行材质替换。清除图1画面所有标签与水印，将标签1的瓷砖地面替换为图2的大理石连纹瓷砖，呈现出柔光质感。1:1还原参考材质的纹理走向、颜色深浅以及细节特征。铺贴需符合真实室内施工逻辑，砖缝、分块和透视关系自然准确，连纹砖纹理沿空间进深方向连续贯通，无断纹错位。保持原场景光影关系一致，替换后效果真实自然。仅替换目标区域的材质表现，不改变非目标区域内容与位置。不出现纹理模糊、不出现纹理拉伸，不出现边缘溢出，不出现透视错误，不出现色差异常，不出现拼贴感，不出现明显AI合成痕迹。清除全部标签、标记图标与水印，生成真实自然的高质量家居效果图。</p>
+              </details>
+            </article>
+            
+            <article class="case-card" data-scene="厨房" data-material-count="2">
+              <header class="case-head">
+                <div>
+                  <h2>厨房-5</h2>
+                </div>
+                <div class="metrics">
+                  <span>整体耗时 68.83s</span>
+                  <span>提示词耗时 17.11s</span>
+                  <span>生图耗时 51.72s</span>
+                </div>
+              </header>
+              <section class="image-grid">
+                
+    <figure class="image-block main-visual">
+      <figcaption>原始场景图</figcaption>
+      <button class="image-button" type="button" data-full="assets/厨房_5_scene.jpg" aria-label="放大查看原始场景图">
+        <img src="assets/厨房_5_scene.jpg" alt="原始场景图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+                <div class="product-grid">
+                  
+    <figure class="image-block product-block">
+      <figcaption>材质图 1</figcaption>
+      <button class="image-button" type="button" data-full="assets/厨房_5_product_1.jpg" aria-label="放大查看材质图 1">
+        <img src="assets/厨房_5_product_1.jpg" alt="材质图 1" loading="lazy">
+      </button>
+      <p class="material-note">非连纹砖 | 抛釉</p>
+    </figure>
+    
+
+    <figure class="image-block product-block">
+      <figcaption>材质图 2</figcaption>
+      <button class="image-button" type="button" data-full="assets/厨房_5_product_2.jpg" aria-label="放大查看材质图 2">
+        <img src="assets/厨房_5_product_2.jpg" alt="材质图 2" loading="lazy">
+      </button>
+      <p class="material-note">非连纹砖 | 柔光</p>
+    </figure>
+    
+                </div>
+                
+    <figure class="image-block main-visual">
+      <figcaption>生成效果图 <a href="assets/厨房_5_effect.jpg" target="_blank" rel="noreferrer" download>下载效果图</a></figcaption>
+      <button class="image-button" type="button" data-full="assets/厨房_5_effect.jpg" aria-label="放大查看生成效果图">
+        <img src="assets/厨房_5_effect.jpg" alt="生成效果图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+              </section>
+              <details>
+                <summary>提示词</summary>
+                <p>以图1房屋原图为基础，保持原场景空间结构、墙体位置、门窗以及软装不变，仅对图1标签区域进行材质替换。清除图1画面所有标签与水印，将标签1的瓷砖墙面替换为图2的大理石瓷砖，呈现出抛釉质感；将标签2的瓷砖地面替换为图3的灰色大理石瓷砖，呈现出柔光质感。1:1还原参考材质的纹理走向、颜色深浅以及细节特征。铺贴需符合真实室内施工逻辑，砖缝、分块和透视关系自然准确。保持原场景光影关系一致，替换后效果真实自然。仅替换目标区域的材质表现，不改变非目标区域内容与位置。不出现纹理模糊、不出现纹理拉伸，不出现边缘溢出，不出现透视错误，不出现色差异常，不出现拼贴感，不出现明显AI合成痕迹。清除全部标签、标记图标与水印，生成真实自然的高质量家居效果图。</p>
+              </details>
+            </article>
+            
+            <article class="case-card" data-scene="厨房" data-material-count="2">
+              <header class="case-head">
+                <div>
+                  <h2>厨房-6</h2>
+                </div>
+                <div class="metrics">
+                  <span>整体耗时 52.39s</span>
+                  <span>提示词耗时 10.46s</span>
+                  <span>生图耗时 41.93s</span>
+                </div>
+              </header>
+              <section class="image-grid">
+                
+    <figure class="image-block main-visual">
+      <figcaption>原始场景图</figcaption>
+      <button class="image-button" type="button" data-full="assets/厨房_6_scene.jpg" aria-label="放大查看原始场景图">
+        <img src="assets/厨房_6_scene.jpg" alt="原始场景图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+                <div class="product-grid">
+                  
+    <figure class="image-block product-block">
+      <figcaption>材质图 1</figcaption>
+      <button class="image-button" type="button" data-full="assets/厨房_6_product_1.jpg" aria-label="放大查看材质图 1">
+        <img src="assets/厨房_6_product_1.jpg" alt="材质图 1" loading="lazy">
+      </button>
+      <p class="material-note">非连纹砖 | 哑光</p>
+    </figure>
+    
+
+    <figure class="image-block product-block">
+      <figcaption>材质图 2</figcaption>
+      <button class="image-button" type="button" data-full="assets/厨房_6_product_2.jpg" aria-label="放大查看材质图 2">
+        <img src="assets/厨房_6_product_2.jpg" alt="材质图 2" loading="lazy">
+      </button>
+      <p class="material-note">连纹砖 | 柔光</p>
+    </figure>
+    
+                </div>
+                
+    <figure class="image-block main-visual">
+      <figcaption>生成效果图 <a href="assets/厨房_6_effect.jpg" target="_blank" rel="noreferrer" download>下载效果图</a></figcaption>
+      <button class="image-button" type="button" data-full="assets/厨房_6_effect.jpg" aria-label="放大查看生成效果图">
+        <img src="assets/厨房_6_effect.jpg" alt="生成效果图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+              </section>
+              <details>
+                <summary>提示词</summary>
+                <p>以图1房屋原图为基础，保持原场景空间结构、墙体位置、门窗以及软装不变，仅对图1标签区域进行材质替换。清除图1画面所有标签与水印，将标签1的瓷砖墙面替换为图2的大理石瓷砖，呈现出哑光质感；将标签2的瓷砖地面替换为图3的大理石连纹瓷砖，呈现出柔光质感。1:1还原参考材质的纹理走向、颜色深浅以及细节特征。铺贴需符合真实室内施工逻辑，砖缝、分块和透视关系自然准确，连纹砖纹理沿空间进深方向连续贯通，无断纹错位。保持原场景光影关系一致，替换后效果真实自然。仅替换目标区域的材质表现，不改变非目标区域内容与位置。不出现纹理模糊、不出现纹理拉伸，不出现边缘溢出，不出现透视错误，不出现色差异常，不出现拼贴感，不出现明显AI合成痕迹。清除全部标签、标记图标与水印，生成真实自然的高质量家居效果图。</p>
+              </details>
+            </article>
+            
+            <article class="case-card" data-scene="厨房" data-material-count="3">
+              <header class="case-head">
+                <div>
+                  <h2>厨房-10</h2>
+                </div>
+                <div class="metrics">
+                  <span>整体耗时 62.39s</span>
+                  <span>提示词耗时 16.38s</span>
+                  <span>生图耗时 46.01s</span>
+                </div>
+              </header>
+              <section class="image-grid">
+                
+    <figure class="image-block main-visual">
+      <figcaption>原始场景图</figcaption>
+      <button class="image-button" type="button" data-full="assets/厨房_10_scene.jpg" aria-label="放大查看原始场景图">
+        <img src="assets/厨房_10_scene.jpg" alt="原始场景图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+                <div class="product-grid">
+                  
+    <figure class="image-block product-block">
+      <figcaption>材质图 1</figcaption>
+      <button class="image-button" type="button" data-full="assets/厨房_10_product_1.jpg" aria-label="放大查看材质图 1">
+        <img src="assets/厨房_10_product_1.jpg" alt="材质图 1" loading="lazy">
+      </button>
+      <p class="material-note">连纹砖 | 抛釉</p>
+    </figure>
+    
+
+    <figure class="image-block product-block">
+      <figcaption>材质图 2</figcaption>
+      <button class="image-button" type="button" data-full="assets/厨房_10_product_2.jpg" aria-label="放大查看材质图 2">
+        <img src="assets/厨房_10_product_2.jpg" alt="材质图 2" loading="lazy">
+      </button>
+      <p class="material-note">连纹砖 | 哑光</p>
+    </figure>
+    
+
+    <figure class="image-block product-block">
+      <figcaption>材质图 3</figcaption>
+      <button class="image-button" type="button" data-full="assets/厨房_10_product_3.jpg" aria-label="放大查看材质图 3">
+        <img src="assets/厨房_10_product_3.jpg" alt="材质图 3" loading="lazy">
+      </button>
+      <p class="material-note">非连纹砖 | 抛釉</p>
+    </figure>
+    
+                </div>
+                
+    <figure class="image-block main-visual">
+      <figcaption>生成效果图 <a href="assets/厨房_10_effect.jpg" target="_blank" rel="noreferrer" download>下载效果图</a></figcaption>
+      <button class="image-button" type="button" data-full="assets/厨房_10_effect.jpg" aria-label="放大查看生成效果图">
+        <img src="assets/厨房_10_effect.jpg" alt="生成效果图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+              </section>
+              <details>
+                <summary>提示词</summary>
+                <p>以图1房屋原图为基础，保持原场景空间结构、墙体位置、门窗以及软装不变，仅对图1标签区域进行材质替换。清除图1画面所有标签与水印，将标签1的瓷砖地面替换为图2的浅灰色大理石连纹瓷砖，呈现出抛釉质感；将标签2的大理石墙面替换为图3的灰调大理石连纹瓷砖，呈现出哑光质感；将标签3的大理石墙面替换为图4的灰色水泥砖，呈现出抛釉质感。1:1还原参考材质的纹理走向、颜色深浅以及细节特征。铺贴需符合真实室内施工逻辑，砖缝、分块和透视关系自然准确，连纹砖纹理沿空间进深方向连续贯通，无断纹错位。保持原场景光影关系一致，替换后效果真实自然。仅替换目标区域的材质表现，不改变非目标区域内容与位置。不出现纹理模糊、不出现纹理拉伸，不出现边缘溢出，不出现透视错误，不出现色差异常，不出现拼贴感，不出现明显AI合成痕迹。清除全部标签、标记图标与水印，生成真实自然的高质量家居效果图。</p>
+              </details>
+            </article>
+            
+            <article class="case-card" data-scene="厨房" data-material-count="3">
+              <header class="case-head">
+                <div>
+                  <h2>厨房-11</h2>
+                </div>
+                <div class="metrics">
+                  <span>整体耗时 66.11s</span>
+                  <span>提示词耗时 15.26s</span>
+                  <span>生图耗时 50.85s</span>
+                </div>
+              </header>
+              <section class="image-grid">
+                
+    <figure class="image-block main-visual">
+      <figcaption>原始场景图</figcaption>
+      <button class="image-button" type="button" data-full="assets/厨房_11_scene.jpg" aria-label="放大查看原始场景图">
+        <img src="assets/厨房_11_scene.jpg" alt="原始场景图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+                <div class="product-grid">
+                  
+    <figure class="image-block product-block">
+      <figcaption>材质图 1</figcaption>
+      <button class="image-button" type="button" data-full="assets/厨房_11_product_1.jpg" aria-label="放大查看材质图 1">
+        <img src="assets/厨房_11_product_1.jpg" alt="材质图 1" loading="lazy">
+      </button>
+      <p class="material-note">非连纹砖 | 抛釉</p>
+    </figure>
+    
+
+    <figure class="image-block product-block">
+      <figcaption>材质图 2</figcaption>
+      <button class="image-button" type="button" data-full="assets/厨房_11_product_2.jpg" aria-label="放大查看材质图 2">
+        <img src="assets/厨房_11_product_2.jpg" alt="材质图 2" loading="lazy">
+      </button>
+      <p class="material-note">连纹砖 | 柔光</p>
+    </figure>
+    
+
+    <figure class="image-block product-block">
+      <figcaption>材质图 3</figcaption>
+      <button class="image-button" type="button" data-full="assets/厨房_11_product_3.jpg" aria-label="放大查看材质图 3">
+        <img src="assets/厨房_11_product_3.jpg" alt="材质图 3" loading="lazy">
+      </button>
+      <p class="material-note">连纹砖 | 抛釉</p>
+    </figure>
+    
+                </div>
+                
+    <figure class="image-block main-visual">
+      <figcaption>生成效果图 <a href="assets/厨房_11_effect.jpg" target="_blank" rel="noreferrer" download>下载效果图</a></figcaption>
+      <button class="image-button" type="button" data-full="assets/厨房_11_effect.jpg" aria-label="放大查看生成效果图">
+        <img src="assets/厨房_11_effect.jpg" alt="生成效果图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+              </section>
+              <details>
+                <summary>提示词</summary>
+                <p>以图1房屋原图为基础，保持原场景空间结构、墙体位置、门窗以及软装不变，仅对图1标签区域进行材质替换。清除图1画面所有标签与水印，将标签1的瓷砖墙面替换为图2的浅米色瓷砖，呈现出抛釉质感；将标签2的木地板地面替换为图3的连纹花砖，呈现出柔光质感；将标签3的橱柜门板区域替换为图4的黑色大理石连纹瓷砖，呈现出抛釉质感。1:1还原参考材质的纹理走向、颜色深浅以及细节特征。铺贴需符合真实室内施工逻辑，砖缝、分块和透视关系自然准确，连纹砖纹理沿空间进深方向连续贯通，无断纹错位。保持原场景光影关系一致，替换后效果真实自然。仅替换目标区域的材质表现，不改变非目标区域内容与位置。不出现纹理模糊、不出现纹理拉伸，不出现边缘溢出，不出现透视错误，不出现色差异常，不出现拼贴感，不出现明显AI合成痕迹。清除全部标签、标记图标与水印，生成真实自然的高质量家居效果图。</p>
+              </details>
+            </article>
+            
+            <article class="case-card" data-scene="客餐厅" data-material-count="1">
+              <header class="case-head">
+                <div>
+                  <h2>客餐厅-1</h2>
+                </div>
+                <div class="metrics">
+                  <span>整体耗时 51.46s</span>
+                  <span>提示词耗时 7.33s</span>
+                  <span>生图耗时 44.13s</span>
+                </div>
+              </header>
+              <section class="image-grid">
+                
+    <figure class="image-block main-visual">
+      <figcaption>原始场景图</figcaption>
+      <button class="image-button" type="button" data-full="assets/客餐厅_1_scene.jpg" aria-label="放大查看原始场景图">
+        <img src="assets/客餐厅_1_scene.jpg" alt="原始场景图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+                <div class="product-grid">
+                  
+    <figure class="image-block product-block">
+      <figcaption>材质图 1</figcaption>
+      <button class="image-button" type="button" data-full="assets/客餐厅_1_product_1.jpg" aria-label="放大查看材质图 1">
+        <img src="assets/客餐厅_1_product_1.jpg" alt="材质图 1" loading="lazy">
+      </button>
+      <p class="material-note">非连纹砖 | 哑光</p>
+    </figure>
+    
+                </div>
+                
+    <figure class="image-block main-visual">
+      <figcaption>生成效果图 <a href="assets/客餐厅_1_effect.jpg" target="_blank" rel="noreferrer" download>下载效果图</a></figcaption>
+      <button class="image-button" type="button" data-full="assets/客餐厅_1_effect.jpg" aria-label="放大查看生成效果图">
+        <img src="assets/客餐厅_1_effect.jpg" alt="生成效果图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+              </section>
+              <details>
+                <summary>提示词</summary>
+                <p>以图1房屋原图为基础，保持原场景空间结构、墙体位置、门窗以及软装不变，仅对图1标签区域进行材质替换。清除图1画面所有标签与水印，将标签1的大理石地面替换为图2的大理石瓷砖，呈现出哑光质感。1:1还原参考材质的纹理走向、颜色深浅以及细节特征。铺贴需符合真实室内施工逻辑，砖缝、分块和透视关系自然准确。保持原场景光影关系一致，替换后效果真实自然。仅替换目标区域的材质表现，不改变非目标区域内容与位置。不出现纹理模糊、不出现纹理拉伸，不出现边缘溢出，不出现透视错误，不出现色差异常，不出现拼贴感，不出现明显AI合成痕迹。清除全部标签、标记图标与水印，生成真实自然的高质量家居效果图。</p>
+              </details>
+            </article>
+            
+            <article class="case-card" data-scene="客餐厅" data-material-count="1">
+              <header class="case-head">
+                <div>
+                  <h2>客餐厅-2</h2>
+                </div>
+                <div class="metrics">
+                  <span>整体耗时 47.89s</span>
+                  <span>提示词耗时 7.67s</span>
+                  <span>生图耗时 40.22s</span>
+                </div>
+              </header>
+              <section class="image-grid">
+                
+    <figure class="image-block main-visual">
+      <figcaption>原始场景图</figcaption>
+      <button class="image-button" type="button" data-full="assets/客餐厅_2_scene.jpg" aria-label="放大查看原始场景图">
+        <img src="assets/客餐厅_2_scene.jpg" alt="原始场景图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+                <div class="product-grid">
+                  
+    <figure class="image-block product-block">
+      <figcaption>材质图 1</figcaption>
+      <button class="image-button" type="button" data-full="assets/客餐厅_2_product_1.jpg" aria-label="放大查看材质图 1">
+        <img src="assets/客餐厅_2_product_1.jpg" alt="材质图 1" loading="lazy">
+      </button>
+      <p class="material-note">连纹砖 | 抛釉</p>
+    </figure>
+    
+                </div>
+                
+    <figure class="image-block main-visual">
+      <figcaption>生成效果图 <a href="assets/客餐厅_2_effect.jpg" target="_blank" rel="noreferrer" download>下载效果图</a></figcaption>
+      <button class="image-button" type="button" data-full="assets/客餐厅_2_effect.jpg" aria-label="放大查看生成效果图">
+        <img src="assets/客餐厅_2_effect.jpg" alt="生成效果图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+              </section>
+              <details>
+                <summary>提示词</summary>
+                <p>以图1房屋原图为基础，保持原场景空间结构、墙体位置、门窗以及软装不变，仅对图1标签区域进行材质替换。清除图1画面所有标签与水印，将标签1的瓷砖地面替换为图2的大理石连纹瓷砖，呈现出抛釉质感。1:1还原参考材质的纹理走向、颜色深浅以及细节特征。铺贴需符合真实室内施工逻辑，砖缝、分块和透视关系自然准确，连纹砖纹理沿空间进深方向连续贯通，无断纹错位。保持原场景光影关系一致，替换后效果真实自然。仅替换目标区域的材质表现，不改变非目标区域内容与位置。不出现纹理模糊、不出现纹理拉伸，不出现边缘溢出，不出现透视错误，不出现色差异常，不出现拼贴感，不出现明显AI合成痕迹。清除全部标签、标记图标与水印，生成真实自然的高质量家居效果图。</p>
+              </details>
+            </article>
+            
+            <article class="case-card" data-scene="客餐厅" data-material-count="1">
+              <header class="case-head">
+                <div>
+                  <h2>客餐厅-3</h2>
+                </div>
+                <div class="metrics">
+                  <span>整体耗时 56.24s</span>
+                  <span>提示词耗时 4.40s</span>
+                  <span>生图耗时 51.84s</span>
+                </div>
+              </header>
+              <section class="image-grid">
+                
+    <figure class="image-block main-visual">
+      <figcaption>原始场景图</figcaption>
+      <button class="image-button" type="button" data-full="assets/客餐厅_3_scene.jpg" aria-label="放大查看原始场景图">
+        <img src="assets/客餐厅_3_scene.jpg" alt="原始场景图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+                <div class="product-grid">
+                  
+    <figure class="image-block product-block">
+      <figcaption>材质图 1</figcaption>
+      <button class="image-button" type="button" data-full="assets/客餐厅_3_product_1.jpg" aria-label="放大查看材质图 1">
+        <img src="assets/客餐厅_3_product_1.jpg" alt="材质图 1" loading="lazy">
+      </button>
+      <p class="material-note">连纹砖 | 抛釉</p>
+    </figure>
+    
+                </div>
+                
+    <figure class="image-block main-visual">
+      <figcaption>生成效果图 <a href="assets/客餐厅_3_effect.jpg" target="_blank" rel="noreferrer" download>下载效果图</a></figcaption>
+      <button class="image-button" type="button" data-full="assets/客餐厅_3_effect.jpg" aria-label="放大查看生成效果图">
+        <img src="assets/客餐厅_3_effect.jpg" alt="生成效果图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+              </section>
+              <details>
+                <summary>提示词</summary>
+                <p>以图1房屋原图为基础，保持原场景空间结构、墙体位置、门窗以及软装不变，仅对图1标签区域进行材质替换。清除图1画面所有标签与水印，将标签1的地面区域替换为图2的大理石连纹瓷砖，呈现出抛釉质感。1:1还原参考材质的纹理走向、颜色深浅以及细节特征。铺贴需符合真实室内施工逻辑，砖缝、分块和透视关系自然准确，连纹砖纹理沿空间进深方向连续贯通，无断纹错位。保持原场景光影关系一致，替换后效果真实自然。仅替换目标区域的材质表现，不改变非目标区域内容与位置。不出现纹理模糊、不出现纹理拉伸，不出现边缘溢出，不出现透视错误，不出现色差异常，不出现拼贴感，不出现明显AI合成痕迹。清除全部标签、标记图标与水印，生成真实自然的高质量家居效果图。</p>
+              </details>
+            </article>
+            
+            <article class="case-card" data-scene="客餐厅" data-material-count="1">
+              <header class="case-head">
+                <div>
+                  <h2>客餐厅-4</h2>
+                </div>
+                <div class="metrics">
+                  <span>整体耗时 51.23s</span>
+                  <span>提示词耗时 14.09s</span>
+                  <span>生图耗时 37.14s</span>
+                </div>
+              </header>
+              <section class="image-grid">
+                
+    <figure class="image-block main-visual">
+      <figcaption>原始场景图</figcaption>
+      <button class="image-button" type="button" data-full="assets/客餐厅_4_scene.jpg" aria-label="放大查看原始场景图">
+        <img src="assets/客餐厅_4_scene.jpg" alt="原始场景图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+                <div class="product-grid">
+                  
+    <figure class="image-block product-block">
+      <figcaption>材质图 1</figcaption>
+      <button class="image-button" type="button" data-full="assets/客餐厅_4_product_1.jpg" aria-label="放大查看材质图 1">
+        <img src="assets/客餐厅_4_product_1.jpg" alt="材质图 1" loading="lazy">
+      </button>
+      <p class="material-note">非连纹砖 | 哑光</p>
+    </figure>
+    
+                </div>
+                
+    <figure class="image-block main-visual">
+      <figcaption>生成效果图 <a href="assets/客餐厅_4_effect.jpg" target="_blank" rel="noreferrer" download>下载效果图</a></figcaption>
+      <button class="image-button" type="button" data-full="assets/客餐厅_4_effect.jpg" aria-label="放大查看生成效果图">
+        <img src="assets/客餐厅_4_effect.jpg" alt="生成效果图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+              </section>
+              <details>
+                <summary>提示词</summary>
+                <p>以图1房屋原图为基础，保持原场景空间结构、墙体位置、门窗以及软装不变，仅对图1标签区域进行材质替换。清除图1画面所有标签与水印，将标签1的地面区域替换为图2的浅灰色大理石瓷砖，呈现出哑光质感。1:1还原参考材质的纹理走向、颜色深浅以及细节特征。铺贴需符合真实室内施工逻辑，砖缝、分块和透视关系自然准确。保持原场景光影关系一致，替换后效果真实自然。仅替换目标区域的材质表现，不改变非目标区域内容与位置。不出现纹理模糊、不出现纹理拉伸，不出现边缘溢出，不出现透视错误，不出现色差异常，不出现拼贴感，不出现明显AI合成痕迹。清除全部标签、标记图标与水印，生成真实自然的高质量家居效果图。</p>
+              </details>
+            </article>
+            
+            <article class="case-card" data-scene="客餐厅" data-material-count="2">
+              <header class="case-head">
+                <div>
+                  <h2>客餐厅-5</h2>
+                </div>
+                <div class="metrics">
+                  <span>整体耗时 55.14s</span>
+                  <span>提示词耗时 11.93s</span>
+                  <span>生图耗时 43.22s</span>
+                </div>
+              </header>
+              <section class="image-grid">
+                
+    <figure class="image-block main-visual">
+      <figcaption>原始场景图</figcaption>
+      <button class="image-button" type="button" data-full="assets/客餐厅_5_scene.jpg" aria-label="放大查看原始场景图">
+        <img src="assets/客餐厅_5_scene.jpg" alt="原始场景图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+                <div class="product-grid">
+                  
+    <figure class="image-block product-block">
+      <figcaption>材质图 1</figcaption>
+      <button class="image-button" type="button" data-full="assets/客餐厅_5_product_1.jpg" aria-label="放大查看材质图 1">
+        <img src="assets/客餐厅_5_product_1.jpg" alt="材质图 1" loading="lazy">
+      </button>
+      <p class="material-note">连纹砖 | 柔光</p>
+    </figure>
+    
+
+    <figure class="image-block product-block">
+      <figcaption>材质图 2</figcaption>
+      <button class="image-button" type="button" data-full="assets/客餐厅_5_product_2.jpg" aria-label="放大查看材质图 2">
+        <img src="assets/客餐厅_5_product_2.jpg" alt="材质图 2" loading="lazy">
+      </button>
+      <p class="material-note">非连纹砖 | 抛釉</p>
+    </figure>
+    
+                </div>
+                
+    <figure class="image-block main-visual">
+      <figcaption>生成效果图 <a href="assets/客餐厅_5_effect.jpg" target="_blank" rel="noreferrer" download>下载效果图</a></figcaption>
+      <button class="image-button" type="button" data-full="assets/客餐厅_5_effect.jpg" aria-label="放大查看生成效果图">
+        <img src="assets/客餐厅_5_effect.jpg" alt="生成效果图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+              </section>
+              <details>
+                <summary>提示词</summary>
+                <p>以图1房屋原图为基础，保持原场景空间结构、墙体位置、门窗以及软装不变，仅对图1标签区域进行材质替换。清除图1画面所有标签与水印，将标签1的瓷砖地面替换为图2的大理石连纹瓷砖，呈现出柔光质感；将标签2的瓷砖墙面替换为图3的大理石瓷砖，呈现出抛釉质感。1:1还原参考材质的纹理走向、颜色深浅以及细节特征。铺贴需符合真实室内施工逻辑，砖缝、分块和透视关系自然准确，连纹砖纹理沿空间进深方向连续贯通，无断纹错位。保持原场景光影关系一致，替换后效果真实自然。仅替换目标区域的材质表现，不改变非目标区域内容与位置。不出现纹理模糊、不出现纹理拉伸，不出现边缘溢出，不出现透视错误，不出现色差异常，不出现拼贴感，不出现明显AI合成痕迹。清除全部标签、标记图标与水印，生成真实自然的高质量家居效果图。</p>
+              </details>
+            </article>
+            
+            <article class="case-card" data-scene="客餐厅" data-material-count="2">
+              <header class="case-head">
+                <div>
+                  <h2>客餐厅-6</h2>
+                </div>
+                <div class="metrics">
+                  <span>整体耗时 67.43s</span>
+                  <span>提示词耗时 11.07s</span>
+                  <span>生图耗时 56.37s</span>
+                </div>
+              </header>
+              <section class="image-grid">
+                
+    <figure class="image-block main-visual">
+      <figcaption>原始场景图</figcaption>
+      <button class="image-button" type="button" data-full="assets/客餐厅_6_scene.jpg" aria-label="放大查看原始场景图">
+        <img src="assets/客餐厅_6_scene.jpg" alt="原始场景图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+                <div class="product-grid">
+                  
+    <figure class="image-block product-block">
+      <figcaption>材质图 1</figcaption>
+      <button class="image-button" type="button" data-full="assets/客餐厅_6_product_1.jpg" aria-label="放大查看材质图 1">
+        <img src="assets/客餐厅_6_product_1.jpg" alt="材质图 1" loading="lazy">
+      </button>
+      <p class="material-note">连纹砖 | 柔光</p>
+    </figure>
+    
+
+    <figure class="image-block product-block">
+      <figcaption>材质图 2</figcaption>
+      <button class="image-button" type="button" data-full="assets/客餐厅_6_product_2.jpg" aria-label="放大查看材质图 2">
+        <img src="assets/客餐厅_6_product_2.jpg" alt="材质图 2" loading="lazy">
+      </button>
+      <p class="material-note">连纹砖 | 抛釉</p>
+    </figure>
+    
+                </div>
+                
+    <figure class="image-block main-visual">
+      <figcaption>生成效果图 <a href="assets/客餐厅_6_effect.jpg" target="_blank" rel="noreferrer" download>下载效果图</a></figcaption>
+      <button class="image-button" type="button" data-full="assets/客餐厅_6_effect.jpg" aria-label="放大查看生成效果图">
+        <img src="assets/客餐厅_6_effect.jpg" alt="生成效果图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+              </section>
+              <details>
+                <summary>提示词</summary>
+                <p>以图1房屋原图为基础，保持原场景空间结构、墙体位置、门窗以及软装不变，仅对图1标签区域进行材质替换。清除图1画面所有标签与水印，将标签1的瓷砖地面替换为图2的大理石连纹瓷砖，呈现出柔光质感；将标签2的岩板背景墙替换为图3的大理石连纹瓷砖，呈现出抛釉质感。1:1还原参考材质的纹理走向、颜色深浅以及细节特征。铺贴需符合真实室内施工逻辑，砖缝、分块和透视关系自然准确，连纹砖纹理沿空间进深方向连续贯通，无断纹错位。保持原场景光影关系一致，替换后效果真实自然。仅替换目标区域的材质表现，不改变非目标区域内容与位置。不出现纹理模糊、不出现纹理拉伸，不出现边缘溢出，不出现透视错误，不出现色差异常，不出现拼贴感，不出现明显AI合成痕迹。清除全部标签、标记图标与水印，生成真实自然的高质量家居效果图。</p>
+              </details>
+            </article>
+            
+            <article class="case-card" data-scene="客餐厅" data-material-count="3">
+              <header class="case-head">
+                <div>
+                  <h2>客餐厅-9</h2>
+                </div>
+                <div class="metrics">
+                  <span>整体耗时 64.56s</span>
+                  <span>提示词耗时 10.08s</span>
+                  <span>生图耗时 54.48s</span>
+                </div>
+              </header>
+              <section class="image-grid">
+                
+    <figure class="image-block main-visual">
+      <figcaption>原始场景图</figcaption>
+      <button class="image-button" type="button" data-full="assets/客餐厅_9_scene.jpg" aria-label="放大查看原始场景图">
+        <img src="assets/客餐厅_9_scene.jpg" alt="原始场景图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+                <div class="product-grid">
+                  
+    <figure class="image-block product-block">
+      <figcaption>材质图 1</figcaption>
+      <button class="image-button" type="button" data-full="assets/客餐厅_9_product_1.jpg" aria-label="放大查看材质图 1">
+        <img src="assets/客餐厅_9_product_1.jpg" alt="材质图 1" loading="lazy">
+      </button>
+      <p class="material-note">非连纹砖 | 抛釉</p>
+    </figure>
+    
+
+    <figure class="image-block product-block">
+      <figcaption>材质图 2</figcaption>
+      <button class="image-button" type="button" data-full="assets/客餐厅_9_product_2.jpg" aria-label="放大查看材质图 2">
+        <img src="assets/客餐厅_9_product_2.jpg" alt="材质图 2" loading="lazy">
+      </button>
+      <p class="material-note">连纹砖 | 哑光</p>
+    </figure>
+    
+
+    <figure class="image-block product-block">
+      <figcaption>材质图 3</figcaption>
+      <button class="image-button" type="button" data-full="assets/客餐厅_9_product_3.jpg" aria-label="放大查看材质图 3">
+        <img src="assets/客餐厅_9_product_3.jpg" alt="材质图 3" loading="lazy">
+      </button>
+      <p class="material-note">连纹砖 | 哑光</p>
+    </figure>
+    
+                </div>
+                
+    <figure class="image-block main-visual">
+      <figcaption>生成效果图 <a href="assets/客餐厅_9_effect.jpg" target="_blank" rel="noreferrer" download>下载效果图</a></figcaption>
+      <button class="image-button" type="button" data-full="assets/客餐厅_9_effect.jpg" aria-label="放大查看生成效果图">
+        <img src="assets/客餐厅_9_effect.jpg" alt="生成效果图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+              </section>
+              <details>
+                <summary>提示词</summary>
+                <p>以图1房屋原图为基础，保持原场景空间结构、墙体位置、门窗以及软装不变，仅对图1标签区域进行材质替换。清除图1画面所有标签与水印，将标签1的瓷砖地面替换为图2的大理石瓷砖，呈现出抛釉质感；将标签2的瓷砖墙面替换为图3的大理石连纹瓷砖，呈现出哑光质感；将标签3的瓷砖墙面替换为图4的大理石连纹瓷砖，呈现出哑光质感。1:1还原参考材质的纹理走向、颜色深浅以及细节特征。铺贴需符合真实室内施工逻辑，砖缝、分块和透视关系自然准确，连纹砖纹理沿空间进深方向连续贯通，无断纹错位。保持原场景光影关系一致，替换后效果真实自然。仅替换目标区域的材质表现，不改变非目标区域内容与位置。不出现纹理模糊、不出现纹理拉伸，不出现边缘溢出，不出现透视错误，不出现色差异常，不出现拼贴感，不出现明显AI合成痕迹。清除全部标签、标记图标与水印，生成真实自然的高质量家居效果图。</p>
+              </details>
+            </article>
+            
+            <article class="case-card" data-scene="卧室" data-material-count="1">
+              <header class="case-head">
+                <div>
+                  <h2>卧室-1</h2>
+                </div>
+                <div class="metrics">
+                  <span>整体耗时 39.14s</span>
+                  <span>提示词耗时 5.79s</span>
+                  <span>生图耗时 33.35s</span>
+                </div>
+              </header>
+              <section class="image-grid">
+                
+    <figure class="image-block main-visual">
+      <figcaption>原始场景图</figcaption>
+      <button class="image-button" type="button" data-full="assets/卧室_1_scene.jpg" aria-label="放大查看原始场景图">
+        <img src="assets/卧室_1_scene.jpg" alt="原始场景图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+                <div class="product-grid">
+                  
+    <figure class="image-block product-block">
+      <figcaption>材质图 1</figcaption>
+      <button class="image-button" type="button" data-full="assets/卧室_1_product_1.jpg" aria-label="放大查看材质图 1">
+        <img src="assets/卧室_1_product_1.jpg" alt="材质图 1" loading="lazy">
+      </button>
+      <p class="material-note">木地板</p>
+    </figure>
+    
+                </div>
+                
+    <figure class="image-block main-visual">
+      <figcaption>生成效果图 <a href="assets/卧室_1_effect.jpg" target="_blank" rel="noreferrer" download>下载效果图</a></figcaption>
+      <button class="image-button" type="button" data-full="assets/卧室_1_effect.jpg" aria-label="放大查看生成效果图">
+        <img src="assets/卧室_1_effect.jpg" alt="生成效果图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+              </section>
+              <details>
+                <summary>提示词</summary>
+                <p>以图1房屋原图为基础，保持原场景空间结构、墙体位置、门窗以及软装不变，仅对图1标签区域进行材质替换。清除图1画面所有标签与水印，将标签1的木地板地面替换为图2的人字拼木地板。1:1还原参考材质的纹理走向、颜色深浅以及细节特征。铺贴需符合真实室内施工逻辑，砖缝、分块和透视关系自然准确。保持原场景光影关系一致，替换后效果真实自然。仅替换目标区域的材质表现，不改变非目标区域内容与位置。不出现纹理模糊、不出现纹理拉伸，不出现边缘溢出，不出现透视错误，不出现色差异常，不出现拼贴感，不出现明显AI合成痕迹。清除全部标签、标记图标与水印，生成真实自然的高质量家居效果图。</p>
+              </details>
+            </article>
+            
+            <article class="case-card" data-scene="卧室" data-material-count="1">
+              <header class="case-head">
+                <div>
+                  <h2>卧室-3</h2>
+                </div>
+                <div class="metrics">
+                  <span>整体耗时 45.94s</span>
+                  <span>提示词耗时 5.96s</span>
+                  <span>生图耗时 39.98s</span>
+                </div>
+              </header>
+              <section class="image-grid">
+                
+    <figure class="image-block main-visual">
+      <figcaption>原始场景图</figcaption>
+      <button class="image-button" type="button" data-full="assets/卧室_3_scene.jpg" aria-label="放大查看原始场景图">
+        <img src="assets/卧室_3_scene.jpg" alt="原始场景图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+                <div class="product-grid">
+                  
+    <figure class="image-block product-block">
+      <figcaption>材质图 1</figcaption>
+      <button class="image-button" type="button" data-full="assets/卧室_3_product_1.jpg" aria-label="放大查看材质图 1">
+        <img src="assets/卧室_3_product_1.jpg" alt="材质图 1" loading="lazy">
+      </button>
+      <p class="material-note">非连纹砖 | 哑光</p>
+    </figure>
+    
+                </div>
+                
+    <figure class="image-block main-visual">
+      <figcaption>生成效果图 <a href="assets/卧室_3_effect.jpg" target="_blank" rel="noreferrer" download>下载效果图</a></figcaption>
+      <button class="image-button" type="button" data-full="assets/卧室_3_effect.jpg" aria-label="放大查看生成效果图">
+        <img src="assets/卧室_3_effect.jpg" alt="生成效果图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+              </section>
+              <details>
+                <summary>提示词</summary>
+                <p>以图1房屋原图为基础，保持原场景空间结构、墙体位置、门窗以及软装不变，仅对图1标签区域进行材质替换。清除图1画面所有标签与水印，将标签1的瓷砖地面替换为图2的大理石瓷砖，呈现出哑光质感。1:1还原参考材质的纹理走向、颜色深浅以及细节特征。铺贴需符合真实室内施工逻辑，砖缝、分块和透视关系自然准确。保持原场景光影关系一致，替换后效果真实自然。仅替换目标区域的材质表现，不改变非目标区域内容与位置。不出现纹理模糊、不出现纹理拉伸，不出现边缘溢出，不出现透视错误，不出现色差异常，不出现拼贴感，不出现明显AI合成痕迹。清除全部标签、标记图标与水印，生成真实自然的高质量家居效果图。</p>
+              </details>
+            </article>
+            
+            <article class="case-card" data-scene="卧室" data-material-count="2">
+              <header class="case-head">
+                <div>
+                  <h2>卧室-4</h2>
+                </div>
+                <div class="metrics">
+                  <span>整体耗时 63.70s</span>
+                  <span>提示词耗时 13.60s</span>
+                  <span>生图耗时 50.10s</span>
+                </div>
+              </header>
+              <section class="image-grid">
+                
+    <figure class="image-block main-visual">
+      <figcaption>原始场景图</figcaption>
+      <button class="image-button" type="button" data-full="assets/卧室_4_scene.jpg" aria-label="放大查看原始场景图">
+        <img src="assets/卧室_4_scene.jpg" alt="原始场景图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+                <div class="product-grid">
+                  
+    <figure class="image-block product-block">
+      <figcaption>材质图 1</figcaption>
+      <button class="image-button" type="button" data-full="assets/卧室_4_product_1.jpg" aria-label="放大查看材质图 1">
+        <img src="assets/卧室_4_product_1.jpg" alt="材质图 1" loading="lazy">
+      </button>
+      <p class="material-note">木地板</p>
+    </figure>
+    
+
+    <figure class="image-block product-block">
+      <figcaption>材质图 2</figcaption>
+      <button class="image-button" type="button" data-full="assets/卧室_4_product_2.jpg" aria-label="放大查看材质图 2">
+        <img src="assets/卧室_4_product_2.jpg" alt="材质图 2" loading="lazy">
+      </button>
+      <p class="material-note">木制墙板</p>
+    </figure>
+    
+                </div>
+                
+    <figure class="image-block main-visual">
+      <figcaption>生成效果图 <a href="assets/卧室_4_effect.jpg" target="_blank" rel="noreferrer" download>下载效果图</a></figcaption>
+      <button class="image-button" type="button" data-full="assets/卧室_4_effect.jpg" aria-label="放大查看生成效果图">
+        <img src="assets/卧室_4_effect.jpg" alt="生成效果图" loading="lazy">
+      </button>
+      
+    </figure>
+    
+              </section>
+              <details>
+                <summary>提示词</summary>
+                <p>以图1房屋原图为基础，保持原场景空间结构、墙体位置、门窗以及软装不变，仅对图1标签区域进行材质替换。清除图1画面所有标签与水印，将标签1的木地板地面替换为图2的人字拼木地板；将标签2的木饰面墙面替换为图3的直纹木饰面。1:1还原参考材质的纹理走向、颜色深浅以及细节特征。铺贴需符合真实室内施工逻辑，砖缝、分块和透视关系自然准确。保持原场景光影关系一致，替换后效果真实自然。仅替换目标区域的材质表现，不改变非目标区域内容与位置。不出现纹理模糊、不出现纹理拉伸，不出现边缘溢出，不出现透视错误，不出现色差异常，不出现拼贴感，不出现明显AI合成痕迹。清除全部标签、标记图标与水印，生成真实自然的高质量家居效果图。</p>
+              </details>
+            </article>
+            
+  </main>
+  <div class="lightbox" hidden>
+    <button class="lightbox-close" type="button" aria-label="关闭">×</button>
+    <img alt="放大图">
+  </div>
+  <script>
+    const buttons = [...document.querySelectorAll('[data-filter]')];
+    const cards = [...document.querySelectorAll('.case-card')];
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        const value = button.dataset.filter;
+        buttons.forEach(item => item.classList.toggle('active', item === button));
+        cards.forEach(card => {
+          if (value === 'all') {
+            card.hidden = false;
+          } else if (value.startsWith('materials:')) {
+            card.hidden = card.dataset.materialCount !== value.split(':')[1];
+          } else {
+            card.hidden = card.dataset.scene !== value;
+          }
+        });
+      });
+    });
+    const lightbox = document.querySelector('.lightbox');
+    const lightboxImage = lightbox.querySelector('img');
+    document.querySelectorAll('[data-full]').forEach(button => {
+      button.addEventListener('click', () => {
+        lightboxImage.src = button.dataset.full;
+        lightbox.hidden = false;
+      });
+    });
+    function closeLightbox() {
+      lightbox.hidden = true;
+      lightboxImage.removeAttribute('src');
+    }
+    document.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', event => {
+      if (event.target === lightbox) closeLightbox();
+    });
+    window.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && !lightbox.hidden) closeLightbox();
+    });
+  </script>
+</body>
+</html>
