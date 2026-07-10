@@ -29,7 +29,7 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
       line-height: 1.45;
     }
-    .page { max-width: 1440px; margin: 0 auto; padding: 28px 28px 48px; }
+    .page { max-width: 1680px; margin: 0 auto; padding: 28px 28px 48px; }
     .topbar { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-bottom: 18px; }
     h1 { margin: 0 0 8px; font-size: 30px; font-weight: 760; letter-spacing: 0; }
     .intro { margin: 0; color: var(--muted); font-size: 15px; }
@@ -52,7 +52,7 @@
     .dify-pill.识别准确 { background: #f7f8fa; border-color: #e4e7ec; color: #475467; }
     .dify-pill.识别有差别 { background: #fff7ed; border-color: #fed7aa; color: #9a5b12; }
     .dify-pill.识别有误, .dify-pill.识别错误, .dify-pill.识别不准确, .dify-pill.不准确 { background: #fff1f2; border-color: #fecdd3; color: #b42318; }
-    .case-body { display: grid; grid-template-columns: minmax(360px, 28%) minmax(0, 1fr); gap: 18px; align-items: start; }
+    .case-body { display: grid; grid-template-columns: minmax(330px, 27%) minmax(0, 1fr); gap: 18px; align-items: start; }
     .panel-title { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
     .input-images { display: block; }
     .product-row { display: flex; gap: 10px; margin-top: 10px; max-height: 146px; }
@@ -64,7 +64,7 @@
     .image-tile.product img { height: 120px; }
     .image-tile.result img { height: 410px; background: #f8fafc; }
     .image-tile span { display: block; margin-top: 5px; color: var(--muted); font-size: 12px; text-align: center; }
-    .result-panel { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .result-panel { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
     .result-card { min-width: 0; }
     .result-title { margin: 0 0 7px; color: #202832; font-size: 15px; font-weight: 720; text-align: left; }
     .model-meta { padding-top: 8px; }
@@ -72,6 +72,7 @@
     .result-footer .model-line { min-height: auto; }
     .model-meta strong { font-size: 15px; }
     .model-meta p { margin: 5px 0 0; color: #475467; font-size: 13px; min-height: 19px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .model-meta.empty-eval { min-height: 52px; }
     .level { display: inline-flex; border-radius: 999px; padding: 4px 9px; font-size: 12px; font-weight: 650; }
     .level-可用 { background: rgba(34, 197, 94, .34); color: #15803d; }
     .level-基本可用 { background: rgba(47, 158, 99, .10); color: #2f9e63; }
@@ -115,13 +116,14 @@
     <section class="topbar">
       <div>
         <h1>成品替换 / 新增效果展示页</h1>
-        <p class="intro">本页面用于查看 60 组测试中，Seedream5.0 与 Nano2 在相同输入下的最终图生图效果。</p>
+        <p class="intro">本页面用于查看 60 组测试中，Seedream5.0 / Nano2 / GPT-image2 在相同输入下的最终图生图效果</p>
       </div>
       <div class="summary-wrap">
         <div class="summary" aria-label="简单汇总">
           <div class="metric"><span>总 case 数</span><strong>60</strong></div>
           <div class="metric"><span>Seedream5.0 通过率</span><strong>75.0%</strong><small>45 / 60</small></div>
           <div class="metric"><span>Nano2 通过率</span><strong>86.7%</strong><small>52 / 60</small></div>
+          <div class="metric"><span>GPT-image2 通过率</span><strong>/</strong><small>/</small></div>
         </div>
         <div class="summary-note">通过率 = 可用 + 基本可用 / 总 case 数</div>
       </div>
@@ -187,6 +189,18 @@
               <p>位置与角度合理，沙发还原较好； 左侧额外生成非产品内容但影响较小。</p>
             </div>
           </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/客餐厅/1-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/客餐厅/1-gpt-image2效果.jpg" alt="GPT-image2" loading="eager" decoding="async" fetchpriority="high"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
+            </div>
+          </div>
         </section>
       </div>
 
@@ -246,6 +260,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-可用">可用</span></div>
               <p>沙发摆放和角度更合理，整体效果较好。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/客餐厅/2-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/客餐厅/2-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -309,6 +335,18 @@
               <p>茶几重新打光，融合更自然，但原图植物配饰未完全消除。</p>
             </div>
           </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/客餐厅/3-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/客餐厅/3-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
+            </div>
+          </div>
         </section>
       </div>
 
@@ -368,6 +406,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-可用">可用</span></div>
               <p>角度、光线和台面花纹还原较好，仅底部材质颜色略有变化。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/客餐厅/4-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/客餐厅/4-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -435,6 +485,18 @@
             <div class="model-meta result-footer">
               <div class="model-line"><span class="level level-基本可用">基本可用</span></div>
               <p>摆放更合理、光影融合较好； 茶几仍受正面素材角度影响。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/客餐厅/5-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/客餐厅/5-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -505,6 +567,18 @@
               <p>透视和材质融合更好，灯具更自然。</p>
             </div>
           </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/客餐厅/6-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/客餐厅/6-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
+            </div>
+          </div>
         </section>
       </div>
 
@@ -571,6 +645,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-基本可用">基本可用</span></div>
               <p>尝试调整茶几角度，但因缺少侧面信息导致结构变形。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/客餐厅/7-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/客餐厅/7-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -641,6 +727,18 @@
               <p>沙发摆放透视更整齐，但仍无法还原背面视角。</p>
             </div>
           </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/客餐厅/8-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/客餐厅/8-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
+            </div>
+          </div>
         </section>
       </div>
 
@@ -707,6 +805,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-基本可用">基本可用</span></div>
               <p>地毯花纹还原度略低，茶几比例被拉伸。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/客餐厅/9-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/客餐厅/9-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -779,6 +889,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-基本可用">基本可用</span></div>
               <p>沙发颜色有还原但L型结构不完全正确； 茶几和窗帘融合较好。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/客餐厅/10-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/客餐厅/10-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -856,6 +978,18 @@
               <p>灯具更自然，但沙发颜色有色差，原茶几清除不干净。</p>
             </div>
           </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/客餐厅/11-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/客餐厅/11-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
+            </div>
+          </div>
         </section>
       </div>
 
@@ -929,6 +1063,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-可用">可用</span></div>
               <p>茶几和地毯均还原较好，沙发有色差。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/客餐厅/12-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/客餐厅/12-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -1008,6 +1154,18 @@
               <p>背景稳定性不足，沙发受遮挡和角度影响结构错误。</p>
             </div>
           </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/客餐厅/13-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/客餐厅/13-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
+            </div>
+          </div>
         </section>
       </div>
 
@@ -1081,6 +1239,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-基本可用">基本可用</span></div>
               <p>融合度和真实感更好，但左侧墙体结构被改变。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/客餐厅/14-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/客餐厅/14-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -1158,6 +1328,18 @@
               <p>产品还原度较好，但摆放位置不合理。</p>
             </div>
           </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/客餐厅/15-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/客餐厅/15-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
+            </div>
+          </div>
         </section>
       </div>
 
@@ -1225,6 +1407,18 @@
               <p>沙发融合更自然，但沙发结构不准确。</p>
             </div>
           </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/客餐厅/16-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/客餐厅/16-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
+            </div>
+          </div>
         </section>
       </div>
 
@@ -1284,6 +1478,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-可用">可用</span></div>
               <p>沙发结构准确但有色差。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/客餐厅/17-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/客餐厅/17-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -1347,6 +1553,18 @@
               <p>茶几替换成功，位置略不合理。</p>
             </div>
           </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/客餐厅/18-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/客餐厅/18-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
+            </div>
+          </div>
         </section>
       </div>
 
@@ -1406,6 +1624,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-可用">可用</span></div>
               <p>椅子数量、视角和小配饰还原更完整，整体效果较好。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/客餐厅/19-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/客餐厅/19-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -1471,6 +1701,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-基本可用">基本可用</span></div>
               <p>沙发结构仍有偏差，但保留部分小台面信息，摆放和光影更自然。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/客餐厅/20-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/客餐厅/20-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -1541,6 +1783,18 @@
               <p>整体更自然，光影和融合度略优。</p>
             </div>
           </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/客餐厅/21-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/客餐厅/21-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
+            </div>
+          </div>
         </section>
       </div>
 
@@ -1607,6 +1861,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-可用">可用</span></div>
               <p>沙发和茶几均替换成功，角度和还原度较好。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/客餐厅/22-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/客餐厅/22-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -1677,6 +1943,18 @@
               <p>沙发受产品图角度影响未能还原。</p>
             </div>
           </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/客餐厅/23-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/客餐厅/23-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
+            </div>
+          </div>
         </section>
       </div>
 
@@ -1743,6 +2021,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-可用">可用</span></div>
               <p>茶几阴影不自然。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/客餐厅/24-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/客餐厅/24-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -1815,6 +2105,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-可用">可用</span></div>
               <p>能识别窗帘款式、花纹和透明度，茶几结构更准确。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/客餐厅/25-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/客餐厅/25-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -1892,6 +2194,18 @@
               <p>沙发结构不准确，多出扶手，但吊灯更自然。</p>
             </div>
           </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/客餐厅/26-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/客餐厅/26-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
+            </div>
+          </div>
         </section>
       </div>
 
@@ -1965,6 +2279,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-可用">可用</span></div>
               <p>沙发靠墙、茶几结构和地毯角度都较合理。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/客餐厅/27-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/客餐厅/27-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -2042,6 +2368,18 @@
               <p>沙发组合未能还原。</p>
             </div>
           </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/客餐厅/28-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/客餐厅/28-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
+            </div>
+          </div>
         </section>
       </div>
 
@@ -2115,6 +2453,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-基本可用">基本可用</span></div>
               <p>布局自然真实，茶几和柜子还原较好，沙发拼色结构有偏差。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/客餐厅/29-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/客餐厅/29-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -2192,6 +2542,18 @@
               <p>摆放更整齐、画面美观性较好，但受标签位置影响，沙发位置和朝向不完全合理。</p>
             </div>
           </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/客餐厅/30-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/客餐厅/30-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
+            </div>
+          </div>
         </section>
       </div>
 
@@ -2259,6 +2621,18 @@
               <p>材质和光影真实，但床靠背/靠枕结构有明显变化。</p>
             </div>
           </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/卧室/1-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/卧室/1-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
+            </div>
+          </div>
         </section>
       </div>
 
@@ -2318,6 +2692,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-基本可用">基本可用</span></div>
               <p>摆放更真实，床头柜和材质更接近参考图，但角度仍受素材影响。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/卧室/2-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/卧室/2-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -2381,6 +2767,18 @@
               <p>角度、光影和整体真实感更好。</p>
             </div>
           </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/卧室/3-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/卧室/3-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
+            </div>
+          </div>
         </section>
       </div>
 
@@ -2440,6 +2838,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-可用">可用</span></div>
               <p>床体摆放合理，地毯、床头柜和光影表现较好。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/卧室/4-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/卧室/4-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -2505,6 +2915,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-基本可用">基本可用</span></div>
               <p>床体结构变化，床品未完全替换。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/卧室/5-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/卧室/5-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -2575,6 +2997,18 @@
               <p>床靠背有色差。</p>
             </div>
           </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/卧室/6-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/卧室/6-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
+            </div>
+          </div>
         </section>
       </div>
 
@@ -2641,6 +3075,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-基本可用">基本可用</span></div>
               <p>桌局部结构略变形，床靠背发生变化。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/卧室/7-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/卧室/7-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -2711,6 +3157,18 @@
               <p>床和化妆桌椅摆放合理，空间关系清晰。</p>
             </div>
           </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/卧室/8-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/卧室/8-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
+            </div>
+          </div>
         </section>
       </div>
 
@@ -2777,6 +3235,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-基本可用">基本可用</span></div>
               <p>床和地毯整体效果较好，但额外生成产品图中没有的床靠背。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/卧室/9-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/卧室/9-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -2849,6 +3319,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-基本可用">基本可用</span></div>
               <p>床尾凳 结构发生变化。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/卧室/10-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/卧室/10-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -2926,6 +3408,18 @@
               <p>多数物体替换成功，透视和真实感更好，但地毯样式有变化。</p>
             </div>
           </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/卧室/11-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/卧室/11-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
+            </div>
+          </div>
         </section>
       </div>
 
@@ -2999,6 +3493,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-基本可用">基本可用</span></div>
               <p>床和床头柜还原较好，但背景板属于硬装边界，替换效果有限。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/卧室/12-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/卧室/12-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -3076,6 +3582,18 @@
               <p>新增物体摆放和融合效果较好。</p>
             </div>
           </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/卧室/13-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/卧室/13-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
+            </div>
+          </div>
         </section>
       </div>
 
@@ -3149,6 +3667,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-基本不可用">基本不可用</span></div>
               <p>画面真实感更好，但电视柜未替换成功，床体颜色也有偏差。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/卧室/14-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/卧室/14-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -3226,6 +3756,18 @@
               <p>摆放合理、真实感较好，但化妆桌颜色变化较大，并额外生成床靠背。</p>
             </div>
           </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/卧室/15-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/卧室/15-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
+            </div>
+          </div>
         </section>
       </div>
 
@@ -3293,6 +3835,18 @@
               <p>床体可用，但床靠背结构变化较大。</p>
             </div>
           </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/卧室/16-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/卧室/16-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
+            </div>
+          </div>
         </section>
       </div>
 
@@ -3352,6 +3906,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-可用">可用</span></div>
               <p>床体摆放更正，床头柜也有补充，整体可用。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/卧室/17-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/卧室/17-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -3415,6 +3981,18 @@
               <p>额外生成床靠背结构。</p>
             </div>
           </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/卧室/18-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/卧室/18-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
+            </div>
+          </div>
         </section>
       </div>
 
@@ -3474,6 +4052,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-可用">可用</span></div>
               <p>床体摆放、还原和真实感均较好。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/卧室/19-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/卧室/19-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -3539,6 +4129,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-可用">可用</span></div>
               <p>透视和还原度更好，整体表现更优。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/卧室/20-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/卧室/20-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -3609,6 +4211,18 @@
               <p>床、地毯和吊灯均替换成功，整体效果较好。</p>
             </div>
           </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/卧室/21-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/卧室/21-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
+            </div>
+          </div>
         </section>
       </div>
 
@@ -3675,6 +4289,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-可用">可用</span></div>
               <p>摆放角度和空间关系合理，整体可用。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/卧室/22-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/卧室/22-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -3745,6 +4371,18 @@
               <p>未完全按标签位置摆放，但布局更合理，整体还原度尚可。</p>
             </div>
           </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/卧室/23-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/卧室/23-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
+            </div>
+          </div>
         </section>
       </div>
 
@@ -3811,6 +4449,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-可用">可用</span></div>
               <p>床和地毯透视关系较好，整体可用。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/卧室/24-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/卧室/24-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -3883,6 +4533,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-基本可用">基本可用</span></div>
               <p>三品均有替换，但床尾凳结构略不一致，床靠背有色差。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/卧室/25-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/卧室/25-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -3960,6 +4622,18 @@
               <p>多数物体替换成功，摆放较好，但柜子被拉高。</p>
             </div>
           </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/卧室/26-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/卧室/26-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
+            </div>
+          </div>
         </section>
       </div>
 
@@ -4033,6 +4707,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-基本可用">基本可用</span></div>
               <p>整体美感和光影较好，但床头柜缺少部分柜体结构。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/卧室/27-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/卧室/27-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
@@ -4110,6 +4796,18 @@
               <p>地毯更合理，但光影表现夸张导致床品色差。</p>
             </div>
           </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/卧室/28-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/卧室/28-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
+            </div>
+          </div>
         </section>
       </div>
 
@@ -4185,6 +4883,18 @@
               <p>三个产品均替换成功，整体可用。</p>
             </div>
           </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/卧室/29-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/卧室/29-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
+            </div>
+          </div>
         </section>
       </div>
 
@@ -4258,6 +4968,18 @@
             <div class="model-meta">
               <div class="model-line"><strong>Nano2</strong><span class="level level-基本不可用">基本不可用</span></div>
               <p>画面氛围较好，但柜子和化妆桌椅位置不合理，结构也有变化。</p>
+            </div>
+          </div>
+
+          <div class="result-card gpt-image2-card">
+            <div class="result-title">GPT-image2</div>
+            
+      <button class="image-tile result" type="button" data-preview-src="image_review_assets/source/效果图/gpt-image2/卧室/30-gpt-image2效果.jpg" data-preview-title="GPT-image2">
+        <span class="image-frame"><img src="image_review_assets/source/效果图/gpt-image2/卧室/30-gpt-image2效果.jpg" alt="GPT-image2" loading="lazy" decoding="async" fetchpriority="low"></span>
+      </button>
+            <div class="model-meta result-footer empty-eval">
+              <div class="model-line"></div>
+              <p></p>
             </div>
           </div>
         </section>
