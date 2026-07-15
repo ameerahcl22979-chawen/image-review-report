@@ -35,6 +35,7 @@
     .stage-content { position:absolute; inset:0; transform-origin:0 0; will-change: transform; }
     .stage img { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; user-select:none; pointer-events:none; }
     .before-wrap { position:absolute; inset:0; width:50%; overflow:hidden; border-right:2px solid rgba(255,255,255,.86); }
+    .before-inner { position:absolute; left:0; top:0; width:100%; height:100%; }
     .before-wrap img { width:100%; height:100%; max-width:none; }
     .handle { position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); z-index:3; width:32px; height:32px; border-radius:999px; background:rgba(255,255,255,.78); color:#334155; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 14px rgba(0,0,0,.25); pointer-events:none; }
     .badge { position:absolute; bottom:24px; z-index:4; padding:6px 10px; color:#fff; font-size:14px; font-weight:800; text-shadow:0 1px 5px rgba(0,0,0,.45); }
@@ -46,7 +47,7 @@
 <body>
   <main class="shell">
     <table>
-      <thead><tr><th class="idx">&#24207;&#21495;</th><th>&#26408;&#37324;&#28210;&#26579;&#22270;</th><th>&#25928;&#26524;A</th><th>&#25928;&#26524;B</th><th>&#32447;&#19978;&#32654;&#21270;&#25928;&#26524;</th></tr></thead>
+      <thead><tr><th class="idx">&#24207;&#21495;</th><th>&#21407;&#22270;</th><th>&#25928;&#26524;B</th><th>&#25928;&#26524;A</th><th>&#32447;&#19978;&#32654;&#21270;&#25928;&#26524;</th></tr></thead>
       <tbody id="tbody"></tbody>
     </table>
   </main>
@@ -60,7 +61,7 @@
       <div class="stage" id="stage">
         <div class="stage-content" id="stageContent">
           <img id="afterImg" alt="" />
-          <div class="before-wrap" id="beforeWrap"><img id="beforeImg" alt="" /></div>
+          <div class="before-wrap" id="beforeWrap"><div class="before-inner" id="beforeInner"><img id="beforeImg" alt="" /></div></div>
           <div class="handle" id="handle"><i data-lucide="chevrons-left-right" width="17" height="17"></i></div>
           <span class="badge left" id="leftBadge"></span>
           <span class="badge right" id="rightBadge"></span>
@@ -72,9 +73,9 @@
 
   <script>
     const columns = [
-      { key:'render', label:'\u6728\u91cc\u6e32\u67d3\u56fe' },
-      { key:'a', label:'\u6548\u679cA' },
+      { key:'original', label:'\u539f\u56fe' },
       { key:'b', label:'\u6548\u679cB' },
+      { key:'a', label:'\u6548\u679cA' },
       { key:'online', label:'\u7ebf\u4e0a\u7f8e\u5316\u6548\u679c' }
     ];
     const rows = (window.__MULI_SHOWCASE__?.rows || []).sort((a,b) => a.order - b.order);
@@ -83,19 +84,20 @@
     const stage = document.querySelector('#stage');
     const stageContent = document.querySelector('#stageContent');
     const beforeWrap = document.querySelector('#beforeWrap');
+    const beforeInner = document.querySelector('#beforeInner');
     const handle = document.querySelector('#handle');
     const splitRange = document.querySelector('#splitRange');
     const beforeImg = document.querySelector('#beforeImg');
     const afterImg = document.querySelector('#afterImg');
     const leftBadge = document.querySelector('#leftBadge');
     const rightBadge = document.querySelector('#rightBadge');
-    const state = { row:null, pair:['render','a'], scale:1, x:0, y:0, max:8, dragging:false, splitDragging:false, sx:0, sy:0, ox:0, oy:0 };
+    const state = { row:null, pair:['original','b'], scale:1, x:0, y:0, max:8, dragging:false, splitDragging:false, sx:0, sy:0, ox:0, oy:0 };
 
     function icon(name) { return `<i data-lucide="${name}" width="16" height="16"></i>`; }
     function cell(row, col) {
-      const compare = col.key === 'render' ? 'render,a' : `render,${col.key}`;
-      const label = col.key === 'render' ? '\u6548\u679cA\u5bf9\u6bd4' : '\u6e32\u67d3\u56fe\u5bf9\u6bd4';
-      return `<td><div class="thumb"><img src="${row[col.key]}" alt="${col.label} ${row.order}" loading="lazy"><div class="actions"><button class="icon-btn" data-zoom="${row.order},${col.key}" title="\u653e\u5927\u67e5\u770b">${icon('search')}</button><button class="pill-btn" data-compare="${row.order},${compare}" title="${label}">${icon('scan-line')}${label}</button></div></div></td>`;
+      const compare = col.key === 'original' ? 'original,b' : `original,${col.key}`;
+      const label = col.key === 'original' ? '\u6548\u679cB\u5bf9\u6bd4' : '\u539f\u56fe\u5bf9\u6bd4';
+      return `<td><div class="thumb"><img src="${row[col.key + 'Thumb'] || row[col.key]}" alt="${col.label} ${row.order}" loading="lazy"><div class="actions"><button class="icon-btn" data-zoom="${row.order},${col.key}" title="\u653e\u5927\u67e5\u770b">${icon('search')}</button><button class="pill-btn" data-compare="${row.order},${compare}" title="${label}">${icon('scan-line')}${label}</button></div></div></td>`;
     }
     tbody.innerHTML = rows.map(row => `<tr><td class="idx">${row.order}</td>${columns.map(col => cell(row,col)).join('')}</tr>`).join('');
     lucide.createIcons();
@@ -105,7 +107,7 @@
       const compare = e.target.closest('[data-compare]');
       if (zoom) {
         const [id, key] = zoom.dataset.zoom.split(',');
-        openModal(Number(id), ['render', key]);
+        openModal(Number(id), ['original', key]);
       }
       if (compare) {
         const [id, left, right] = compare.dataset.compare.split(',');
@@ -133,7 +135,7 @@
       modal.classList.add('open'); updateTransform(); updateSplit(50); lucide.createIcons();
     }
     function closeModal() { modal.classList.remove('open'); beforeImg.removeAttribute('src'); afterImg.removeAttribute('src'); }
-    function updateSplit(v) { splitRange.value = v; beforeWrap.style.width = `${v}%`; handle.style.left = `${v}%`; }
+    function updateSplit(v) { splitRange.value = v; beforeWrap.style.width = `${v}%`; beforeInner.style.width = `${10000 / Math.max(v, 0.01)}%`; handle.style.left = `${v}%`; }
     function updateTransform() { stageContent.style.transform = `translate(${state.x}px, ${state.y}px) scale(${state.scale})`; stage.classList.toggle('dragging', state.dragging); }
     function clampPan() {
       const rect = stage.getBoundingClientRect();
@@ -182,5 +184,6 @@
   </script>
 </body>
 </html>
+
 
 
