@@ -1,0 +1,186 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>&#26408;&#37324;&#36136;&#24863;&#22686;&#24378;&#25928;&#26524;&#23545;&#27604;</title>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="./manifest.js"></script>
+  <style>
+    :root { --bg:#eef2f6; --panel:#fff; --line:#dfe7f1; --text:#111827; }
+    * { box-sizing: border-box; }
+    html, body { margin:0; min-height:100%; background:var(--bg); color:var(--text); font-family: Arial, "Microsoft YaHei", sans-serif; }
+    body { padding: 18px 20px 28px; }
+    .shell { max-width: 1720px; margin: 0 auto; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; box-shadow: 0 18px 46px rgba(15, 23, 42, .08); }
+    table { width:100%; border-collapse: collapse; table-layout: fixed; }
+    thead th { height: 44px; padding: 0 12px; text-align:left; font-size: 18px; font-weight: 800; border-bottom:1px solid var(--line); border-right:1px solid var(--line); background:#f8fafc; white-space: nowrap; }
+    thead th.idx, tbody td.idx { width: 56px; text-align:center; }
+    tbody td { padding: 14px 10px; border-right:1px solid var(--line); border-bottom:1px solid var(--line); vertical-align: top; }
+    tbody td.idx { color:#0b57d0; font-size:18px; font-weight:800; padding-top:22px; }
+    .thumb { position: relative; width:100%; aspect-ratio: 4 / 3; background:#e5e7eb; border-radius:6px; overflow:hidden; }
+    .thumb img { width:100%; height:100%; object-fit: contain; display:block; background:#e5e7eb; }
+    .actions { position:absolute; right:10px; bottom:10px; display:flex; gap:8px; align-items:center; }
+    button { border:0; font:inherit; cursor:pointer; }
+    .icon-btn, .pill-btn { height:34px; border-radius:8px; color:#fff; background:rgba(17,24,39,.82); display:inline-flex; align-items:center; justify-content:center; gap:5px; padding:0 10px; font-size:13px; font-weight:800; box-shadow:0 8px 18px rgba(15,23,42,.18); }
+    .icon-btn { width:34px; padding:0; }
+    .icon-btn:hover, .pill-btn:hover { background:rgba(17,24,39,.95); }
+    .modal { position:fixed; inset:0; z-index:50; display:none; align-items:center; justify-content:center; background:rgba(15,23,42,.72); padding:14px; }
+    .modal.open { display:flex; }
+    .modal-panel { width:min(96vw, 1500px); height:min(92vh, 920px); background:#111827; border-radius:8px; overflow:hidden; display:grid; grid-template-rows:58px minmax(0,1fr); box-shadow:0 22px 70px rgba(0,0,0,.42); }
+    .modal-bar { background:#fff; display:flex; align-items:center; justify-content:flex-end; gap:10px; padding:0 14px; border-bottom:1px solid var(--line); }
+    .bar-btn { width:38px; height:38px; border-radius:8px; background:#fff; border:1px solid #d8e2ee; color:#0f172a; display:inline-flex; align-items:center; justify-content:center; }
+    .bar-btn:hover { background:#f3f6fb; }
+    .stage { position:relative; overflow:hidden; background:#111827; min-height:0; touch-action:none; cursor:grab; }
+    .stage.dragging { cursor:grabbing; }
+    .stage-content { position:absolute; inset:0; transform-origin:0 0; will-change: transform; }
+    .stage img { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; user-select:none; pointer-events:none; }
+    .before-wrap { position:absolute; inset:0; width:50%; overflow:hidden; border-right:2px solid rgba(255,255,255,.86); }
+    .before-wrap img { width:100%; height:100%; max-width:none; }
+    .handle { position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); z-index:3; width:32px; height:32px; border-radius:999px; background:rgba(255,255,255,.78); color:#334155; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 14px rgba(0,0,0,.25); pointer-events:none; }
+    .badge { position:absolute; bottom:24px; z-index:4; padding:6px 10px; color:#fff; font-size:14px; font-weight:800; text-shadow:0 1px 5px rgba(0,0,0,.45); }
+    .badge.left { left:30px; } .badge.right { right:30px; }
+    #splitRange { position:absolute; inset:0; width:100%; height:100%; opacity:0; cursor:ew-resize; z-index:2; }
+    @media (max-width: 1100px) { body { padding:10px; } .shell { overflow-x:auto; } table { min-width:1200px; } thead th { font-size:16px; } }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <table>
+      <thead><tr><th class="idx">&#24207;&#21495;</th><th>&#26408;&#37324;&#28210;&#26579;&#22270;</th><th>&#25928;&#26524;A</th><th>&#25928;&#26524;B</th><th>&#32447;&#19978;&#32654;&#21270;&#25928;&#26524;</th></tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </main>
+
+  <div class="modal" id="modal">
+    <div class="modal-panel">
+      <div class="modal-bar">
+        <button class="bar-btn" id="fullscreenBtn" title="&#20840;&#23631;"><i data-lucide="maximize-2"></i></button>
+        <button class="bar-btn" id="closeBtn" title="&#20851;&#38381;"><i data-lucide="x"></i></button>
+      </div>
+      <div class="stage" id="stage">
+        <div class="stage-content" id="stageContent">
+          <img id="afterImg" alt="" />
+          <div class="before-wrap" id="beforeWrap"><img id="beforeImg" alt="" /></div>
+          <div class="handle" id="handle"><i data-lucide="chevrons-left-right" width="17" height="17"></i></div>
+          <span class="badge left" id="leftBadge"></span>
+          <span class="badge right" id="rightBadge"></span>
+          <input id="splitRange" type="range" min="0" max="100" value="50" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const columns = [
+      { key:'render', label:'\u6728\u91cc\u6e32\u67d3\u56fe' },
+      { key:'a', label:'\u6548\u679cA' },
+      { key:'b', label:'\u6548\u679cB' },
+      { key:'online', label:'\u7ebf\u4e0a\u7f8e\u5316\u6548\u679c' }
+    ];
+    const rows = (window.__MULI_SHOWCASE__?.rows || []).sort((a,b) => a.order - b.order);
+    const tbody = document.querySelector('#tbody');
+    const modal = document.querySelector('#modal');
+    const stage = document.querySelector('#stage');
+    const stageContent = document.querySelector('#stageContent');
+    const beforeWrap = document.querySelector('#beforeWrap');
+    const handle = document.querySelector('#handle');
+    const splitRange = document.querySelector('#splitRange');
+    const beforeImg = document.querySelector('#beforeImg');
+    const afterImg = document.querySelector('#afterImg');
+    const leftBadge = document.querySelector('#leftBadge');
+    const rightBadge = document.querySelector('#rightBadge');
+    const state = { row:null, pair:['render','a'], scale:1, x:0, y:0, max:8, dragging:false, splitDragging:false, sx:0, sy:0, ox:0, oy:0 };
+
+    function icon(name) { return `<i data-lucide="${name}" width="16" height="16"></i>`; }
+    function cell(row, col) {
+      const compare = col.key === 'render' ? 'render,a' : `render,${col.key}`;
+      const label = col.key === 'render' ? '\u6548\u679cA\u5bf9\u6bd4' : '\u6e32\u67d3\u56fe\u5bf9\u6bd4';
+      return `<td><div class="thumb"><img src="${row[col.key]}" alt="${col.label} ${row.order}" loading="lazy"><div class="actions"><button class="icon-btn" data-zoom="${row.order},${col.key}" title="\u653e\u5927\u67e5\u770b">${icon('search')}</button><button class="pill-btn" data-compare="${row.order},${compare}" title="${label}">${icon('scan-line')}${label}</button></div></div></td>`;
+    }
+    tbody.innerHTML = rows.map(row => `<tr><td class="idx">${row.order}</td>${columns.map(col => cell(row,col)).join('')}</tr>`).join('');
+    lucide.createIcons();
+
+    tbody.addEventListener('click', e => {
+      const zoom = e.target.closest('[data-zoom]');
+      const compare = e.target.closest('[data-compare]');
+      if (zoom) {
+        const [id, key] = zoom.dataset.zoom.split(',');
+        openModal(Number(id), ['render', key]);
+      }
+      if (compare) {
+        const [id, left, right] = compare.dataset.compare.split(',');
+        openModal(Number(id), [left, right]);
+      }
+    });
+    document.querySelector('#closeBtn').addEventListener('click', closeModal);
+    document.querySelector('#fullscreenBtn').addEventListener('click', () => document.querySelector('.modal-panel').requestFullscreen?.());
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+    splitRange.addEventListener('input', e => updateSplit(Number(e.target.value)));
+    stage.addEventListener('wheel', onWheel, { passive:false });
+    stage.addEventListener('pointerdown', onDown);
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', onUp);
+    window.addEventListener('pointercancel', onUp);
+
+    function openModal(id, pair) {
+      const row = rows.find(r => r.order === id);
+      if (!row) return;
+      state.row = row; state.pair = pair; state.scale = 1; state.x = 0; state.y = 0;
+      beforeImg.src = row[pair[0]]; afterImg.src = row[pair[1]];
+      leftBadge.textContent = columns.find(c => c.key === pair[0])?.label || pair[0];
+      rightBadge.textContent = columns.find(c => c.key === pair[1])?.label || pair[1];
+      modal.classList.add('open'); updateTransform(); updateSplit(50); lucide.createIcons();
+    }
+    function closeModal() { modal.classList.remove('open'); beforeImg.removeAttribute('src'); afterImg.removeAttribute('src'); }
+    function updateSplit(v) { splitRange.value = v; beforeWrap.style.width = `${v}%`; handle.style.left = `${v}%`; }
+    function updateTransform() { stageContent.style.transform = `translate(${state.x}px, ${state.y}px) scale(${state.scale})`; stage.classList.toggle('dragging', state.dragging); }
+    function clampPan() {
+      const rect = stage.getBoundingClientRect();
+      const maxX = Math.max(0, rect.width * (state.scale - 1));
+      const maxY = Math.max(0, rect.height * (state.scale - 1));
+      state.x = Math.min(0, Math.max(-maxX, state.x));
+      state.y = Math.min(0, Math.max(-maxY, state.y));
+    }
+    function onWheel(e) {
+      if (!modal.classList.contains('open')) return;
+      e.preventDefault();
+      const rect = stage.getBoundingClientRect();
+      const px = e.clientX - rect.left;
+      const py = e.clientY - rect.top;
+      const old = state.scale;
+      const next = Math.min(state.max, Math.max(1, old * Math.exp(-e.deltaY * 0.0015)));
+      if (next === old) return;
+      state.x = px - (px - state.x) * (next / old);
+      state.y = py - (py - state.y) * (next / old);
+      state.scale = next;
+      clampPan(); updateTransform();
+    }
+    function updateSplitFromPointer(e) {
+      const rect = stage.getBoundingClientRect();
+      updateSplit(Math.max(0, Math.min(100, ((e.clientX - rect.left - state.x) / (rect.width * state.scale)) * 100)));
+    }
+    function onDown(e) {
+      if (!modal.classList.contains('open') || e.button !== 0) return;
+      stage.setPointerCapture?.(e.pointerId);
+      const rect = stage.getBoundingClientRect();
+      const current = Number(splitRange.value) / 100 * rect.width * state.scale + state.x;
+      const local = e.clientX - rect.left;
+      state.splitDragging = Math.abs(local - current) < 34 || state.scale <= 1;
+      state.dragging = !state.splitDragging && state.scale > 1;
+      state.sx = e.clientX; state.sy = e.clientY; state.ox = state.x; state.oy = state.y;
+      if (state.splitDragging) updateSplitFromPointer(e);
+      updateTransform();
+    }
+    function onMove(e) {
+      if (state.splitDragging) { updateSplitFromPointer(e); return; }
+      if (!state.dragging) return;
+      state.x = state.ox + e.clientX - state.sx; state.y = state.oy + e.clientY - state.sy;
+      clampPan(); updateTransform();
+    }
+    function onUp() { state.dragging = false; state.splitDragging = false; updateTransform(); }
+  </script>
+</body>
+</html>
+
+
