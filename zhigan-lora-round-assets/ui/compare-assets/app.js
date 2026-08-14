@@ -89,6 +89,6 @@
   function closeModal() { app.querySelector(".modal").classList.remove("open"); singleState = null; }
   window.addEventListener("keydown", (event) => { if (!app.querySelector(".modal.open")) return; if (event.key === "Escape") closeModal(); if (singleState && event.key === "ArrowLeft") { event.preventDefault(); changeSingle(-1); } if (singleState && event.key === "ArrowRight") { event.preventDefault(); changeSingle(1); } });
 
-  fetch(window.REVIEW_MANIFEST).then((response) => response.json()).then((data) => { manifest = data; render(); })
+  fetch(window.REVIEW_MANIFEST, { cache: "no-store" }).then((response) => response.json()).then((data) => { manifest = data; render(); })
     .catch((error) => { app.innerHTML = `<div class="loading">页面加载失败：${esc(error.message)}</div>`; });
 })();

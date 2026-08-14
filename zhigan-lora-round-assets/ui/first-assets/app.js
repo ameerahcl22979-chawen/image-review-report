@@ -105,8 +105,8 @@
   });
 
   Promise.all([
-    fetch("./full/manifest.json").then((response) => response.json()),
-    fetch(window.REVIEW_MANIFEST).then((response) => response.json()),
+    fetch("./full/manifest.json?v=20260815-1", { cache: "no-store" }).then((response) => response.json()),
+    fetch(window.REVIEW_MANIFEST, { cache: "no-store" }).then((response) => response.json()),
   ]).then(([full, badcase]) => { manifests = { full, badcase }; render(); })
     .catch((error) => { app.innerHTML = `<div class="loading">页面加载失败：${esc(error.message)}</div>`; });
 })();
