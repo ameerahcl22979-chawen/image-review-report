@@ -22,8 +22,8 @@ window.REVIEW_MANIFEST_DATA = (() => {
       images: {
         ...placeholder,
         original: `./assets/original/${n}-original.jpg`,
-        workflow_a: `./assets/original-effect/${n}-original-effect.jpg`,
-        workflow_b: `./assets/test-effect/${n}-test-effect.jpg`
+        workflow_a: `./assets/original-effect-preview/${n}-original-effect.jpg`,
+        workflow_b: `./assets/test-effect-preview/${n}-test-effect.jpg`
       },
       thumbs: {
         ...placeholder,
