@@ -83,17 +83,44 @@
 
   function sceneById(id) { return manifest.scenes.find((scene) => scene.id === id); }
   function applyRatio(image, stage) { const update = () => { if (image.naturalHeight) stage.style.setProperty("--image-ratio", String(image.naturalWidth / image.naturalHeight)); }; image.onload = update; if (image.complete) update(); }
+  function loadImage(src) {
+    return new Promise((resolve, reject) => {
+      if (!src) { reject(new Error("missing src")); return; }
+      const image = new Image();
+      image.decoding = "async";
+      image.onload = () => resolve(image);
+      image.onerror = reject;
+      image.src = src;
+    });
+  }
+  function upgradeImage(imageEl, src, stage) {
+    if (!src || imageEl.src.endsWith(src)) return;
+    imageEl.dataset.loading = "true";
+    loadImage(src).then((image) => {
+      imageEl.src = src;
+      applyRatio(imageEl, stage);
+      imageEl.dataset.loading = "false";
+    }).catch(() => {
+      imageEl.dataset.loading = "false";
+    });
+  }
   function openCompare({ id, left, right, leftLabel, rightLabel }) {
     const scene = sceneById(id); const modal = app.querySelector(".modal"); const stage = modal.querySelector(".stage"); singleState = null;
     modal.classList.remove("single"); modal.querySelector(".modal-title strong").textContent = `${String(scene.number).padStart(2, "0")} · ${leftLabel} / ${rightLabel}`;
-    const before = modal.querySelector(".before"); const after = modal.querySelector(".after"); before.src = scene.images[left]; after.src = scene.images[right]; applyRatio(after, stage);
+    const before = modal.querySelector(".before"); const after = modal.querySelector(".after");
+    before.src = scene.thumbs?.[left] || scene.images[left];
+    after.src = scene.thumbs?.[right] || scene.images[right];
+    applyRatio(after, stage);
     modal.querySelector(".badge.left").textContent = leftLabel; modal.querySelector(".badge.right").textContent = rightLabel; stage.style.setProperty("--split", "50%"); modal.querySelector("input").value = 50; modal.classList.add("open");
+    upgradeImage(before, scene.images[left], stage);
+    upgradeImage(after, scene.images[right], stage);
   }
   function openSingle(id, key) { singleState = { id, index: Math.max(0, columns.findIndex(([columnKey]) => columnKey === key)) }; showSingle(); }
   function showSingle() {
     const { id, index } = singleState; const [key] = columns[index]; const scene = sceneById(id); const modal = app.querySelector(".modal"); const stage = modal.querySelector(".stage");
     modal.classList.add("single"); modal.querySelector(".modal-title strong").textContent = `${String(scene.number).padStart(2, "0")} · ${fullLabel(key)} · ${index + 1} / ${columns.length}`;
-    const after = modal.querySelector(".after"); after.src = scene.images[key]; applyRatio(after, stage); modal.classList.add("open");
+    const after = modal.querySelector(".after"); after.src = scene.thumbs?.[key] || scene.images[key]; applyRatio(after, stage); modal.classList.add("open");
+    upgradeImage(after, scene.images[key], stage);
   }
   function changeSingle(delta) { if (!singleState) return; singleState.index = (singleState.index + delta + columns.length) % columns.length; showSingle(); }
   function closeModal() { app.querySelector(".modal").classList.remove("open"); singleState = null; }

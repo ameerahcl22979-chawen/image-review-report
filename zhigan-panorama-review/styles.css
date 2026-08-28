@@ -15,6 +15,15 @@
 .single-next {
   right: 34px;
 }
+.stage img[data-loading="true"] {
+  filter: blur(4px);
+  transition: filter .18s ease;
+}
+.stage img[data-loading="false"],
+.stage img:not([data-loading]) {
+  filter: blur(0);
+  transition: filter .18s ease;
+}
 .thumb-actions { align-items: flex-end; flex-wrap: wrap; max-width: calc(100% - 12px); }
 .thumb-actions .preview-link,
 .thumb-actions button { flex: 0 0 auto; }
