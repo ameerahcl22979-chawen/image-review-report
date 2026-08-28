@@ -61,7 +61,7 @@
   }
 
   function row(scene) {
-    return `<div class="td index-cell"><span>${String(scene.number).padStart(2, "0")}</span></div>${columns.map(([key], index) => `<div class="td ${index === 1 ? "workflow-start" : ""}"><div class="thumb"><img src="${scene.thumbs?.[key] || scene.images[key]}" alt="${esc(scene.categoryName + " " + fullLabel(key))}" loading="lazy" decoding="async" data-single="${scene.id}" data-key="${key}" title="点击查看大图"/>${thumbActions(scene, key)}</div></div>`).join("")}`;
+    return `<div class="td index-cell"><span>${String(scene.number).padStart(2, "0")}</span></div>${columns.map(([key], index) => `<div class="td ${index === 1 ? "workflow-start" : ""}"><div class="thumb"><img src="${scene.thumbs?.[key] || scene.images[key]}" alt="${esc(scene.categoryName + " " + fullLabel(key))}" decoding="async" fetchpriority="high" data-single="${scene.id}" data-key="${key}" title="点击查看大图"/>${thumbActions(scene, key)}</div></div>`).join("")}`;
   }
 
   function modalMarkup() {
