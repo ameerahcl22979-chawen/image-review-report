@@ -74,6 +74,7 @@
     search.addEventListener("input", () => { query = search.value; render(); app.querySelector(".search").focus(); });
     app.querySelectorAll("[data-compare]").forEach((button) => button.addEventListener("click", () => openCompare({ id: button.dataset.compare, left: button.dataset.left, right: button.dataset.right, leftLabel: button.dataset.leftLabel, rightLabel: button.dataset.rightLabel })));
     app.querySelectorAll("[data-single]").forEach((image) => image.addEventListener("click", () => openSingle(image.dataset.single, image.dataset.key)));
+    app.querySelectorAll(".thumb img").forEach((image) => image.addEventListener("error", handleThumbError, { once: false }));
     app.querySelector(".single-prev").addEventListener("click", () => changeSingle(-1));
     app.querySelector(".single-next").addEventListener("click", () => changeSingle(1));
     app.querySelector(".modal-close").addEventListener("click", closeModal);
@@ -83,6 +84,20 @@
   }
 
   function sceneById(id) { return manifest.scenes.find((scene) => scene.id === id); }
+  function bustCache(src) {
+    const joiner = src.includes("?") ? "&" : "?";
+    return `${src}${joiner}r=${Date.now()}`;
+  }
+  function handleThumbError(event) {
+    const image = event.currentTarget;
+    if (image.dataset.retry === "1") {
+      image.dataset.loading = "false";
+      image.classList.add("thumb-failed");
+      return;
+    }
+    image.dataset.retry = "1";
+    image.src = bustCache(image.currentSrc || image.src);
+  }
   function applyRatio(image, stage) { const update = () => { if (image.naturalHeight) stage.style.setProperty("--image-ratio", String(image.naturalWidth / image.naturalHeight)); }; image.onload = update; if (image.complete) update(); }
   function loadImage(src) {
     return new Promise((resolve, reject) => {

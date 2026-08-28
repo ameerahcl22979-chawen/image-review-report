@@ -13,6 +13,9 @@
   height: auto;
   background: #f7f8fb;
 }
+.thumb img.thumb-failed {
+  opacity: .35;
+}
 .modal-panel {
   height: min(792px, calc(100vh - 36px));
 }
