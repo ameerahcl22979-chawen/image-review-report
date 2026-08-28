@@ -22,14 +22,14 @@ window.REVIEW_MANIFEST_DATA = (() => {
       images: {
         ...placeholder,
         original: `./assets/original/${n}-original.jpg`,
-        workflow_a: `./assets/original-effect/${n}-original-effect.png`,
-        workflow_b: `./assets/test-effect/${n}-test-effect.png`
+        workflow_a: `./assets/original-effect/${n}-original-effect.jpg`,
+        workflow_b: `./assets/test-effect/${n}-test-effect.jpg`
       },
       thumbs: {
         ...placeholder,
         original: `./assets/original/${n}-original.jpg`,
-        workflow_a: `./assets/original-effect/${n}-original-effect.png`,
-        workflow_b: `./assets/test-effect/${n}-test-effect.png`
+        workflow_a: `./assets/original-effect/${n}-original-effect.jpg`,
+        workflow_b: `./assets/test-effect/${n}-test-effect.jpg`
       }
     });
   }
