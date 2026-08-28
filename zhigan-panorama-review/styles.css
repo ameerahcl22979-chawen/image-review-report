@@ -66,6 +66,24 @@
   width: 240px;
 }
 @media (max-width: 900px) {
+  html, body {
+    overflow: auto;
+    height: auto;
+  }
+  .app {
+    height: auto;
+    min-height: 100vh;
+  }
+  .showcase {
+    overflow: visible;
+  }
+  .thumb {
+    min-height: 88px;
+  }
+  .thumb img {
+    min-height: 88px;
+    object-fit: cover;
+  }
   .panorama-grid { grid-template-columns: 42px repeat(3, minmax(0, 1fr)); }
   .topbar-tools {
     width: 100%;
