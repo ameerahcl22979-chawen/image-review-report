@@ -5,6 +5,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  flex-wrap: wrap;
 }
 
 .vote-stats {
@@ -92,6 +93,8 @@
 /* 分类分组 */
 .category-section {
   margin-bottom: 32px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .category-title {
@@ -106,6 +109,8 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  flex-wrap: wrap;
+  min-width: 900px;
 }
 
 .category-count {
@@ -128,6 +133,7 @@
 .vote-grid {
   grid-template-columns: 48px minmax(120px, 1fr) repeat(6, minmax(100px, 1fr)) 100px !important;
   gap: 0;
+  min-width: 900px;
 }
 
 /* 表头分组 */
@@ -335,5 +341,73 @@
   }
   .th-effect {
     font-size: 10px !important;
+  }
+}
+
+/* 手机屏幕优化 */
+@media (max-width: 768px) {
+  .topbar {
+    padding: 10px 12px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+  }
+  .brand h1 {
+    font-size: 15px !important;
+  }
+  .brand p {
+    font-size: 11px !important;
+  }
+  .vote-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .vote-stats {
+    font-size: 11px;
+  }
+  .export-btn, .clear-btn {
+    height: 30px;
+    font-size: 12px;
+    padding: 0 12px;
+  }
+  .shell {
+    padding: 10px 8px !important;
+  }
+  .vote-progress-bar {
+    height: 24px;
+  }
+  .vote-progress-text {
+    font-size: 11px;
+  }
+  .category-title {
+    font-size: 14px;
+    padding: 8px 10px;
+    min-width: 900px;
+  }
+  .category-count, .category-progress {
+    font-size: 11px;
+  }
+  .vote-grid {
+    min-width: 900px;
+  }
+  .th {
+    font-size: 10px !important;
+    padding: 4px !important;
+  }
+  .th-effect {
+    font-size: 9px !important;
+    min-height: 40px !important;
+  }
+  .vote-btn {
+    height: 22px;
+    font-size: 9px;
+    padding: 0 3px;
+  }
+  .batch-btn {
+    height: 24px;
+    font-size: 10px;
+  }
+  .td {
+    padding: 4px !important;
   }
 }
