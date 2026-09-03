@@ -1,36 +1,11 @@
 {
   "meta": {
-    "title": "专项测试投票评估",
-    "description": "对160组专项测试图片进行通过/不通过评估",
-    "sceneCount": 160,
-    "effectCount": 6,
-    "categories": [
-      {
-        "id": "full",
-        "name": "完整测试集",
-        "output": "00_完整测试集"
-      },
-      {
-        "id": "lighting",
-        "name": "光影合理性",
-        "output": "01_光影合理性"
-      },
-      {
-        "id": "material",
-        "name": "材质品类一致性",
-        "output": "02_材质品类一致性"
-      },
-      {
-        "id": "structure",
-        "name": "结构一致性",
-        "output": "03_结构一致性"
-      },
-      {
-        "id": "color",
-        "name": "颜色一致性",
-        "output": "04_颜色一致性"
-      }
-    ]
+    "title": "增强幅度与色调 · 七种效果横向对比",
+    "modelNote": "完整测试集100组 + Badcase专项160组 · 原色调/暖调/中性调 × 低强度/高强度",
+    "dataset": "all-effects",
+    "sceneCount": 260,
+    "imageCount": 1820,
+    "missingCount": 0
   },
   "categories": [
     {
