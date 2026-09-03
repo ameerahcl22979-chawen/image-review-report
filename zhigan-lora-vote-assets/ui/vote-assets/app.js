@@ -147,12 +147,12 @@
   }
 
   function tableHead() {
-    return `<div class="th th-index">序号</div>
-      <div class="th">原图</div>
+    return `<div class="th th-index th-rowspan2">序号</div>
+      <div class="th th-original th-rowspan2">原图</div>
       <div class="th group-low">低强度</div>
       <div class="th group-high">高强度</div>
-      ${effectColumns.map(([key, label, type]) => `<div class="th th-effect th-${type}">${label.replace("·", "<br>")}</div>`).join("")}
-      <div class="th th-batch">批量操作</div>`;
+      <div class="th th-batch th-rowspan2">批量操作</div>
+      ${effectColumns.map(([key, label, type]) => `<div class="th th-effect th-${type} th-row2">${label.replace("·", "<br>")}</div>`).join("")}`;
   }
 
   function row(scene) {
