@@ -24,18 +24,22 @@
       },
     };
   });
+  const batchSize = 20;
+  const preloaded = new Map();
 
   const app = document.querySelector("#app");
   let query = "";
   let singleState = null;
   let compareState = null;
   let interaction = null;
+  let rowObserver = null;
   const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (character) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;",
   })[character]);
 
   function render() {
     const rows = scenes.filter((scene) => !query || String(scene.number).padStart(3, "0").includes(query));
+    const visibleRows = rows.slice(0, batchSize);
     app.innerHTML = `<div class="app">
       <header class="topbar">
         <div class="brand"><h1>4K实时增强 · 批量效果测试</h1></div>
@@ -50,7 +54,8 @@
           <div class="table-grid">
             <div class="th th-index">序号</div>
             ${columns.map(([key, label]) => `<div class="th th-${key}">${escapeHtml(label)}</div>`).join("")}
-            ${rows.map(rowMarkup).join("")}
+            ${visibleRows.map(rowMarkup).join("")}
+            ${visibleRows.length < rows.length ? '<div class="load-sentinel" aria-hidden="true"></div>' : ''}
           </div>
         </section>
       </main>
@@ -87,8 +92,8 @@
       render();
       app.querySelector(".search").focus();
     });
-    app.querySelectorAll("[data-compare]").forEach((button) => button.addEventListener("click", () => openCompare(button.dataset)));
-    app.querySelectorAll("[data-single]").forEach((image) => image.addEventListener("click", () => openSingle(image.dataset.single, image.dataset.key)));
+    bindRows(app);
+    observeMoreRows();
     app.querySelector(".single-prev").addEventListener("click", () => changeSingle(-1));
     app.querySelector(".single-next").addEventListener("click", () => changeSingle(1));
     app.querySelector(".modal-close").addEventListener("click", closeModal);
@@ -98,9 +103,11 @@
     app.querySelector(".actual-size").addEventListener("click", () => {
       const stage = app.querySelector(".stage");
       const image = stage.querySelector(".after");
-      stage.dataset.zoom = Math.max(1, image.naturalWidth / stage.clientWidth);
-      stage.style.setProperty("--zoom", stage.dataset.zoom);
-      clampPan(stage);
+      if (image.dataset.fullReady !== "true") {
+        stage.dataset.pendingActual = "true";
+        return;
+      }
+      setActualSize(stage);
     });
     app.querySelector(".modal").addEventListener("click", (event) => {
       if (event.target.classList.contains("modal")) closeModal();
@@ -113,21 +120,116 @@
     stage.addEventListener("pointerdown", startInteraction);
   }
 
+  function filteredScenes() {
+    return scenes.filter((scene) => !query || String(scene.number).padStart(3, "0").includes(query));
+  }
+
+  function observeMoreRows() {
+    rowObserver?.disconnect();
+    const sentinel = app.querySelector(".load-sentinel");
+    if (!sentinel) return;
+    rowObserver = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) appendRows();
+    }, { root: app.querySelector(".showcase"), rootMargin: "900px 0px" });
+    rowObserver.observe(sentinel);
+  }
+
+  function appendRows() {
+    const sentinel = app.querySelector(".load-sentinel");
+    if (!sentinel) return;
+    const rows = filteredScenes();
+    const displayed = app.querySelectorAll(".index-cell").length;
+    const next = rows.slice(displayed, displayed + batchSize);
+    sentinel.insertAdjacentHTML("beforebegin", next.map(rowMarkup).join(""));
+    bindRows(app.querySelector(".table-grid"));
+    if (displayed + next.length >= rows.length) {
+      rowObserver?.disconnect();
+      sentinel.remove();
+    }
+  }
+
+  function preload(url) {
+    if (!preloaded.has(url)) {
+      const image = new Image();
+      image.decoding = "async";
+      image.src = url;
+      preloaded.set(url, image);
+    }
+    return preloaded.get(url);
+  }
+
+  function prefetchSingle(sceneId, key) {
+    const scene = findScene(sceneId);
+    if (scene) preload(scene.images[key]);
+  }
+
+  function bindRows(scope) {
+    scope.querySelectorAll("[data-compare]:not([data-bound])").forEach((button) => {
+      button.dataset.bound = "true";
+      const warm = () => {
+        prefetchSingle(button.dataset.compare, button.dataset.left);
+        prefetchSingle(button.dataset.compare, button.dataset.right);
+      };
+      button.addEventListener("pointerenter", warm, { once: true });
+      button.addEventListener("pointerdown", warm, { once: true });
+      button.addEventListener("click", () => openCompare(button.dataset));
+    });
+    scope.querySelectorAll("[data-single]:not([data-bound])").forEach((image) => {
+      image.dataset.bound = "true";
+      const warm = () => prefetchSingle(image.dataset.single, image.dataset.key);
+      image.addEventListener("pointerenter", warm, { once: true });
+      image.addEventListener("pointerdown", warm, { once: true });
+      image.addEventListener("click", () => openSingle(image.dataset.single, image.dataset.key));
+    });
+  }
+
   function findScene(id) { return scenes.find((scene) => scene.id === id); }
   function setRatio(image, stage) {
-    const update = () => {
-      if (image.naturalHeight) stage.style.setProperty("--image-ratio", image.naturalWidth / image.naturalHeight);
-    };
-    image.onload = update;
-    if (image.complete) update();
+    if (image.naturalHeight) stage.style.setProperty("--image-ratio", image.naturalWidth / image.naturalHeight);
   }
   function reset(stage) {
     stage.dataset.zoom = "1";
     stage.dataset.panX = "0";
     stage.dataset.panY = "0";
+    stage.dataset.pendingActual = "false";
     stage.style.setProperty("--zoom", 1);
     stage.style.setProperty("--pan-x", "0px");
     stage.style.setProperty("--pan-y", "0px");
+  }
+  function loadProgressive(target, thumb, full, stage, token) {
+    target.onload = null;
+    target.dataset.fullReady = "false";
+    target.src = thumb;
+    const source = preload(full);
+    const ready = source.complete && source.naturalWidth
+      ? Promise.resolve()
+      : new Promise((resolve, reject) => {
+          source.addEventListener("load", resolve, { once: true });
+          source.addEventListener("error", reject, { once: true });
+        });
+    ready.then(() => source.decode?.().catch(() => {})).then(() => {
+      if (stage.dataset.loadToken !== token) return;
+      let swapped = false;
+      const finishSwap = () => {
+        if (swapped || stage.dataset.loadToken !== token) return;
+        swapped = true;
+        target.dataset.fullReady = "true";
+        if (target.classList.contains("after")) setRatio(target, stage);
+        if (target.classList.contains("after") && stage.dataset.pendingActual === "true") {
+          stage.dataset.pendingActual = "false";
+          setActualSize(stage);
+        }
+      };
+      target.onload = finishSwap;
+      target.src = full;
+      if (target.complete && target.naturalWidth) finishSwap();
+    }).catch(() => {});
+  }
+  function setActualSize(stage) {
+    const image = stage.querySelector(".after");
+    stage.dataset.zoom = Math.max(1, image.naturalWidth / stage.clientWidth);
+    stage.style.setProperty("--zoom", stage.dataset.zoom);
+    clampPan(stage);
   }
   function openCompare(data) {
     compareState = { ...data };
@@ -137,10 +239,11 @@
     singleState = null;
     modal.classList.remove("single");
     modal.querySelector(".modal-title").textContent = `${String(scene.number).padStart(3, "0")} · ${data.leftLabel} / ${data.rightLabel}`;
-    modal.querySelector(".before").src = scene.images[data.left];
-    modal.querySelector(".after").src = scene.images[data.right];
+    const token = `${scene.id}-${data.left}-${data.right}-${Date.now()}`;
+    stage.dataset.loadToken = token;
+    loadProgressive(modal.querySelector(".before"), scene.thumbs[data.left], scene.images[data.left], stage, token);
+    loadProgressive(modal.querySelector(".after"), scene.thumbs[data.right], scene.images[data.right], stage, token);
     modal.querySelector(".source-link").href = scene.images[data.right];
-    setRatio(modal.querySelector(".after"), stage);
     modal.querySelector(".badge.left").textContent = data.leftLabel;
     modal.querySelector(".badge.right").textContent = data.rightLabel;
     stage.style.setProperty("--split", "50%");
@@ -162,9 +265,10 @@
     modal.classList.add("single");
     modal.querySelector(".modal-title").textContent = `${String(scene.number).padStart(3, "0")} · ${label} · ${index + 1}/${columns.length}`;
     const image = modal.querySelector(".after");
-    image.src = scene.images[key];
+    const token = `${scene.id}-${key}-${Date.now()}`;
+    stage.dataset.loadToken = token;
+    loadProgressive(image, scene.thumbs[key], scene.images[key], stage, token);
     modal.querySelector(".source-link").href = scene.images[key];
-    setRatio(image, stage);
     reset(stage);
     modal.classList.add("open");
   }
