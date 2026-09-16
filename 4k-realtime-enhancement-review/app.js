@@ -94,6 +94,10 @@
     });
     bindRows(app);
     observeMoreRows();
+    const showcase = app.querySelector(".showcase");
+    showcase.addEventListener("scroll", () => {
+      if (showcase.scrollTop + showcase.clientHeight >= showcase.scrollHeight - 900) appendRows();
+    }, { passive: true });
     app.querySelector(".single-prev").addEventListener("click", () => changeSingle(-1));
     app.querySelector(".single-next").addEventListener("click", () => changeSingle(1));
     app.querySelector(".modal-close").addEventListener("click", closeModal);
