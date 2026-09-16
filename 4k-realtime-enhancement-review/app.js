@@ -11,16 +11,16 @@
       id: `scene-${String(number).padStart(3, "0")}`,
       number,
       images: {
-        original: `./assets/original/${file}?v=20260916-online-opt`,
-        effect1: `./assets/effect1/${file}?v=20260916-online-opt`,
-        effect2: `./assets/effect2/${file}?v=20260916-online-opt`,
-        reference2k: `./assets/reference2k/${file}?v=20260916-online-opt`,
+        original: `./assets/original/${file}?v=20260916-original-assets`,
+        effect1: `./assets/effect1/${file}?v=20260916-original-assets`,
+        effect2: `./assets/effect2/${file}?v=20260916-original-assets`,
+        reference2k: `./assets/reference2k/${file}?v=20260916-original-assets`,
       },
       thumbs: {
-        original: `./assets/thumbs/original/${file}?v=20260916-online-opt`,
-        effect1: `./assets/thumbs/effect1/${file}?v=20260916-online-opt`,
-        effect2: `./assets/thumbs/effect2/${file}?v=20260916-online-opt`,
-        reference2k: `./assets/thumbs/reference2k/${file}?v=20260916-online-opt`,
+        original: `./assets/thumbs/original/${file}?v=20260916-original-assets`,
+        effect1: `./assets/thumbs/effect1/${file}?v=20260916-original-assets`,
+        effect2: `./assets/thumbs/effect2/${file}?v=20260916-original-assets`,
+        reference2k: `./assets/thumbs/reference2k/${file}?v=20260916-original-assets`,
       },
     };
   });
