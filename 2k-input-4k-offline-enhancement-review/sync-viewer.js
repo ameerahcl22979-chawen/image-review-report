@@ -1,6 +1,6 @@
 (() => {
-  const labels = ["原图", "2K工作流效果", "4K工作流效果"];
-  const keys = ["original", "low2k", "effect4k"];
+  const labels = ["原图", "2K工作流效果", "4K工作流效果（0915）", "4K工作流效果（0923）"];
+  const keys = ["original", "low2k", "effect4k", "effect4k0923"];
   let dialog, group = 1, zoom = 1, centerX = .5, centerY = .5, drag = null, opener = null;
   const sources = new Map();
 
@@ -10,7 +10,7 @@
     dialog.setAttribute("role", "dialog");
     dialog.setAttribute("aria-modal", "true");
     dialog.setAttribute("aria-label", "细节对比");
-    dialog.innerHTML = `<div class="sync-panel"><div class="sync-header"><strong class="sync-title"></strong><div class="sync-controls"><button type="button" data-action="prev" title="上一组" aria-label="上一组">‹</button><button type="button" data-action="next" title="下一组" aria-label="下一组">›</button><button type="button" data-action="out" title="缩小" aria-label="缩小">−</button><button type="button" data-action="actual" title="4K结果原尺寸，三图保持同一视野">1:1</button><button type="button" data-action="in" title="放大" aria-label="放大">+</button><button type="button" data-action="fit" title="适应窗口">适应</button><span class="sync-readout">100%</span></div><button type="button" class="sync-close" data-action="close" title="关闭" aria-label="关闭">×</button></div><div class="sync-grid">${keys.map((key, i) => `<figure class="sync-column"><figcaption>${labels[i]}</figcaption><div class="sync-viewport" data-key="${key}"><img alt="${labels[i]}" draggable="false"></div></figure>`).join("")}</div></div>`;
+    dialog.innerHTML = `<div class="sync-panel"><div class="sync-header"><strong class="sync-title"></strong><div class="sync-controls"><button type="button" data-action="prev" title="上一组" aria-label="上一组">‹</button><button type="button" data-action="next" title="下一组" aria-label="下一组">›</button><button type="button" data-action="out" title="缩小" aria-label="缩小">−</button><button type="button" data-action="actual" title="0923结果原尺寸，四图保持同一视野">1:1</button><button type="button" data-action="in" title="放大" aria-label="放大">+</button><button type="button" data-action="fit" title="适应窗口">适应</button><span class="sync-readout">100%</span></div><button type="button" class="sync-close" data-action="close" title="关闭" aria-label="关闭">×</button></div><div class="sync-grid">${keys.map((key, i) => `<figure class="sync-column"><figcaption>${labels[i]}</figcaption><div class="sync-viewport" data-key="${key}"><img alt="${labels[i]}" draggable="false"></div></figure>`).join("")}</div></div>`;
     document.body.append(dialog);
     dialog.addEventListener("click", event => {
       if (event.target === dialog) { close(); return; }
@@ -102,7 +102,7 @@
 
   function reset() { zoom = 1; centerX = centerY = .5; renderTransform(); }
   function actualSize() {
-    const view = dialog.querySelector('[data-key="effect4k"]');
+    const view = dialog.querySelector('[data-key="effect4k0923"]');
     const img = view.querySelector("img");
     if (img.naturalWidth) setZoom(img.naturalWidth / fittedSize(view).width);
   }
@@ -137,17 +137,17 @@
   }
 
   document.addEventListener("click", event => {
-    const button = event.target.closest("[data-triple]");
+    const button = event.target.closest("[data-sync]");
     if (!button) return;
     event.stopPropagation();
     if (!dialog) init();
     opener = button;
-    group = Number(button.dataset.triple.replace("scene-", ""));
-    sources.set(group, { original: button.dataset.original, low2k: button.dataset.low2k, effect4k: button.dataset.effect4k });
+    group = Number(button.dataset.sync.replace("scene-", ""));
+    sources.set(group, { original: button.dataset.original, low2k: button.dataset.low2k, effect4k: button.dataset.effect4k, effect4k0923: button.dataset.effect4k0923 });
     // Populate neighboring groups even when the list is currently filtered.
-    document.querySelectorAll("[data-triple]").forEach(item => {
-      const number = Number(item.dataset.triple.replace("scene-", ""));
-      sources.set(number, { original: item.dataset.original, low2k: item.dataset.low2k, effect4k: item.dataset.effect4k });
+    document.querySelectorAll("[data-sync]").forEach(item => {
+      const number = Number(item.dataset.sync.replace("scene-", ""));
+      sources.set(number, { original: item.dataset.original, low2k: item.dataset.low2k, effect4k: item.dataset.effect4k, effect4k0923: item.dataset.effect4k0923 });
     });
     dialog.classList.add("open");
     document.body.classList.add("sync-open");
