@@ -1,0 +1,565 @@
+{
+  "source_page": "C:\\Users\\admin\\Downloads\\20260915-离线4K效果100组\\02_本地对比网页",
+  "scenes": [
+    {
+      "id": "scene-001",
+      "number": 1,
+      "images": {
+        "original": "./assets/original/001.jpg",
+        "aiBeauty": "./assets/low2k/001.jpg",
+        "f3": "./assets/effect4k/001.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/001.jpg",
+        "aiBeauty": "./thumbs/low2k/001.jpg",
+        "f3": "./thumbs/effect4k/001.jpg"
+      }
+    },
+    {
+      "id": "scene-002",
+      "number": 2,
+      "images": {
+        "original": "./assets/original/002.jpg",
+        "aiBeauty": "./assets/low2k/002.jpg",
+        "f3": "./assets/effect4k/002.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/002.jpg",
+        "aiBeauty": "./thumbs/low2k/002.jpg",
+        "f3": "./thumbs/effect4k/002.jpg"
+      }
+    },
+    {
+      "id": "scene-003",
+      "number": 3,
+      "images": {
+        "original": "./assets/original/003.jpg",
+        "aiBeauty": "./assets/low2k/003.jpg",
+        "f3": "./assets/effect4k/003.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/003.jpg",
+        "aiBeauty": "./thumbs/low2k/003.jpg",
+        "f3": "./thumbs/effect4k/003.jpg"
+      }
+    },
+    {
+      "id": "scene-004",
+      "number": 4,
+      "images": {
+        "original": "./assets/original/004.jpg",
+        "aiBeauty": "./assets/low2k/004.jpg",
+        "f3": "./assets/effect4k/004.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/004.jpg",
+        "aiBeauty": "./thumbs/low2k/004.jpg",
+        "f3": "./thumbs/effect4k/004.jpg"
+      }
+    },
+    {
+      "id": "scene-005",
+      "number": 5,
+      "images": {
+        "original": "./assets/original/005.jpg",
+        "aiBeauty": "./assets/low2k/005.jpg",
+        "f3": "./assets/effect4k/005.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/005.jpg",
+        "aiBeauty": "./thumbs/low2k/005.jpg",
+        "f3": "./thumbs/effect4k/005.jpg"
+      }
+    },
+    {
+      "id": "scene-006",
+      "number": 6,
+      "images": {
+        "original": "./assets/original/006.jpg",
+        "aiBeauty": "./assets/low2k/006.jpg",
+        "f3": "./assets/effect4k/006.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/006.jpg",
+        "aiBeauty": "./thumbs/low2k/006.jpg",
+        "f3": "./thumbs/effect4k/006.jpg"
+      }
+    },
+    {
+      "id": "scene-007",
+      "number": 7,
+      "images": {
+        "original": "./assets/original/007.jpg",
+        "aiBeauty": "./assets/low2k/007.jpg",
+        "f3": "./assets/effect4k/007.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/007.jpg",
+        "aiBeauty": "./thumbs/low2k/007.jpg",
+        "f3": "./thumbs/effect4k/007.jpg"
+      }
+    },
+    {
+      "id": "scene-008",
+      "number": 8,
+      "images": {
+        "original": "./assets/original/008.jpg",
+        "aiBeauty": "./assets/low2k/008.jpg",
+        "f3": "./assets/effect4k/008.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/008.jpg",
+        "aiBeauty": "./thumbs/low2k/008.jpg",
+        "f3": "./thumbs/effect4k/008.jpg"
+      }
+    },
+    {
+      "id": "scene-009",
+      "number": 9,
+      "images": {
+        "original": "./assets/original/009.jpg",
+        "aiBeauty": "./assets/low2k/009.jpg",
+        "f3": "./assets/effect4k/009.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/009.jpg",
+        "aiBeauty": "./thumbs/low2k/009.jpg",
+        "f3": "./thumbs/effect4k/009.jpg"
+      }
+    },
+    {
+      "id": "scene-010",
+      "number": 10,
+      "images": {
+        "original": "./assets/original/010.jpg",
+        "aiBeauty": "./assets/low2k/010.jpg",
+        "f3": "./assets/effect4k/010.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/010.jpg",
+        "aiBeauty": "./thumbs/low2k/010.jpg",
+        "f3": "./thumbs/effect4k/010.jpg"
+      }
+    },
+    {
+      "id": "scene-011",
+      "number": 11,
+      "images": {
+        "original": "./assets/original/011.jpg",
+        "aiBeauty": "./assets/low2k/011.jpg",
+        "f3": "./assets/effect4k/011.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/011.jpg",
+        "aiBeauty": "./thumbs/low2k/011.jpg",
+        "f3": "./thumbs/effect4k/011.jpg"
+      }
+    },
+    {
+      "id": "scene-012",
+      "number": 12,
+      "images": {
+        "original": "./assets/original/012.jpg",
+        "aiBeauty": "./assets/low2k/012.jpg",
+        "f3": "./assets/effect4k/012.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/012.jpg",
+        "aiBeauty": "./thumbs/low2k/012.jpg",
+        "f3": "./thumbs/effect4k/012.jpg"
+      }
+    },
+    {
+      "id": "scene-013",
+      "number": 13,
+      "images": {
+        "original": "./assets/original/013.jpg",
+        "aiBeauty": "./assets/low2k/013.jpg",
+        "f3": "./assets/effect4k/013.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/013.jpg",
+        "aiBeauty": "./thumbs/low2k/013.jpg",
+        "f3": "./thumbs/effect4k/013.jpg"
+      }
+    },
+    {
+      "id": "scene-014",
+      "number": 14,
+      "images": {
+        "original": "./assets/original/014.jpg",
+        "aiBeauty": "./assets/low2k/014.jpg",
+        "f3": "./assets/effect4k/014.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/014.jpg",
+        "aiBeauty": "./thumbs/low2k/014.jpg",
+        "f3": "./thumbs/effect4k/014.jpg"
+      }
+    },
+    {
+      "id": "scene-015",
+      "number": 15,
+      "images": {
+        "original": "./assets/original/015.jpg",
+        "aiBeauty": "./assets/low2k/015.jpg",
+        "f3": "./assets/effect4k/015.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/015.jpg",
+        "aiBeauty": "./thumbs/low2k/015.jpg",
+        "f3": "./thumbs/effect4k/015.jpg"
+      }
+    },
+    {
+      "id": "scene-016",
+      "number": 16,
+      "images": {
+        "original": "./assets/original/016.jpg",
+        "aiBeauty": "./assets/low2k/016.jpg",
+        "f3": "./assets/effect4k/016.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/016.jpg",
+        "aiBeauty": "./thumbs/low2k/016.jpg",
+        "f3": "./thumbs/effect4k/016.jpg"
+      }
+    },
+    {
+      "id": "scene-017",
+      "number": 17,
+      "images": {
+        "original": "./assets/original/017.jpg",
+        "aiBeauty": "./assets/low2k/017.jpg",
+        "f3": "./assets/effect4k/017.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/017.jpg",
+        "aiBeauty": "./thumbs/low2k/017.jpg",
+        "f3": "./thumbs/effect4k/017.jpg"
+      }
+    },
+    {
+      "id": "scene-018",
+      "number": 18,
+      "images": {
+        "original": "./assets/original/018.jpg",
+        "aiBeauty": "./assets/low2k/018.jpg",
+        "f3": "./assets/effect4k/018.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/018.jpg",
+        "aiBeauty": "./thumbs/low2k/018.jpg",
+        "f3": "./thumbs/effect4k/018.jpg"
+      }
+    },
+    {
+      "id": "scene-019",
+      "number": 19,
+      "images": {
+        "original": "./assets/original/019.jpg",
+        "aiBeauty": "./assets/low2k/019.jpg",
+        "f3": "./assets/effect4k/019.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/019.jpg",
+        "aiBeauty": "./thumbs/low2k/019.jpg",
+        "f3": "./thumbs/effect4k/019.jpg"
+      }
+    },
+    {
+      "id": "scene-020",
+      "number": 20,
+      "images": {
+        "original": "./assets/original/020.jpg",
+        "aiBeauty": "./assets/low2k/020.jpg",
+        "f3": "./assets/effect4k/020.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/020.jpg",
+        "aiBeauty": "./thumbs/low2k/020.jpg",
+        "f3": "./thumbs/effect4k/020.jpg"
+      }
+    },
+    {
+      "id": "scene-021",
+      "number": 21,
+      "images": {
+        "original": "./assets/original/021.jpg",
+        "aiBeauty": "./assets/low2k/021.jpg",
+        "f3": "./assets/effect4k/021.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/021.jpg",
+        "aiBeauty": "./thumbs/low2k/021.jpg",
+        "f3": "./thumbs/effect4k/021.jpg"
+      }
+    },
+    {
+      "id": "scene-022",
+      "number": 22,
+      "images": {
+        "original": "./assets/original/022.jpg",
+        "aiBeauty": "./assets/low2k/022.jpg",
+        "f3": "./assets/effect4k/022.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/022.jpg",
+        "aiBeauty": "./thumbs/low2k/022.jpg",
+        "f3": "./thumbs/effect4k/022.jpg"
+      }
+    },
+    {
+      "id": "scene-023",
+      "number": 23,
+      "images": {
+        "original": "./assets/original/023.jpg",
+        "aiBeauty": "./assets/low2k/023.jpg",
+        "f3": "./assets/effect4k/023.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/023.jpg",
+        "aiBeauty": "./thumbs/low2k/023.jpg",
+        "f3": "./thumbs/effect4k/023.jpg"
+      }
+    },
+    {
+      "id": "scene-024",
+      "number": 24,
+      "images": {
+        "original": "./assets/original/024.jpg",
+        "aiBeauty": "./assets/low2k/024.jpg",
+        "f3": "./assets/effect4k/024.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/024.jpg",
+        "aiBeauty": "./thumbs/low2k/024.jpg",
+        "f3": "./thumbs/effect4k/024.jpg"
+      }
+    },
+    {
+      "id": "scene-025",
+      "number": 25,
+      "images": {
+        "original": "./assets/original/025.jpg",
+        "aiBeauty": "./assets/low2k/025.jpg",
+        "f3": "./assets/effect4k/025.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/025.jpg",
+        "aiBeauty": "./thumbs/low2k/025.jpg",
+        "f3": "./thumbs/effect4k/025.jpg"
+      }
+    },
+    {
+      "id": "scene-026",
+      "number": 26,
+      "images": {
+        "original": "./assets/original/026.jpg",
+        "aiBeauty": "./assets/low2k/026.jpg",
+        "f3": "./assets/effect4k/026.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/026.jpg",
+        "aiBeauty": "./thumbs/low2k/026.jpg",
+        "f3": "./thumbs/effect4k/026.jpg"
+      }
+    },
+    {
+      "id": "scene-027",
+      "number": 27,
+      "images": {
+        "original": "./assets/original/027.jpg",
+        "aiBeauty": "./assets/low2k/027.jpg",
+        "f3": "./assets/effect4k/027.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/027.jpg",
+        "aiBeauty": "./thumbs/low2k/027.jpg",
+        "f3": "./thumbs/effect4k/027.jpg"
+      }
+    },
+    {
+      "id": "scene-028",
+      "number": 28,
+      "images": {
+        "original": "./assets/original/028.jpg",
+        "aiBeauty": "./assets/low2k/028.jpg",
+        "f3": "./assets/effect4k/028.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/028.jpg",
+        "aiBeauty": "./thumbs/low2k/028.jpg",
+        "f3": "./thumbs/effect4k/028.jpg"
+      }
+    },
+    {
+      "id": "scene-029",
+      "number": 29,
+      "images": {
+        "original": "./assets/original/029.jpg",
+        "aiBeauty": "./assets/low2k/029.jpg",
+        "f3": "./assets/effect4k/029.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/029.jpg",
+        "aiBeauty": "./thumbs/low2k/029.jpg",
+        "f3": "./thumbs/effect4k/029.jpg"
+      }
+    },
+    {
+      "id": "scene-030",
+      "number": 30,
+      "images": {
+        "original": "./assets/original/030.jpg",
+        "aiBeauty": "./assets/low2k/030.jpg",
+        "f3": "./assets/effect4k/030.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/030.jpg",
+        "aiBeauty": "./thumbs/low2k/030.jpg",
+        "f3": "./thumbs/effect4k/030.jpg"
+      }
+    },
+    {
+      "id": "scene-031",
+      "number": 31,
+      "images": {
+        "original": "./assets/original/031.jpg",
+        "aiBeauty": "./assets/low2k/031.jpg",
+        "f3": "./assets/effect4k/031.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/031.jpg",
+        "aiBeauty": "./thumbs/low2k/031.jpg",
+        "f3": "./thumbs/effect4k/031.jpg"
+      }
+    },
+    {
+      "id": "scene-032",
+      "number": 32,
+      "images": {
+        "original": "./assets/original/032.jpg",
+        "aiBeauty": "./assets/low2k/032.jpg",
+        "f3": "./assets/effect4k/032.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/032.jpg",
+        "aiBeauty": "./thumbs/low2k/032.jpg",
+        "f3": "./thumbs/effect4k/032.jpg"
+      }
+    },
+    {
+      "id": "scene-033",
+      "number": 33,
+      "images": {
+        "original": "./assets/original/033.jpg",
+        "aiBeauty": "./assets/low2k/033.jpg",
+        "f3": "./assets/effect4k/033.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/033.jpg",
+        "aiBeauty": "./thumbs/low2k/033.jpg",
+        "f3": "./thumbs/effect4k/033.jpg"
+      }
+    },
+    {
+      "id": "scene-034",
+      "number": 34,
+      "images": {
+        "original": "./assets/original/034.jpg",
+        "aiBeauty": "./assets/low2k/034.jpg",
+        "f3": "./assets/effect4k/034.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/034.jpg",
+        "aiBeauty": "./thumbs/low2k/034.jpg",
+        "f3": "./thumbs/effect4k/034.jpg"
+      }
+    },
+    {
+      "id": "scene-035",
+      "number": 35,
+      "images": {
+        "original": "./assets/original/035.jpg",
+        "aiBeauty": "./assets/low2k/035.jpg",
+        "f3": "./assets/effect4k/035.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/035.jpg",
+        "aiBeauty": "./thumbs/low2k/035.jpg",
+        "f3": "./thumbs/effect4k/035.jpg"
+      }
+    },
+    {
+      "id": "scene-036",
+      "number": 36,
+      "images": {
+        "original": "./assets/original/036.jpg",
+        "aiBeauty": "./assets/low2k/036.jpg",
+        "f3": "./assets/effect4k/036.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/036.jpg",
+        "aiBeauty": "./thumbs/low2k/036.jpg",
+        "f3": "./thumbs/effect4k/036.jpg"
+      }
+    },
+    {
+      "id": "scene-037",
+      "number": 37,
+      "images": {
+        "original": "./assets/original/037.jpg",
+        "aiBeauty": "./assets/low2k/037.jpg",
+        "f3": "./assets/effect4k/037.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/037.jpg",
+        "aiBeauty": "./thumbs/low2k/037.jpg",
+        "f3": "./thumbs/effect4k/037.jpg"
+      }
+    },
+    {
+      "id": "scene-038",
+      "number": 38,
+      "images": {
+        "original": "./assets/original/038.jpg",
+        "aiBeauty": "./assets/low2k/038.jpg",
+        "f3": "./assets/effect4k/038.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/038.jpg",
+        "aiBeauty": "./thumbs/low2k/038.jpg",
+        "f3": "./thumbs/effect4k/038.jpg"
+      }
+    },
+    {
+      "id": "scene-039",
+      "number": 39,
+      "images": {
+        "original": "./assets/original/039.jpg",
+        "aiBeauty": "./assets/low2k/039.jpg",
+        "f3": "./assets/effect4k/039.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/039.jpg",
+        "aiBeauty": "./thumbs/low2k/039.jpg",
+        "f3": "./thumbs/effect4k/039.jpg"
+      }
+    },
+    {
+      "id": "scene-040",
+      "number": 40,
+      "images": {
+        "original": "./assets/original/040.jpg",
+        "aiBeauty": "./assets/low2k/040.jpg",
+        "f3": "./assets/effect4k/040.jpg"
+      },
+      "thumbs": {
+        "original": "./thumbs/original/040.jpg",
+        "aiBeauty": "./thumbs/low2k/040.jpg",
+        "f3": "./thumbs/effect4k/040.jpg"
+      }
+    }
+  ]
+}
