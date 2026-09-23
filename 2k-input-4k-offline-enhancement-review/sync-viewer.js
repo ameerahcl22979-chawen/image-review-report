@@ -1,5 +1,5 @@
 (() => {
-  const labels = ["原图（离线2K）", "2K工作流效果", "4K工作流效果"];
+  const labels = ["原图", "2K工作流效果", "4K工作流效果"];
   const keys = ["original", "low2k", "effect4k"];
   let dialog, group = 1, zoom = 1, centerX = .5, centerY = .5, drag = null, opener = null;
   const sources = new Map();
@@ -115,16 +115,20 @@
     sources.set(number, result);
     return result;
   }
+  function totalGroups() {
+    const match = document.querySelector(".summary")?.textContent.match(/\/\s*(\d+)/);
+    return Number(match?.[1]) || Math.max(group, ...sources.keys());
+  }
   function showGroup() {
     const item = sourceFor(group);
     if (!item) return;
     dialog.querySelector(".sync-title").textContent = `第 ${String(group).padStart(2, "0")} 组 · 细节对比`;
     keys.forEach(key => { dialog.querySelector(`[data-key="${key}"] img`).src = item[key]; });
     dialog.querySelector('[data-action="prev"]').disabled = group <= 1;
-    dialog.querySelector('[data-action="next"]').disabled = group >= 40;
+    dialog.querySelector('[data-action="next"]').disabled = group >= totalGroups();
     reset();
   }
-  function changeGroup(delta) { group = Math.max(1, Math.min(40, group + delta)); showGroup(); }
+  function changeGroup(delta) { group = Math.max(1, Math.min(totalGroups(), group + delta)); showGroup(); }
   function close() {
     dialog.classList.remove("open");
     document.body.classList.remove("sync-open");
