@@ -566,12 +566,12 @@
       "number": 41,
       "images": {
         "original": "./assets/original/041.jpg",
-        "aiBeauty": "./assets/low2k/041.jpg",
+        "aiBeauty": "./assets/low2k/041.jpg?v=corrected-0923",
         "f3": "./assets/effect4k/041.jpg"
       },
       "thumbs": {
         "original": "./thumbs/original/041.jpg",
-        "aiBeauty": "./thumbs/low2k/041.jpg",
+        "aiBeauty": "./thumbs/low2k/041.jpg?v=corrected-0923",
         "f3": "./thumbs/effect4k/041.jpg"
       }
     },
@@ -580,12 +580,12 @@
       "number": 42,
       "images": {
         "original": "./assets/original/042.jpg",
-        "aiBeauty": "./assets/low2k/042.jpg",
+        "aiBeauty": "./assets/low2k/042.jpg?v=corrected-0923",
         "f3": "./assets/effect4k/042.jpg"
       },
       "thumbs": {
         "original": "./thumbs/original/042.jpg",
-        "aiBeauty": "./thumbs/low2k/042.jpg",
+        "aiBeauty": "./thumbs/low2k/042.jpg?v=corrected-0923",
         "f3": "./thumbs/effect4k/042.jpg"
       }
     },
@@ -594,12 +594,12 @@
       "number": 43,
       "images": {
         "original": "./assets/original/043.jpg",
-        "aiBeauty": "./assets/low2k/043.jpg",
+        "aiBeauty": "./assets/low2k/043.jpg?v=corrected-0923",
         "f3": "./assets/effect4k/043.jpg"
       },
       "thumbs": {
         "original": "./thumbs/original/043.jpg",
-        "aiBeauty": "./thumbs/low2k/043.jpg",
+        "aiBeauty": "./thumbs/low2k/043.jpg?v=corrected-0923",
         "f3": "./thumbs/effect4k/043.jpg"
       }
     },
@@ -608,12 +608,12 @@
       "number": 44,
       "images": {
         "original": "./assets/original/044.jpg",
-        "aiBeauty": "./assets/low2k/044.jpg",
+        "aiBeauty": "./assets/low2k/044.jpg?v=corrected-0923",
         "f3": "./assets/effect4k/044.jpg"
       },
       "thumbs": {
         "original": "./thumbs/original/044.jpg",
-        "aiBeauty": "./thumbs/low2k/044.jpg",
+        "aiBeauty": "./thumbs/low2k/044.jpg?v=corrected-0923",
         "f3": "./thumbs/effect4k/044.jpg"
       }
     },
@@ -622,12 +622,12 @@
       "number": 45,
       "images": {
         "original": "./assets/original/045.jpg",
-        "aiBeauty": "./assets/low2k/045.jpg",
+        "aiBeauty": "./assets/low2k/045.jpg?v=corrected-0923",
         "f3": "./assets/effect4k/045.jpg"
       },
       "thumbs": {
         "original": "./thumbs/original/045.jpg",
-        "aiBeauty": "./thumbs/low2k/045.jpg",
+        "aiBeauty": "./thumbs/low2k/045.jpg?v=corrected-0923",
         "f3": "./thumbs/effect4k/045.jpg"
       }
     },
@@ -636,12 +636,12 @@
       "number": 46,
       "images": {
         "original": "./assets/original/046.jpg",
-        "aiBeauty": "./assets/low2k/046.jpg",
+        "aiBeauty": "./assets/low2k/046.jpg?v=corrected-0923",
         "f3": "./assets/effect4k/046.jpg"
       },
       "thumbs": {
         "original": "./thumbs/original/046.jpg",
-        "aiBeauty": "./thumbs/low2k/046.jpg",
+        "aiBeauty": "./thumbs/low2k/046.jpg?v=corrected-0923",
         "f3": "./thumbs/effect4k/046.jpg"
       }
     },
@@ -650,12 +650,12 @@
       "number": 47,
       "images": {
         "original": "./assets/original/047.jpg",
-        "aiBeauty": "./assets/low2k/047.jpg",
+        "aiBeauty": "./assets/low2k/047.jpg?v=corrected-0923",
         "f3": "./assets/effect4k/047.jpg"
       },
       "thumbs": {
         "original": "./thumbs/original/047.jpg",
-        "aiBeauty": "./thumbs/low2k/047.jpg",
+        "aiBeauty": "./thumbs/low2k/047.jpg?v=corrected-0923",
         "f3": "./thumbs/effect4k/047.jpg"
       }
     },
@@ -664,12 +664,12 @@
       "number": 48,
       "images": {
         "original": "./assets/original/048.jpg",
-        "aiBeauty": "./assets/low2k/048.jpg",
+        "aiBeauty": "./assets/low2k/048.jpg?v=corrected-0923",
         "f3": "./assets/effect4k/048.jpg"
       },
       "thumbs": {
         "original": "./thumbs/original/048.jpg",
-        "aiBeauty": "./thumbs/low2k/048.jpg",
+        "aiBeauty": "./thumbs/low2k/048.jpg?v=corrected-0923",
         "f3": "./thumbs/effect4k/048.jpg"
       }
     }
