@@ -4,7 +4,7 @@
     "defaultDataset": "0923",
     "sceneCountPerDataset": 20,
     "columnsPerScene": 7,
-    "publishedVersion": "0924-fast-detail-v2"
+    "publishedVersion": "0924-fast-detail-v3"
   },
   "columns": [
     [

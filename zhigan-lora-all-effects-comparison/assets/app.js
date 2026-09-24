@@ -202,7 +202,7 @@
     if (singleState && event.key === "ArrowLeft") changeSingle(-1);
     if (singleState && event.key === "ArrowRight") changeSingle(1);
   });
-  if ("serviceWorker" in navigator && location.protocol.startsWith("http")) navigator.serviceWorker.register("./sw.js?v=0924-fast-detail-v2").catch(() => {});
+  if ("serviceWorker" in navigator && location.protocol.startsWith("http")) navigator.serviceWorker.register("./sw.js?v=0924-fast-detail-v3").catch(() => {});
   Promise.resolve(window.REVIEW_DATA).then((data) => { manifest = data; dataset = data.meta?.defaultDataset || "0923"; render(); })
     .catch((error) => { app.innerHTML = `<div class="loading">页面加载失败：${esc(error.message)}</div>`; });
 })();

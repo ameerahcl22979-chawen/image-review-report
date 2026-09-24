@@ -126,6 +126,7 @@
     const promise = new Promise((resolve, reject) => {
       const image = new Image();
       image.decoding = "async";
+      image.fetchPriority = "high";
       image.onload = () => resolve(src);
       image.onerror = reject;
       image.src = src;
@@ -139,7 +140,7 @@
     const token = loadToken;
     const current = scenes()[sceneIndex];
     if (!current) return;
-    await Promise.allSettled(columns.map(async ([key]) => {
+    const pending = columns.map(([key]) => async () => {
       const view = dialog.querySelector(`[data-key="${key}"]`);
       const image = view.querySelector("img");
       if (image.dataset.fullReady === "true") return;
@@ -150,7 +151,15 @@
       image.dataset.fullReady = "true";
       if (image.decode) await image.decode().catch(() => {});
       view.classList.remove("loading-full");
-    }));
+    });
+    let next = 0;
+    async function worker() {
+      while (next < pending.length && token === loadToken) {
+        const task = pending[next++];
+        await task().catch(() => {});
+      }
+    }
+    await Promise.all([worker(), worker()]);
     if (token === loadToken) renderTransform();
   }
 

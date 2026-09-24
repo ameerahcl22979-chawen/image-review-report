@@ -1,4 +1,4 @@
-const CACHE_NAME = "4k-six-mode-viewer-0924-v2";
+const CACHE_NAME = "4k-six-mode-viewer-0924-v3";
 const CACHEABLE = /\/assets\/(?:full|previews)\//;
 
 self.addEventListener("activate", (event) => {
