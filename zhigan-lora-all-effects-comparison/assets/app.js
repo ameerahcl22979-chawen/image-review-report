@@ -100,10 +100,11 @@
   function preloadFull(src) {
     if (!src) return Promise.resolve();
     if (fullImageCache.has(src)) return fullImageCache.get(src);
+    const image = new Image(); image.decoding = "async"; image.fetchPriority = "high";
     const promise = new Promise((resolve, reject) => {
-      const image = new Image(); image.decoding = "async"; image.fetchPriority = "high";
       image.onload = () => resolve(src); image.onerror = reject; image.src = src;
     });
+    promise.image = image;
     fullImageCache.set(src, promise); promise.catch(() => fullImageCache.delete(src)); return promise;
   }
   function applyRatio(image, stage) {
@@ -202,7 +203,7 @@
     if (singleState && event.key === "ArrowLeft") changeSingle(-1);
     if (singleState && event.key === "ArrowRight") changeSingle(1);
   });
-  if ("serviceWorker" in navigator && location.protocol.startsWith("http")) navigator.serviceWorker.register("./sw.js?v=0924-fast-detail-v3").catch(() => {});
+  if ("serviceWorker" in navigator && location.protocol.startsWith("http")) navigator.serviceWorker.register("./sw.js?v=0924-fast-detail-v4").catch(() => {});
   Promise.resolve(window.REVIEW_DATA).then((data) => { manifest = data; dataset = data.meta?.defaultDataset || "0923"; render(); })
     .catch((error) => { app.innerHTML = `<div class="loading">页面加载失败：${esc(error.message)}</div>`; });
 })();

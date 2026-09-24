@@ -123,14 +123,15 @@
 
   function preload(src) {
     if (fullCache.has(src)) return fullCache.get(src);
+    const image = new Image();
+    image.decoding = "async";
+    image.fetchPriority = "high";
     const promise = new Promise((resolve, reject) => {
-      const image = new Image();
-      image.decoding = "async";
-      image.fetchPriority = "high";
       image.onload = () => resolve(src);
       image.onerror = reject;
       image.src = src;
     });
+    promise.image = image;
     fullCache.set(src, promise);
     promise.catch(() => fullCache.delete(src));
     return promise;
