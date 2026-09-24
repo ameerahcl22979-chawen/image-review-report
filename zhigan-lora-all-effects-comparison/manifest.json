@@ -4,7 +4,7 @@
     "defaultDataset": "0923",
     "sceneCountPerDataset": 20,
     "columnsPerScene": 7,
-    "publishedVersion": "0924-4k-six-modes"
+    "publishedVersion": "0924-fast-detail-v2"
   },
   "columns": [
     [
@@ -64,6 +64,15 @@
             "high_default": "assets/thumbs/0923/high_default/001.jpg",
             "high_warm": "assets/thumbs/0923/high_warm/001.jpg",
             "high_neutral": "assets/thumbs/0923/high_neutral/001.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/001.jpg",
+            "low_default": "assets/previews/0923/low_default/001.jpg",
+            "low_warm": "assets/previews/0923/low_warm/001.jpg",
+            "low_neutral": "assets/previews/0923/low_neutral/001.jpg",
+            "high_default": "assets/previews/0923/high_default/001.jpg",
+            "high_warm": "assets/previews/0923/high_warm/001.jpg",
+            "high_neutral": "assets/previews/0923/high_neutral/001.jpg"
           }
         },
         {
@@ -90,6 +99,15 @@
             "high_default": "assets/thumbs/0923/high_default/002.jpg",
             "high_warm": "assets/thumbs/0923/high_warm/002.jpg",
             "high_neutral": "assets/thumbs/0923/high_neutral/002.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/002.jpg",
+            "low_default": "assets/previews/0923/low_default/002.jpg",
+            "low_warm": "assets/previews/0923/low_warm/002.jpg",
+            "low_neutral": "assets/previews/0923/low_neutral/002.jpg",
+            "high_default": "assets/previews/0923/high_default/002.jpg",
+            "high_warm": "assets/previews/0923/high_warm/002.jpg",
+            "high_neutral": "assets/previews/0923/high_neutral/002.jpg"
           }
         },
         {
@@ -116,6 +134,15 @@
             "high_default": "assets/thumbs/0923/high_default/003.jpg",
             "high_warm": "assets/thumbs/0923/high_warm/003.jpg",
             "high_neutral": "assets/thumbs/0923/high_neutral/003.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/003.jpg",
+            "low_default": "assets/previews/0923/low_default/003.jpg",
+            "low_warm": "assets/previews/0923/low_warm/003.jpg",
+            "low_neutral": "assets/previews/0923/low_neutral/003.jpg",
+            "high_default": "assets/previews/0923/high_default/003.jpg",
+            "high_warm": "assets/previews/0923/high_warm/003.jpg",
+            "high_neutral": "assets/previews/0923/high_neutral/003.jpg"
           }
         },
         {
@@ -142,6 +169,15 @@
             "high_default": "assets/thumbs/0923/high_default/004.jpg",
             "high_warm": "assets/thumbs/0923/high_warm/004.jpg",
             "high_neutral": "assets/thumbs/0923/high_neutral/004.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/004.jpg",
+            "low_default": "assets/previews/0923/low_default/004.jpg",
+            "low_warm": "assets/previews/0923/low_warm/004.jpg",
+            "low_neutral": "assets/previews/0923/low_neutral/004.jpg",
+            "high_default": "assets/previews/0923/high_default/004.jpg",
+            "high_warm": "assets/previews/0923/high_warm/004.jpg",
+            "high_neutral": "assets/previews/0923/high_neutral/004.jpg"
           }
         },
         {
@@ -168,6 +204,15 @@
             "high_default": "assets/thumbs/0923/high_default/005.jpg",
             "high_warm": "assets/thumbs/0923/high_warm/005.jpg",
             "high_neutral": "assets/thumbs/0923/high_neutral/005.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/005.jpg",
+            "low_default": "assets/previews/0923/low_default/005.jpg",
+            "low_warm": "assets/previews/0923/low_warm/005.jpg",
+            "low_neutral": "assets/previews/0923/low_neutral/005.jpg",
+            "high_default": "assets/previews/0923/high_default/005.jpg",
+            "high_warm": "assets/previews/0923/high_warm/005.jpg",
+            "high_neutral": "assets/previews/0923/high_neutral/005.jpg"
           }
         },
         {
@@ -194,6 +239,15 @@
             "high_default": "assets/thumbs/0923/high_default/006.jpg",
             "high_warm": "assets/thumbs/0923/high_warm/006.jpg",
             "high_neutral": "assets/thumbs/0923/high_neutral/006.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/006.jpg",
+            "low_default": "assets/previews/0923/low_default/006.jpg",
+            "low_warm": "assets/previews/0923/low_warm/006.jpg",
+            "low_neutral": "assets/previews/0923/low_neutral/006.jpg",
+            "high_default": "assets/previews/0923/high_default/006.jpg",
+            "high_warm": "assets/previews/0923/high_warm/006.jpg",
+            "high_neutral": "assets/previews/0923/high_neutral/006.jpg"
           }
         },
         {
@@ -220,6 +274,15 @@
             "high_default": "assets/thumbs/0923/high_default/007.jpg",
             "high_warm": "assets/thumbs/0923/high_warm/007.jpg",
             "high_neutral": "assets/thumbs/0923/high_neutral/007.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/007.jpg",
+            "low_default": "assets/previews/0923/low_default/007.jpg",
+            "low_warm": "assets/previews/0923/low_warm/007.jpg",
+            "low_neutral": "assets/previews/0923/low_neutral/007.jpg",
+            "high_default": "assets/previews/0923/high_default/007.jpg",
+            "high_warm": "assets/previews/0923/high_warm/007.jpg",
+            "high_neutral": "assets/previews/0923/high_neutral/007.jpg"
           }
         },
         {
@@ -246,6 +309,15 @@
             "high_default": "assets/thumbs/0923/high_default/008.jpg",
             "high_warm": "assets/thumbs/0923/high_warm/008.jpg",
             "high_neutral": "assets/thumbs/0923/high_neutral/008.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/008.jpg",
+            "low_default": "assets/previews/0923/low_default/008.jpg",
+            "low_warm": "assets/previews/0923/low_warm/008.jpg",
+            "low_neutral": "assets/previews/0923/low_neutral/008.jpg",
+            "high_default": "assets/previews/0923/high_default/008.jpg",
+            "high_warm": "assets/previews/0923/high_warm/008.jpg",
+            "high_neutral": "assets/previews/0923/high_neutral/008.jpg"
           }
         },
         {
@@ -272,6 +344,15 @@
             "high_default": "assets/thumbs/0923/high_default/009.jpg",
             "high_warm": "assets/thumbs/0923/high_warm/009.jpg",
             "high_neutral": "assets/thumbs/0923/high_neutral/009.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/009.jpg",
+            "low_default": "assets/previews/0923/low_default/009.jpg",
+            "low_warm": "assets/previews/0923/low_warm/009.jpg",
+            "low_neutral": "assets/previews/0923/low_neutral/009.jpg",
+            "high_default": "assets/previews/0923/high_default/009.jpg",
+            "high_warm": "assets/previews/0923/high_warm/009.jpg",
+            "high_neutral": "assets/previews/0923/high_neutral/009.jpg"
           }
         },
         {
@@ -298,6 +379,15 @@
             "high_default": "assets/thumbs/0923/high_default/010.jpg",
             "high_warm": "assets/thumbs/0923/high_warm/010.jpg",
             "high_neutral": "assets/thumbs/0923/high_neutral/010.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/010.jpg",
+            "low_default": "assets/previews/0923/low_default/010.jpg",
+            "low_warm": "assets/previews/0923/low_warm/010.jpg",
+            "low_neutral": "assets/previews/0923/low_neutral/010.jpg",
+            "high_default": "assets/previews/0923/high_default/010.jpg",
+            "high_warm": "assets/previews/0923/high_warm/010.jpg",
+            "high_neutral": "assets/previews/0923/high_neutral/010.jpg"
           }
         },
         {
@@ -324,6 +414,15 @@
             "high_default": "assets/thumbs/0923/high_default/011.jpg",
             "high_warm": "assets/thumbs/0923/high_warm/011.jpg",
             "high_neutral": "assets/thumbs/0923/high_neutral/011.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/011.jpg",
+            "low_default": "assets/previews/0923/low_default/011.jpg",
+            "low_warm": "assets/previews/0923/low_warm/011.jpg",
+            "low_neutral": "assets/previews/0923/low_neutral/011.jpg",
+            "high_default": "assets/previews/0923/high_default/011.jpg",
+            "high_warm": "assets/previews/0923/high_warm/011.jpg",
+            "high_neutral": "assets/previews/0923/high_neutral/011.jpg"
           }
         },
         {
@@ -350,6 +449,15 @@
             "high_default": "assets/thumbs/0923/high_default/012.jpg",
             "high_warm": "assets/thumbs/0923/high_warm/012.jpg",
             "high_neutral": "assets/thumbs/0923/high_neutral/012.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/012.jpg",
+            "low_default": "assets/previews/0923/low_default/012.jpg",
+            "low_warm": "assets/previews/0923/low_warm/012.jpg",
+            "low_neutral": "assets/previews/0923/low_neutral/012.jpg",
+            "high_default": "assets/previews/0923/high_default/012.jpg",
+            "high_warm": "assets/previews/0923/high_warm/012.jpg",
+            "high_neutral": "assets/previews/0923/high_neutral/012.jpg"
           }
         },
         {
@@ -376,6 +484,15 @@
             "high_default": "assets/thumbs/0923/high_default/013.jpg",
             "high_warm": "assets/thumbs/0923/high_warm/013.jpg",
             "high_neutral": "assets/thumbs/0923/high_neutral/013.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/013.jpg",
+            "low_default": "assets/previews/0923/low_default/013.jpg",
+            "low_warm": "assets/previews/0923/low_warm/013.jpg",
+            "low_neutral": "assets/previews/0923/low_neutral/013.jpg",
+            "high_default": "assets/previews/0923/high_default/013.jpg",
+            "high_warm": "assets/previews/0923/high_warm/013.jpg",
+            "high_neutral": "assets/previews/0923/high_neutral/013.jpg"
           }
         },
         {
@@ -402,6 +519,15 @@
             "high_default": "assets/thumbs/0923/high_default/014.jpg",
             "high_warm": "assets/thumbs/0923/high_warm/014.jpg",
             "high_neutral": "assets/thumbs/0923/high_neutral/014.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/014.jpg",
+            "low_default": "assets/previews/0923/low_default/014.jpg",
+            "low_warm": "assets/previews/0923/low_warm/014.jpg",
+            "low_neutral": "assets/previews/0923/low_neutral/014.jpg",
+            "high_default": "assets/previews/0923/high_default/014.jpg",
+            "high_warm": "assets/previews/0923/high_warm/014.jpg",
+            "high_neutral": "assets/previews/0923/high_neutral/014.jpg"
           }
         },
         {
@@ -428,6 +554,15 @@
             "high_default": "assets/thumbs/0923/high_default/015.jpg",
             "high_warm": "assets/thumbs/0923/high_warm/015.jpg",
             "high_neutral": "assets/thumbs/0923/high_neutral/015.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/015.jpg",
+            "low_default": "assets/previews/0923/low_default/015.jpg",
+            "low_warm": "assets/previews/0923/low_warm/015.jpg",
+            "low_neutral": "assets/previews/0923/low_neutral/015.jpg",
+            "high_default": "assets/previews/0923/high_default/015.jpg",
+            "high_warm": "assets/previews/0923/high_warm/015.jpg",
+            "high_neutral": "assets/previews/0923/high_neutral/015.jpg"
           }
         },
         {
@@ -454,6 +589,15 @@
             "high_default": "assets/thumbs/0923/high_default/016.jpg",
             "high_warm": "assets/thumbs/0923/high_warm/016.jpg",
             "high_neutral": "assets/thumbs/0923/high_neutral/016.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/016.jpg",
+            "low_default": "assets/previews/0923/low_default/016.jpg",
+            "low_warm": "assets/previews/0923/low_warm/016.jpg",
+            "low_neutral": "assets/previews/0923/low_neutral/016.jpg",
+            "high_default": "assets/previews/0923/high_default/016.jpg",
+            "high_warm": "assets/previews/0923/high_warm/016.jpg",
+            "high_neutral": "assets/previews/0923/high_neutral/016.jpg"
           }
         },
         {
@@ -480,6 +624,15 @@
             "high_default": "assets/thumbs/0923/high_default/017.jpg",
             "high_warm": "assets/thumbs/0923/high_warm/017.jpg",
             "high_neutral": "assets/thumbs/0923/high_neutral/017.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/017.jpg",
+            "low_default": "assets/previews/0923/low_default/017.jpg",
+            "low_warm": "assets/previews/0923/low_warm/017.jpg",
+            "low_neutral": "assets/previews/0923/low_neutral/017.jpg",
+            "high_default": "assets/previews/0923/high_default/017.jpg",
+            "high_warm": "assets/previews/0923/high_warm/017.jpg",
+            "high_neutral": "assets/previews/0923/high_neutral/017.jpg"
           }
         },
         {
@@ -506,6 +659,15 @@
             "high_default": "assets/thumbs/0923/high_default/018.jpg",
             "high_warm": "assets/thumbs/0923/high_warm/018.jpg",
             "high_neutral": "assets/thumbs/0923/high_neutral/018.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/018.jpg",
+            "low_default": "assets/previews/0923/low_default/018.jpg",
+            "low_warm": "assets/previews/0923/low_warm/018.jpg",
+            "low_neutral": "assets/previews/0923/low_neutral/018.jpg",
+            "high_default": "assets/previews/0923/high_default/018.jpg",
+            "high_warm": "assets/previews/0923/high_warm/018.jpg",
+            "high_neutral": "assets/previews/0923/high_neutral/018.jpg"
           }
         },
         {
@@ -532,6 +694,15 @@
             "high_default": "assets/thumbs/0923/high_default/019.jpg",
             "high_warm": "assets/thumbs/0923/high_warm/019.jpg",
             "high_neutral": "assets/thumbs/0923/high_neutral/019.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/019.jpg",
+            "low_default": "assets/previews/0923/low_default/019.jpg",
+            "low_warm": "assets/previews/0923/low_warm/019.jpg",
+            "low_neutral": "assets/previews/0923/low_neutral/019.jpg",
+            "high_default": "assets/previews/0923/high_default/019.jpg",
+            "high_warm": "assets/previews/0923/high_warm/019.jpg",
+            "high_neutral": "assets/previews/0923/high_neutral/019.jpg"
           }
         },
         {
@@ -558,6 +729,15 @@
             "high_default": "assets/thumbs/0923/high_default/020.jpg",
             "high_warm": "assets/thumbs/0923/high_warm/020.jpg",
             "high_neutral": "assets/thumbs/0923/high_neutral/020.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/020.jpg",
+            "low_default": "assets/previews/0923/low_default/020.jpg",
+            "low_warm": "assets/previews/0923/low_warm/020.jpg",
+            "low_neutral": "assets/previews/0923/low_neutral/020.jpg",
+            "high_default": "assets/previews/0923/high_default/020.jpg",
+            "high_warm": "assets/previews/0923/high_warm/020.jpg",
+            "high_neutral": "assets/previews/0923/high_neutral/020.jpg"
           }
         }
       ]
@@ -589,6 +769,15 @@
             "high_default": "assets/thumbs/0915/high_default/001.jpg",
             "high_warm": "assets/thumbs/0915/high_warm/001.jpg",
             "high_neutral": "assets/thumbs/0915/high_neutral/001.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/001.jpg",
+            "low_default": "assets/previews/0915/low_default/001.jpg",
+            "low_warm": "assets/previews/0915/low_warm/001.jpg",
+            "low_neutral": "assets/previews/0915/low_neutral/001.jpg",
+            "high_default": "assets/previews/0915/high_default/001.jpg",
+            "high_warm": "assets/previews/0915/high_warm/001.jpg",
+            "high_neutral": "assets/previews/0915/high_neutral/001.jpg"
           }
         },
         {
@@ -615,6 +804,15 @@
             "high_default": "assets/thumbs/0915/high_default/002.jpg",
             "high_warm": "assets/thumbs/0915/high_warm/002.jpg",
             "high_neutral": "assets/thumbs/0915/high_neutral/002.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/002.jpg",
+            "low_default": "assets/previews/0915/low_default/002.jpg",
+            "low_warm": "assets/previews/0915/low_warm/002.jpg",
+            "low_neutral": "assets/previews/0915/low_neutral/002.jpg",
+            "high_default": "assets/previews/0915/high_default/002.jpg",
+            "high_warm": "assets/previews/0915/high_warm/002.jpg",
+            "high_neutral": "assets/previews/0915/high_neutral/002.jpg"
           }
         },
         {
@@ -641,6 +839,15 @@
             "high_default": "assets/thumbs/0915/high_default/003.jpg",
             "high_warm": "assets/thumbs/0915/high_warm/003.jpg",
             "high_neutral": "assets/thumbs/0915/high_neutral/003.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/003.jpg",
+            "low_default": "assets/previews/0915/low_default/003.jpg",
+            "low_warm": "assets/previews/0915/low_warm/003.jpg",
+            "low_neutral": "assets/previews/0915/low_neutral/003.jpg",
+            "high_default": "assets/previews/0915/high_default/003.jpg",
+            "high_warm": "assets/previews/0915/high_warm/003.jpg",
+            "high_neutral": "assets/previews/0915/high_neutral/003.jpg"
           }
         },
         {
@@ -667,6 +874,15 @@
             "high_default": "assets/thumbs/0915/high_default/004.jpg",
             "high_warm": "assets/thumbs/0915/high_warm/004.jpg",
             "high_neutral": "assets/thumbs/0915/high_neutral/004.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/004.jpg",
+            "low_default": "assets/previews/0915/low_default/004.jpg",
+            "low_warm": "assets/previews/0915/low_warm/004.jpg",
+            "low_neutral": "assets/previews/0915/low_neutral/004.jpg",
+            "high_default": "assets/previews/0915/high_default/004.jpg",
+            "high_warm": "assets/previews/0915/high_warm/004.jpg",
+            "high_neutral": "assets/previews/0915/high_neutral/004.jpg"
           }
         },
         {
@@ -693,6 +909,15 @@
             "high_default": "assets/thumbs/0915/high_default/005.jpg",
             "high_warm": "assets/thumbs/0915/high_warm/005.jpg",
             "high_neutral": "assets/thumbs/0915/high_neutral/005.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/005.jpg",
+            "low_default": "assets/previews/0915/low_default/005.jpg",
+            "low_warm": "assets/previews/0915/low_warm/005.jpg",
+            "low_neutral": "assets/previews/0915/low_neutral/005.jpg",
+            "high_default": "assets/previews/0915/high_default/005.jpg",
+            "high_warm": "assets/previews/0915/high_warm/005.jpg",
+            "high_neutral": "assets/previews/0915/high_neutral/005.jpg"
           }
         },
         {
@@ -719,6 +944,15 @@
             "high_default": "assets/thumbs/0915/high_default/006.jpg",
             "high_warm": "assets/thumbs/0915/high_warm/006.jpg",
             "high_neutral": "assets/thumbs/0915/high_neutral/006.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/006.jpg",
+            "low_default": "assets/previews/0915/low_default/006.jpg",
+            "low_warm": "assets/previews/0915/low_warm/006.jpg",
+            "low_neutral": "assets/previews/0915/low_neutral/006.jpg",
+            "high_default": "assets/previews/0915/high_default/006.jpg",
+            "high_warm": "assets/previews/0915/high_warm/006.jpg",
+            "high_neutral": "assets/previews/0915/high_neutral/006.jpg"
           }
         },
         {
@@ -745,6 +979,15 @@
             "high_default": "assets/thumbs/0915/high_default/007.jpg",
             "high_warm": "assets/thumbs/0915/high_warm/007.jpg",
             "high_neutral": "assets/thumbs/0915/high_neutral/007.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/007.jpg",
+            "low_default": "assets/previews/0915/low_default/007.jpg",
+            "low_warm": "assets/previews/0915/low_warm/007.jpg",
+            "low_neutral": "assets/previews/0915/low_neutral/007.jpg",
+            "high_default": "assets/previews/0915/high_default/007.jpg",
+            "high_warm": "assets/previews/0915/high_warm/007.jpg",
+            "high_neutral": "assets/previews/0915/high_neutral/007.jpg"
           }
         },
         {
@@ -771,6 +1014,15 @@
             "high_default": "assets/thumbs/0915/high_default/008.jpg",
             "high_warm": "assets/thumbs/0915/high_warm/008.jpg",
             "high_neutral": "assets/thumbs/0915/high_neutral/008.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/008.jpg",
+            "low_default": "assets/previews/0915/low_default/008.jpg",
+            "low_warm": "assets/previews/0915/low_warm/008.jpg",
+            "low_neutral": "assets/previews/0915/low_neutral/008.jpg",
+            "high_default": "assets/previews/0915/high_default/008.jpg",
+            "high_warm": "assets/previews/0915/high_warm/008.jpg",
+            "high_neutral": "assets/previews/0915/high_neutral/008.jpg"
           }
         },
         {
@@ -797,6 +1049,15 @@
             "high_default": "assets/thumbs/0915/high_default/009.jpg",
             "high_warm": "assets/thumbs/0915/high_warm/009.jpg",
             "high_neutral": "assets/thumbs/0915/high_neutral/009.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/009.jpg",
+            "low_default": "assets/previews/0915/low_default/009.jpg",
+            "low_warm": "assets/previews/0915/low_warm/009.jpg",
+            "low_neutral": "assets/previews/0915/low_neutral/009.jpg",
+            "high_default": "assets/previews/0915/high_default/009.jpg",
+            "high_warm": "assets/previews/0915/high_warm/009.jpg",
+            "high_neutral": "assets/previews/0915/high_neutral/009.jpg"
           }
         },
         {
@@ -823,6 +1084,15 @@
             "high_default": "assets/thumbs/0915/high_default/010.jpg",
             "high_warm": "assets/thumbs/0915/high_warm/010.jpg",
             "high_neutral": "assets/thumbs/0915/high_neutral/010.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/010.jpg",
+            "low_default": "assets/previews/0915/low_default/010.jpg",
+            "low_warm": "assets/previews/0915/low_warm/010.jpg",
+            "low_neutral": "assets/previews/0915/low_neutral/010.jpg",
+            "high_default": "assets/previews/0915/high_default/010.jpg",
+            "high_warm": "assets/previews/0915/high_warm/010.jpg",
+            "high_neutral": "assets/previews/0915/high_neutral/010.jpg"
           }
         },
         {
@@ -849,6 +1119,15 @@
             "high_default": "assets/thumbs/0915/high_default/011.jpg",
             "high_warm": "assets/thumbs/0915/high_warm/011.jpg",
             "high_neutral": "assets/thumbs/0915/high_neutral/011.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/011.jpg",
+            "low_default": "assets/previews/0915/low_default/011.jpg",
+            "low_warm": "assets/previews/0915/low_warm/011.jpg",
+            "low_neutral": "assets/previews/0915/low_neutral/011.jpg",
+            "high_default": "assets/previews/0915/high_default/011.jpg",
+            "high_warm": "assets/previews/0915/high_warm/011.jpg",
+            "high_neutral": "assets/previews/0915/high_neutral/011.jpg"
           }
         },
         {
@@ -875,6 +1154,15 @@
             "high_default": "assets/thumbs/0915/high_default/012.jpg",
             "high_warm": "assets/thumbs/0915/high_warm/012.jpg",
             "high_neutral": "assets/thumbs/0915/high_neutral/012.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/012.jpg",
+            "low_default": "assets/previews/0915/low_default/012.jpg",
+            "low_warm": "assets/previews/0915/low_warm/012.jpg",
+            "low_neutral": "assets/previews/0915/low_neutral/012.jpg",
+            "high_default": "assets/previews/0915/high_default/012.jpg",
+            "high_warm": "assets/previews/0915/high_warm/012.jpg",
+            "high_neutral": "assets/previews/0915/high_neutral/012.jpg"
           }
         },
         {
@@ -901,6 +1189,15 @@
             "high_default": "assets/thumbs/0915/high_default/013.jpg",
             "high_warm": "assets/thumbs/0915/high_warm/013.jpg",
             "high_neutral": "assets/thumbs/0915/high_neutral/013.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/013.jpg",
+            "low_default": "assets/previews/0915/low_default/013.jpg",
+            "low_warm": "assets/previews/0915/low_warm/013.jpg",
+            "low_neutral": "assets/previews/0915/low_neutral/013.jpg",
+            "high_default": "assets/previews/0915/high_default/013.jpg",
+            "high_warm": "assets/previews/0915/high_warm/013.jpg",
+            "high_neutral": "assets/previews/0915/high_neutral/013.jpg"
           }
         },
         {
@@ -927,6 +1224,15 @@
             "high_default": "assets/thumbs/0915/high_default/014.jpg",
             "high_warm": "assets/thumbs/0915/high_warm/014.jpg",
             "high_neutral": "assets/thumbs/0915/high_neutral/014.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/014.jpg",
+            "low_default": "assets/previews/0915/low_default/014.jpg",
+            "low_warm": "assets/previews/0915/low_warm/014.jpg",
+            "low_neutral": "assets/previews/0915/low_neutral/014.jpg",
+            "high_default": "assets/previews/0915/high_default/014.jpg",
+            "high_warm": "assets/previews/0915/high_warm/014.jpg",
+            "high_neutral": "assets/previews/0915/high_neutral/014.jpg"
           }
         },
         {
@@ -953,6 +1259,15 @@
             "high_default": "assets/thumbs/0915/high_default/015.jpg",
             "high_warm": "assets/thumbs/0915/high_warm/015.jpg",
             "high_neutral": "assets/thumbs/0915/high_neutral/015.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/015.jpg",
+            "low_default": "assets/previews/0915/low_default/015.jpg",
+            "low_warm": "assets/previews/0915/low_warm/015.jpg",
+            "low_neutral": "assets/previews/0915/low_neutral/015.jpg",
+            "high_default": "assets/previews/0915/high_default/015.jpg",
+            "high_warm": "assets/previews/0915/high_warm/015.jpg",
+            "high_neutral": "assets/previews/0915/high_neutral/015.jpg"
           }
         },
         {
@@ -979,6 +1294,15 @@
             "high_default": "assets/thumbs/0915/high_default/016.jpg",
             "high_warm": "assets/thumbs/0915/high_warm/016.jpg",
             "high_neutral": "assets/thumbs/0915/high_neutral/016.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/016.jpg",
+            "low_default": "assets/previews/0915/low_default/016.jpg",
+            "low_warm": "assets/previews/0915/low_warm/016.jpg",
+            "low_neutral": "assets/previews/0915/low_neutral/016.jpg",
+            "high_default": "assets/previews/0915/high_default/016.jpg",
+            "high_warm": "assets/previews/0915/high_warm/016.jpg",
+            "high_neutral": "assets/previews/0915/high_neutral/016.jpg"
           }
         },
         {
@@ -1005,6 +1329,15 @@
             "high_default": "assets/thumbs/0915/high_default/017.jpg",
             "high_warm": "assets/thumbs/0915/high_warm/017.jpg",
             "high_neutral": "assets/thumbs/0915/high_neutral/017.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/017.jpg",
+            "low_default": "assets/previews/0915/low_default/017.jpg",
+            "low_warm": "assets/previews/0915/low_warm/017.jpg",
+            "low_neutral": "assets/previews/0915/low_neutral/017.jpg",
+            "high_default": "assets/previews/0915/high_default/017.jpg",
+            "high_warm": "assets/previews/0915/high_warm/017.jpg",
+            "high_neutral": "assets/previews/0915/high_neutral/017.jpg"
           }
         },
         {
@@ -1031,6 +1364,15 @@
             "high_default": "assets/thumbs/0915/high_default/018.jpg",
             "high_warm": "assets/thumbs/0915/high_warm/018.jpg",
             "high_neutral": "assets/thumbs/0915/high_neutral/018.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/018.jpg",
+            "low_default": "assets/previews/0915/low_default/018.jpg",
+            "low_warm": "assets/previews/0915/low_warm/018.jpg",
+            "low_neutral": "assets/previews/0915/low_neutral/018.jpg",
+            "high_default": "assets/previews/0915/high_default/018.jpg",
+            "high_warm": "assets/previews/0915/high_warm/018.jpg",
+            "high_neutral": "assets/previews/0915/high_neutral/018.jpg"
           }
         },
         {
@@ -1057,6 +1399,15 @@
             "high_default": "assets/thumbs/0915/high_default/019.jpg",
             "high_warm": "assets/thumbs/0915/high_warm/019.jpg",
             "high_neutral": "assets/thumbs/0915/high_neutral/019.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/019.jpg",
+            "low_default": "assets/previews/0915/low_default/019.jpg",
+            "low_warm": "assets/previews/0915/low_warm/019.jpg",
+            "low_neutral": "assets/previews/0915/low_neutral/019.jpg",
+            "high_default": "assets/previews/0915/high_default/019.jpg",
+            "high_warm": "assets/previews/0915/high_warm/019.jpg",
+            "high_neutral": "assets/previews/0915/high_neutral/019.jpg"
           }
         },
         {
@@ -1083,6 +1434,15 @@
             "high_default": "assets/thumbs/0915/high_default/020.jpg",
             "high_warm": "assets/thumbs/0915/high_warm/020.jpg",
             "high_neutral": "assets/thumbs/0915/high_neutral/020.jpg"
+          },
+          "previews": {
+            "original": "assets/previews/original/020.jpg",
+            "low_default": "assets/previews/0915/low_default/020.jpg",
+            "low_warm": "assets/previews/0915/low_warm/020.jpg",
+            "low_neutral": "assets/previews/0915/low_neutral/020.jpg",
+            "high_default": "assets/previews/0915/high_default/020.jpg",
+            "high_warm": "assets/previews/0915/high_warm/020.jpg",
+            "high_neutral": "assets/previews/0915/high_neutral/020.jpg"
           }
         }
       ]
