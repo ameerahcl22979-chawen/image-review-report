@@ -1,29 +1,30 @@
 (() => {
   const columns = [
     ["original", "原图（实时4K）"],
+    ["v4_scheme1", "新4K效果"],
+    ["currentEffect1", "原4K效果1"],
     ["reference2k", "2K效果"],
-    ["effect1", "4K效果1"],
-    ["effect2", "4K效果2"],
   ];
-  const scenes = Array.from({ length: 100 }, (_, index) => index + 1).map((number) => {
+  const makeScenes = () => Array.from({ length: 100 }, (_, index) => index + 1).map((number) => {
     const file = `${String(number).padStart(3, "0")}.jpg`;
     return {
       id: `scene-${String(number).padStart(3, "0")}`,
       number,
       images: {
         original: `./assets/original/${file}?v=20260916-original-assets`,
-        effect1: `./assets/effect1/${file}?v=20260916-original-assets`,
-        effect2: `./assets/effect2/${file}?v=20260916-original-assets`,
+        v4_scheme1: `./assets/v4-6000/${file}?v=20261009-v4-6000`,
+        currentEffect1: `./assets/effect1/${file}?v=20260916-original-assets`,
         reference2k: `./assets/reference2k/${file}?v=20260916-original-assets`,
       },
       thumbs: {
-        original: `./assets/thumbs/original/${file}?v=20260916-original-assets`,
-        effect1: `./assets/thumbs/effect1/${file}?v=20260916-original-assets`,
-        effect2: `./assets/thumbs/effect2/${file}?v=20260916-original-assets`,
-        reference2k: `./assets/thumbs/reference2k/${file}?v=20260916-original-assets`,
+        original: `./assets/thumbs-webp/original/${file.replace(".jpg", ".webp")}?v=20261009-online`,
+        v4_scheme1: `./assets/thumbs-webp/v4-6000/${file.replace(".jpg", ".webp")}?v=20261009-online`,
+        currentEffect1: `./assets/thumbs-webp/currentEffect1/${file.replace(".jpg", ".webp")}?v=20261009-online`,
+        reference2k: `./assets/thumbs-webp/reference2k/${file.replace(".jpg", ".webp")}?v=20261009-online`,
       },
     };
   });
+  let scenes = makeScenes();
   const batchSize = 20;
   const preloaded = new Map();
 
@@ -47,8 +48,7 @@
       </header>
       <main class="shell">
         <div class="filterbar">
-          <div class="filter-group"><span class="filter-label">测试结果</span></div>
-          <input class="search" value="${escapeHtml(query)}" placeholder="搜索序号，如 095" aria-label="搜索序号" />
+        <input class="search" value="${escapeHtml(query)}" placeholder="搜索序号，如 095" aria-label="搜索序号" />
         </div>
         <section class="showcase">
           <div class="table-grid">
@@ -67,12 +67,18 @@
   function rowMarkup(scene) {
     const padded = String(scene.number).padStart(3, "0");
     return `<div class="td index-cell"><span>${padded}</span></div>${columns.map(([key, label]) => {
-      let actions = "";
-      if (key !== "original") {
+      let actions;
+      if (key === "original") {
+        actions = `<button type="button" class="detail-button" data-detail="${scene.id}" title="同步放大四张图查看细节">细节对比</button>`;
+      } else {
         const compareButton = (left, leftLabel, text) => `<button data-compare="${scene.id}" data-left="${left}" data-right="${key}" data-left-label="${leftLabel}" data-right-label="${label}">↔ ${text}</button>`;
-        actions = `<div class="thumb-actions">${compareButton("original", "原图（实时4K）", "原图")}${key === "effect2" ? compareButton("effect1", "4K效果1", "4K效果1") : ""}${key !== "reference2k" ? compareButton("reference2k", "2K效果", "2K") : ""}</div>`;
+        const newEffect = key === "currentEffect1" || key === "reference2k"
+          ? compareButton("v4_scheme1", "新4K效果", "新4K") : "";
+        const oldEffect = key === "reference2k"
+          ? compareButton("currentEffect1", "原4K效果1", "原4K效果1") : "";
+        actions = `${compareButton("original", "原图（实时4K）", "原图")}${newEffect}${oldEffect}`;
       }
-      return `<div class="td"><div class="thumb"><img src="${scene.thumbs[key]}" alt="${escapeHtml(label)} ${padded}" loading="lazy" decoding="async" data-single="${scene.id}" data-key="${key}" title="点击查看大图" />${actions}</div></div>`;
+      return `<div class="td"><div class="thumb"><img src="${scene.thumbs[key]}" alt="${escapeHtml(label)} ${padded}" loading="${scene.number <= 2 ? "eager" : "lazy"}" fetchpriority="${scene.number === 1 ? "high" : "auto"}" decoding="async" data-single="${scene.id}" data-key="${key}" title="点击查看大图" /><div class="thumb-actions">${actions}</div></div></div>`;
     }).join("")}`;
   }
 
@@ -117,6 +123,9 @@
       if (event.target.classList.contains("modal")) closeModal();
     });
     const stage = app.querySelector(".stage");
+    stage.querySelector('input[type="range"]').addEventListener("input", (event) => {
+      stage.style.setProperty("--split", `${event.target.value}%`);
+    });
     stage.addEventListener("wheel", (event) => {
       event.preventDefault();
       zoom(event.deltaY < 0 ? 1.15 : 1 / 1.15);
@@ -168,6 +177,15 @@
   }
 
   function bindRows(scope) {
+    scope.querySelectorAll("[data-detail]:not([data-bound])").forEach((button) => {
+      button.dataset.bound = "true";
+      button.addEventListener("click", (event) => {
+        event.stopPropagation();
+        document.dispatchEvent(new CustomEvent("review:details", {
+          detail: { scenes, id: button.dataset.detail },
+        }));
+      });
+    });
     scope.querySelectorAll("[data-compare]:not([data-bound])").forEach((button) => {
       button.dataset.bound = "true";
       const warm = () => {
