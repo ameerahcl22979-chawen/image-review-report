@@ -1,12 +1,15 @@
 {
-  "original_jpegs": 780,
-  "references": 840,
-  "full_bytes": 4637988683,
+  "source_original_jpegs": 780,
+  "source_bytes": 4637988683,
+  "source_jpeg_bytes_unchanged": true,
+  "online_jpegs": 780,
+  "online_jpeg_bytes_unchanged": false,
+  "online_full_bytes": 1419395988,
+  "online_full_max_bytes": 1999936,
   "thumb_bytes": 19243288,
   "preview_bytes": 113959398,
-  "jpeg_bytes_unchanged": true,
-  "full_storage": "GitHub Release",
-  "release_originals": 780,
-  "release_tag": "offline-six-mode-originals-20261010",
+  "full_storage": "GitHub Release (full-resolution lightweight JPEG)",
+  "release_assets": 780,
+  "release_tag": "offline-six-mode-light-20261010",
   "full_references": 840
 }
