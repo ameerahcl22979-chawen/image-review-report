@@ -80,7 +80,7 @@
       } else if (columns.length === 4) {
         actions = compareButton(scene, "original", key, "↔ 原图");
         if (key === "warm" || key === "cold") actions += compareButton(scene, "natural", key, "↔ 自然调");
-        if (key === "cold") actions += compareButton(scene, "warm", key, "↔ 暖色调");
+        if (key === "cold") actions += compareButton(scene, "warm", key, "↔ 暖调");
       } else if (key.startsWith("low_")) {
         actions = compareButton(scene, "original", key, "原图对比");
       } else {
