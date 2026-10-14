@@ -28,3 +28,6 @@
 .four-columns .thumb-actions button{font-size:11px;height:30px;padding:0 7px}
 .zoom-controls .source-link{color:#29333d;background:#fff;border:1px solid #d8e0ea;border-radius:7px;padding:7px 9px;text-decoration:none;font-size:12px}
 @media(max-width:900px){.table-grid.four-columns{min-width:1100px}.version-switch{flex-wrap:wrap}.topbar{flex-wrap:wrap}}
+
+.back-to-top{position:fixed;left:16px;bottom:16px;z-index:30;width:40px;height:40px;display:grid;place-items:center;border:1px solid #d8e0ea;border-radius:50%;background:#344a61;color:#fff;box-shadow:0 3px 12px rgba(20,31,45,.22)}
+.back-to-top:hover{background:#253d55}.back-to-top:focus-visible{outline:3px solid #8fb4ff;outline-offset:2px}

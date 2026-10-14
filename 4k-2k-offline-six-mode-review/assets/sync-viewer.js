@@ -5,6 +5,9 @@
     ["high_neutral", "高强度·冷调"],
   ];
   let columns = legacyColumns;
+  let fourMode = false;
+  const lowColumns = [["original", "原图"], ["low_default", "自然调"], ["low_warm", "暖调"], ["low_neutral", "冷调"]];
+  const currentColumns = () => fourMode ? (window.REVIEW_DATA.datasets[dataset].columns || lowColumns) : legacyColumns;
   const fullCache = new Map();
   let dialog;
   let dataset = "0923";
@@ -26,10 +29,12 @@
     dialog.setAttribute("role", "dialog");
     dialog.setAttribute("aria-modal", "true");
     dialog.setAttribute("aria-label", "细节对比");
-    dialog.innerHTML = `<div class="sync-panel"><div class="sync-header"><strong class="sync-title"></strong><div class="sync-controls"><button type="button" data-action="prev" title="上一组" aria-label="上一组">‹</button><button type="button" data-action="next" title="下一组" aria-label="下一组">›</button><button type="button" data-action="out" title="缩小" aria-label="缩小">−</button><button type="button" data-action="actual" title="原尺寸，同步定位">1:1</button><button type="button" data-action="in" title="放大" aria-label="放大">+</button><button type="button" data-action="fit" title="适应窗口">适应</button><span class="sync-readout">100%</span></div><button type="button" class="sync-close" data-action="close" title="关闭" aria-label="关闭">×</button></div><div class="sync-grid" style="grid-template-columns:repeat(${columns.length},minmax(0,1fr))">${columns.map(([key, label]) => `<figure class="sync-column"><figcaption>${label}</figcaption><div class="sync-viewport" data-key="${key}" tabindex="0"><img alt="${label}" draggable="false"></div></figure>`).join("")}</div></div>`;
+    dialog.innerHTML = `<div class="sync-panel"><div class="sync-header"><strong class="sync-title"></strong>${fourMode ? `<div class="sync-versions" role="tablist" aria-label="细节对比版本">${Object.entries(window.REVIEW_DATA.datasets).map(([key, value]) => `<button type="button" data-sync-dataset="${key}" role="tab">${value.label}</button>`).join("")}</div>` : ""}<div class="sync-controls"><button type="button" data-action="prev" title="上一组" aria-label="上一组">‹</button><button type="button" data-action="next" title="下一组" aria-label="下一组">›</button><button type="button" data-action="out" title="缩小" aria-label="缩小">−</button><button type="button" data-action="actual" title="原尺寸，同步定位">1:1</button><button type="button" data-action="in" title="放大" aria-label="放大">+</button><button type="button" data-action="fit" title="适应窗口">适应</button><span class="sync-readout">100%</span></div><button type="button" class="sync-close" data-action="close" title="关闭" aria-label="关闭">×</button></div><div class="sync-grid" style="grid-template-columns:repeat(${columns.length},minmax(0,1fr))">${columns.map(([key, label]) => `<figure class="sync-column"><figcaption>${label}</figcaption><div class="sync-viewport" data-key="${key}" tabindex="0"><img alt="${label}" draggable="false"></div></figure>`).join("")}</div></div>`;
     document.body.append(dialog);
     dialog.addEventListener("click", (event) => {
       if (event.target === dialog) return close();
+      const version = event.target.closest("[data-sync-dataset]");
+      if (version) { switchDataset(version.dataset.syncDataset); return; }
       const action = event.target.closest("[data-action]")?.dataset.action;
       if (action === "close") close();
       if (action === "prev") changeScene(-1);
@@ -71,8 +76,8 @@
 
   function fittedSize(view) {
     const image = view.querySelector("img");
-    const width = image.naturalWidth || 16;
-    const height = image.naturalHeight || 9;
+    const width = Number(image.dataset.width) || image.naturalWidth || 16;
+    const height = Number(image.dataset.height) || image.naturalHeight || 9;
     const scale = Math.min(view.clientWidth / width, view.clientHeight / height);
     return { width: width * scale, height: height * scale };
   }
@@ -152,6 +157,8 @@
       if (token !== loadToken) return;
       image.src = current.images[key];
       image.dataset.fullReady = "true";
+      image.dataset.width = image.naturalWidth || image.dataset.width;
+      image.dataset.height = image.naturalHeight || image.dataset.height;
       if (image.decode) await image.decode().catch(() => {});
       view.classList.remove("loading-full");
     });
@@ -167,27 +174,54 @@
   }
 
   async function actualSize() {
+    const token = loadToken;
     await ensureFullImages();
+    if (token !== loadToken || !dialog?.classList.contains("open")) return;
     const view = dialog.querySelector('[data-key="original"]');
     const image = view.querySelector("img");
     if (image.naturalWidth) setZoom(image.naturalWidth / fittedSize(view).width);
   }
 
-  function showScene() {
+  function showScene(preserveView = false) {
     const current = scenes()[sceneIndex];
     if (!current) return;
     loadToken += 1;
-    dialog.querySelector(".sync-title").textContent = `第 ${String(current.number).padStart(3, "0")} 组 · ${columns.length}图细节对比 · ${window.REVIEW_DATA.datasets[dataset].label}`;
+    dialog.querySelector(".sync-title").textContent = `第 ${String(current.number).padStart(3, "0")} 组`;
+    dialog.querySelectorAll("[data-sync-dataset]").forEach(button => {
+      const active = button.dataset.syncDataset === dataset;
+      button.classList.toggle("active", active);
+      button.setAttribute("aria-selected", String(active));
+    });
     columns.forEach(([key]) => {
       const view = dialog.querySelector(`[data-key="${key}"]`);
       const image = view.querySelector("img");
       view.classList.remove("loading-full");
       image.dataset.fullReady = "false";
+      image.dataset.width = String(current.width || 16);
+      image.dataset.height = String(current.height || 9);
       image.src = current.previews?.[key] || current.thumbs?.[key] || current.images[key];
     });
     dialog.querySelector('[data-action="prev"]').disabled = sceneIndex <= 0;
     dialog.querySelector('[data-action="next"]').disabled = sceneIndex >= scenes().length - 1;
-    reset();
+    if (preserveView) renderTransform(); else reset();
+    if (zoom >= 2.25) ensureFullImages();
+  }
+
+  function switchDataset(nextDataset) {
+    if (!fourMode || nextDataset === dataset || !window.REVIEW_DATA.datasets[nextDataset]) return;
+    const number = scenes()[sceneIndex].number;
+    const saved = { zoom, centerX, centerY };
+    loadToken += 1;
+    dialog.remove();
+    dataset = nextDataset;
+    columns = currentColumns();
+    sceneIndex = Math.max(0, scenes().findIndex(scene => scene.number === number));
+    drag = null;
+    init();
+    dialog.classList.add("open");
+    ({ zoom, centerX, centerY } = saved);
+    showScene(true);
+    dialog.querySelector(`[data-sync-dataset="${dataset}"]`).focus({ preventScroll: true });
   }
 
   function changeScene(delta) {
@@ -205,9 +239,10 @@
 
   document.addEventListener("review:details", (event) => {
     const nextDataset = event.detail.dataset;
-    if (dialog && dataset !== nextDataset) { close(); dialog.remove(); dialog = null; }
+    if (dialog) { close(); dialog.remove(); dialog = null; }
+    fourMode = nextDataset === "1014";
     dataset = nextDataset;
-    columns = window.REVIEW_DATA.datasets[dataset].columns || legacyColumns;
+    columns = currentColumns();
     if (!dialog) init();
     sceneIndex = Math.max(0, scenes().findIndex((scene) => scene.id === event.detail.id));
     opener = document.querySelector(`[data-detail="${event.detail.id}"]`);

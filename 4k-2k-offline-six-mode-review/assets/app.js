@@ -26,18 +26,43 @@
   ));
   const fullLabel = (key) => Object.fromEntries(columns)[key];
 
-  function render() {
+  function capturePosition() {
+    const showcase = app.querySelector(".showcase");
+    const rect = showcase.getBoundingClientRect();
+    const headerHeight = columns.length === 4 ? 46 : 88;
+    const cell = [...app.querySelectorAll(".index-cell")].find((cell) => cell.getBoundingClientRect().bottom > rect.top + headerHeight + 1);
+    if (!cell) return null;
+    const rowRect = cell.getBoundingClientRect();
+    return { number: Number(cell.dataset.number), fraction: Math.max(0, (rect.top + headerHeight - rowRect.top) / rowRect.height), left: showcase.scrollLeft };
+  }
+
+  function render({ searchState = null, position = null } = {}) {
     columns = manifest.datasets[dataset].columns || legacyColumns;
     const scenes = visibleScenes();
+    const anchorIndex = position ? scenes.findIndex(scene => scene.number === position.number) : -1;
+    const initialCount = Math.min(scenes.length, Math.max(ROW_BATCH, Math.ceil((anchorIndex + 1) / ROW_BATCH) * ROW_BATCH));
     const total = datasetScenes().length;
     rowObserver?.disconnect();
     app.innerHTML = `<div class="app">
       <header class="topbar"><div class="brand"><h1>${esc(manifest.meta?.title || "4k离线效果／2k离线效果 · 六模式对比")}</h1></div><div class="summary"><strong>${scenes.length}</strong>/ ${total} 组</div></header>
       <div class="shell"><div class="filterbar"><div class="filter-group version-switch" role="tablist" aria-label="效果版本">${Object.entries(manifest.datasets).map(([key, value]) => `<button class="filter-chip module-chip ${dataset === key ? "active" : ""}" data-dataset="${key}" role="tab" aria-selected="${dataset === key}">${esc(value.label)}</button>`).join("")}</div><input class="search" value="${esc(query)}" placeholder="搜索序号" aria-label="搜索"/></div>
-      <section class="showcase"><div class="table-grid ${columns.length === 4 ? "four-columns" : ""}" style="grid-template-columns:48px repeat(${columns.length},minmax(0,1fr))">${tableHead()}${scenes.length ? scenes.slice(0, ROW_BATCH).map(row).join("") : '<div class="empty">没有匹配的测试图片</div>'}</div><div class="load-more" aria-live="polite"></div></section></div>
-      ${modalMarkup()}</div>`;
+      <section class="showcase"><div class="table-grid ${columns.length === 4 ? "four-columns" : ""}" style="grid-template-columns:48px repeat(${columns.length},minmax(0,1fr))">${tableHead()}${scenes.length ? scenes.slice(0, initialCount).map(row).join("") : '<div class="empty">没有匹配的测试图片</div>'}</div><div class="load-more" aria-live="polite"></div></section></div>
+      <button class="back-to-top" type="button" title="返回顶部" aria-label="返回顶部"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M5 8V5h14v3M6 13l6-6 6 6M12 7v13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>${modalMarkup()}</div>`;
     bind();
-    let rendered = Math.min(ROW_BATCH, scenes.length);
+    if (searchState) {
+      const search = app.querySelector(".search");
+      search.focus({ preventScroll: true });
+      search.setSelectionRange(searchState.start, searchState.end, searchState.direction);
+    }
+    if (position && anchorIndex >= 0) {
+      const showcase = app.querySelector(".showcase");
+      const cell = app.querySelector(`.index-cell[data-number="${position.number}"]`);
+      const headerHeight = columns.length === 4 ? 46 : 88;
+      const rowRect = cell.getBoundingClientRect();
+      showcase.scrollTop += rowRect.top - showcase.getBoundingClientRect().top - headerHeight + position.fraction * rowRect.height;
+      showcase.scrollLeft = position.left;
+    }
+    let rendered = initialCount;
     const marker = app.querySelector(".load-more");
     const appendRows = () => {
       if (rendered >= scenes.length) { rowObserver?.disconnect(); marker.remove(); return; }
@@ -72,7 +97,7 @@
   }
 
   function row(scene) {
-    return `<div class="td index-cell"><span>${String(scene.number).padStart(3, "0")}</span></div>${columns.map(([key]) => {
+    return `<div class="td index-cell" data-number="${scene.number}"><span>${String(scene.number).padStart(3, "0")}</span></div>${columns.map(([key]) => {
       const label = fullLabel(key);
       let actions;
       if (key === "original") {
@@ -98,10 +123,20 @@
 
   function bind() {
     app.querySelectorAll("[data-dataset]").forEach((button) => button.addEventListener("click", () => {
-      dataset = button.dataset.dataset; query = ""; singleState = null; interaction = null; render();
+      if (dataset === button.dataset.dataset) return;
+      const position = capturePosition();
+      dataset = button.dataset.dataset; singleState = compareState = null; interaction = null;
+      render({ position });
     }));
     const search = app.querySelector(".search");
-    search.addEventListener("input", () => { query = search.value; render(); app.querySelector(".search").focus(); });
+    const updateSearch = () => {
+      query = search.value;
+      render({ searchState: { start: search.selectionStart, end: search.selectionEnd, direction: search.selectionDirection } });
+    };
+    search.addEventListener("input", (event) => { if (!event.isComposing && !search._composing) updateSearch(); });
+    search.addEventListener("compositionstart", () => { search._composing = true; });
+    search.addEventListener("compositionend", () => { search._composing = false; updateSearch(); });
+    app.querySelector(".back-to-top").addEventListener("click", () => app.querySelector(".showcase").scrollTo({ top: 0, behavior: "smooth" }));
     const grid = app.querySelector(".table-grid");
     grid.addEventListener("click", (event) => {
       const compare = event.target.closest("[data-compare]");
@@ -137,11 +172,12 @@
     const stage = app.querySelector(".stage");
     stage.addEventListener("wheel", (event) => { event.preventDefault(); zoom(event.deltaY < 0 ? 1.15 : 1 / 1.15, event.clientX, event.clientY); }, { passive: false });
     stage.addEventListener("pointerdown", startInteraction);
-    window.addEventListener("pointermove", moveInteraction);
-    window.addEventListener("pointerup", endInteraction);
-    window.addEventListener("pointercancel", endInteraction);
+
   }
 
+  window.addEventListener("pointermove", moveInteraction);
+  window.addEventListener("pointerup", endInteraction);
+  window.addEventListener("pointercancel", endInteraction);
   const sceneById = (id) => datasetScenes().find((scene) => scene.id === id);
   function preloadFull(src) {
     if (!src) return Promise.resolve();

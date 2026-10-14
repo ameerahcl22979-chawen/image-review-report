@@ -30,3 +30,9 @@ body.sync-open{overflow:hidden}
 .sync-dialog.four-columns .sync-column:nth-child(1) figcaption{background:#f8fafc;color:#172026}
 .sync-dialog.four-columns .sync-column:nth-child(3) figcaption{background:#fff8e1;color:#8a6d1f}
 @media(max-width:900px){.sync-dialog.four-columns .sync-grid{min-width:880px}}
+
+.sync-versions{display:flex;gap:5px;flex-wrap:wrap;margin-right:auto}
+.sync-versions button{font-size:12px;font-weight:700}
+.sync-header .sync-versions button.active{background:#344a61;border-color:#344a61;color:#fff}
+.sync-header .sync-versions button.active:hover{background:#253d55;color:#fff}
+@media(max-width:900px){.sync-versions{width:100%}.sync-versions button{font-size:11px}.sync-header{flex-shrink:0}}
