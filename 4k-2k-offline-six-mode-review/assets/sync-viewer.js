@@ -1,9 +1,10 @@
 (() => {
-  const columns = [
+  const legacyColumns = [
     ["original", "原图"], ["low_default", "低强度·自然调"], ["low_warm", "低强度·暖调"],
     ["low_neutral", "低强度·冷调"], ["high_default", "高强度·自然调"], ["high_warm", "高强度·暖调"],
     ["high_neutral", "高强度·冷调"],
   ];
+  let columns = legacyColumns;
   const fullCache = new Map();
   let dialog;
   let dataset = "0923";
@@ -21,11 +22,11 @@
 
   function init() {
     dialog = document.createElement("div");
-    dialog.className = "sync-dialog";
+    dialog.className = "sync-dialog" + (columns.length === 4 ? " four-columns" : "");
     dialog.setAttribute("role", "dialog");
     dialog.setAttribute("aria-modal", "true");
     dialog.setAttribute("aria-label", "细节对比");
-    dialog.innerHTML = `<div class="sync-panel"><div class="sync-header"><strong class="sync-title"></strong><div class="sync-controls"><button type="button" data-action="prev" title="上一组" aria-label="上一组">‹</button><button type="button" data-action="next" title="下一组" aria-label="下一组">›</button><button type="button" data-action="out" title="缩小" aria-label="缩小">−</button><button type="button" data-action="actual" title="原尺寸，七图保持同一视野">1:1</button><button type="button" data-action="in" title="放大" aria-label="放大">+</button><button type="button" data-action="fit" title="适应窗口">适应</button><span class="sync-readout">100%</span></div><button type="button" class="sync-close" data-action="close" title="关闭" aria-label="关闭">×</button></div><div class="sync-grid">${columns.map(([key, label]) => `<figure class="sync-column"><figcaption>${label}</figcaption><div class="sync-viewport" data-key="${key}" tabindex="0"><img alt="${label}" draggable="false"></div></figure>`).join("")}</div></div>`;
+    dialog.innerHTML = `<div class="sync-panel"><div class="sync-header"><strong class="sync-title"></strong><div class="sync-controls"><button type="button" data-action="prev" title="上一组" aria-label="上一组">‹</button><button type="button" data-action="next" title="下一组" aria-label="下一组">›</button><button type="button" data-action="out" title="缩小" aria-label="缩小">−</button><button type="button" data-action="actual" title="原尺寸，同步定位">1:1</button><button type="button" data-action="in" title="放大" aria-label="放大">+</button><button type="button" data-action="fit" title="适应窗口">适应</button><span class="sync-readout">100%</span></div><button type="button" class="sync-close" data-action="close" title="关闭" aria-label="关闭">×</button></div><div class="sync-grid" style="grid-template-columns:repeat(${columns.length},minmax(0,1fr))">${columns.map(([key, label]) => `<figure class="sync-column"><figcaption>${label}</figcaption><div class="sync-viewport" data-key="${key}" tabindex="0"><img alt="${label}" draggable="false"></div></figure>`).join("")}</div></div>`;
     document.body.append(dialog);
     dialog.addEventListener("click", (event) => {
       if (event.target === dialog) return close();
@@ -64,7 +65,8 @@
       }));
       view.querySelector("img").addEventListener("load", renderTransform);
     });
-    window.addEventListener("resize", () => { if (dialog.classList.contains("open")) renderTransform(); });
+    if (!window.reviewSyncResizeBound) window.addEventListener("resize", () => { if (dialog?.classList.contains("open")) renderTransform(); });
+    window.reviewSyncResizeBound = true;
   }
 
   function fittedSize(view) {
@@ -100,7 +102,7 @@
   }
 
   function setZoom(next, view, clientX, clientY) {
-    const updated = Math.max(1, Math.min(16, next));
+    const updated = Math.max(1, Math.min(64, next));
     if (view && updated !== zoom) {
       const fit = fittedSize(view);
       const rect = view.getBoundingClientRect();
@@ -175,7 +177,7 @@
     const current = scenes()[sceneIndex];
     if (!current) return;
     loadToken += 1;
-    dialog.querySelector(".sync-title").textContent = `第 ${String(current.number).padStart(2, "0")} 组 · 七图细节对比 · ${window.REVIEW_DATA.datasets[dataset].label}`;
+    dialog.querySelector(".sync-title").textContent = `第 ${String(current.number).padStart(3, "0")} 组 · ${columns.length}图细节对比 · ${window.REVIEW_DATA.datasets[dataset].label}`;
     columns.forEach(([key]) => {
       const view = dialog.querySelector(`[data-key="${key}"]`);
       const image = view.querySelector("img");
@@ -202,8 +204,11 @@
   }
 
   document.addEventListener("review:details", (event) => {
+    const nextDataset = event.detail.dataset;
+    if (dialog && dataset !== nextDataset) { close(); dialog.remove(); dialog = null; }
+    dataset = nextDataset;
+    columns = window.REVIEW_DATA.datasets[dataset].columns || legacyColumns;
     if (!dialog) init();
-    dataset = event.detail.dataset;
     sceneIndex = Math.max(0, scenes().findIndex((scene) => scene.id === event.detail.id));
     opener = document.querySelector(`[data-detail="${event.detail.id}"]`);
     dialog.classList.add("open");

@@ -11,5 +11,15 @@
   "full_storage": "GitHub Release (full-resolution lightweight JPEG)",
   "release_assets": 780,
   "release_tag": "offline-six-mode-light-20261010",
-  "full_references": 840
+  "full_references": 840,
+  "dataset_1014": {
+    "rows": 60,
+    "columns": 4,
+    "full_images": 240,
+    "full_bytes": 340020061,
+    "release_tag": "offline-enhancement-1014-20261014",
+    "source_jpg_bytes_unchanged": true
+  },
+  "total_unique_full_images": 1020,
+  "total_full_references": 1080
 }

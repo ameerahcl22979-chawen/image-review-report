@@ -1,15 +1,17 @@
 (() => {
-  const columns = [
+  const legacyColumns = [
     ["original", "原图"], ["low_default", "低强度·自然调"], ["low_warm", "低强度·暖调"],
     ["low_neutral", "低强度·冷调"], ["high_default", "高强度·自然调"], ["high_warm", "高强度·暖调"],
     ["high_neutral", "高强度·冷调"],
   ];
+  let columns = legacyColumns;
   const app = document.querySelector("#app");
   const fullImageCache = new Map();
   let manifest;
   let dataset = "0923";
   let query = "";
   let singleState = null;
+  let compareState = null;
   let interaction = null;
   let loadSequence = 0;
   let rowObserver = null;
@@ -20,18 +22,19 @@
   })[char]);
   const datasetScenes = () => manifest.datasets?.[dataset]?.scenes || [];
   const visibleScenes = () => datasetScenes().filter((scene) => (
-    !query || `${scene.number} ${scene.categoryName} ${scene.sourceName}`.toLowerCase().includes(query.toLowerCase())
+    !query || `${String(scene.number).padStart(3,"0")} ${scene.categoryName} ${scene.sourceName}`.toLowerCase().includes(query.toLowerCase())
   ));
   const fullLabel = (key) => Object.fromEntries(columns)[key];
 
   function render() {
+    columns = manifest.datasets[dataset].columns || legacyColumns;
     const scenes = visibleScenes();
     const total = datasetScenes().length;
     rowObserver?.disconnect();
     app.innerHTML = `<div class="app">
       <header class="topbar"><div class="brand"><h1>${esc(manifest.meta?.title || "4k离线效果／2k离线效果 · 六模式对比")}</h1></div><div class="summary"><strong>${scenes.length}</strong>/ ${total} 组</div></header>
-      <div class="shell"><div class="filterbar"><div class="filter-group version-switch" role="tablist" aria-label="效果版本"><button class="filter-chip module-chip ${dataset === "0923" ? "active" : ""}" data-dataset="0923" role="tab" aria-selected="${dataset === "0923"}">${esc(manifest.datasets["0923"].label)}</button><button class="filter-chip module-chip ${dataset === "0915" ? "active" : ""}" data-dataset="0915" role="tab" aria-selected="${dataset === "0915"}">${esc(manifest.datasets["0915"].label)}</button></div><input class="search" value="${esc(query)}" placeholder="搜索序号" aria-label="搜索"/></div>
-      <section class="showcase"><div class="table-grid">${tableHead()}${scenes.length ? scenes.slice(0, ROW_BATCH).map(row).join("") : '<div class="empty">没有匹配的测试图片</div>'}</div><div class="load-more" aria-live="polite"></div></section></div>
+      <div class="shell"><div class="filterbar"><div class="filter-group version-switch" role="tablist" aria-label="效果版本">${Object.entries(manifest.datasets).map(([key, value]) => `<button class="filter-chip module-chip ${dataset === key ? "active" : ""}" data-dataset="${key}" role="tab" aria-selected="${dataset === key}">${esc(value.label)}</button>`).join("")}</div><input class="search" value="${esc(query)}" placeholder="搜索序号" aria-label="搜索"/></div>
+      <section class="showcase"><div class="table-grid ${columns.length === 4 ? "four-columns" : ""}" style="grid-template-columns:48px repeat(${columns.length},minmax(0,1fr))">${tableHead()}${scenes.length ? scenes.slice(0, ROW_BATCH).map(row).join("") : '<div class="empty">没有匹配的测试图片</div>'}</div><div class="load-more" aria-live="polite"></div></section></div>
       ${modalMarkup()}</div>`;
     bind();
     let rendered = Math.min(ROW_BATCH, scenes.length);
@@ -60,6 +63,7 @@
   }
 
   function tableHead() {
+    if (columns.length === 4) return `<div class="th th-index">序号</div>${columns.map(([key, label]) => `<div class="th th-${key}">${esc(label)}</div>`).join("")}`;
     return `<div class="th th-index compare-span">序号</div><div class="th compare-span">原图</div><div class="th compare-group group-realtime">低强度</div><div class="th compare-group group-beauty">高强度</div><div class="th compare-sub tone-default">自然调</div><div class="th compare-sub round-first">暖调</div><div class="th compare-sub round-second">冷调</div><div class="th compare-sub tone-default workflow-start">自然调</div><div class="th compare-sub round-first">暖调</div><div class="th compare-sub round-second">冷调</div>`;
   }
 
@@ -68,11 +72,15 @@
   }
 
   function row(scene) {
-    return `<div class="td index-cell"><span>${String(scene.number).padStart(2, "0")}</span></div>${columns.map(([key]) => {
+    return `<div class="td index-cell"><span>${String(scene.number).padStart(3, "0")}</span></div>${columns.map(([key]) => {
       const label = fullLabel(key);
       let actions;
       if (key === "original") {
-        actions = `<button type="button" class="detail-button" data-detail="${scene.id}" title="同步放大七张图查看细节">细节对比</button>`;
+        actions = `<button type="button" class="detail-button" data-detail="${scene.id}" title="同步放大${columns.length}张图查看细节">细节对比</button>`;
+      } else if (columns.length === 4) {
+        actions = compareButton(scene, "original", key, "↔ 原图");
+        if (key === "warm" || key === "cold") actions += compareButton(scene, "natural", key, "↔ 自然调");
+        if (key === "cold") actions += compareButton(scene, "warm", key, "↔ 暖色调");
       } else if (key.startsWith("low_")) {
         actions = compareButton(scene, "original", key, "原图对比");
       } else {
@@ -85,12 +93,12 @@
   }
 
   function modalMarkup() {
-    return `<div class="modal" role="dialog" aria-modal="true"><div class="modal-panel"><div class="modal-head"><div class="modal-title"><strong></strong></div><div class="zoom-controls"><button type="button" data-zoom-out title="缩小" aria-label="缩小">−</button><button type="button" data-one-to-one title="1:1 原尺寸">1:1</button><button type="button" data-zoom-in title="放大" aria-label="放大">+</button><button type="button" data-reset title="适应窗口">适应</button><span class="zoom-readout">100%</span></div><button type="button" class="modal-close" aria-label="关闭">×</button></div><div class="stage-wrap"><button type="button" class="single-nav single-prev" aria-label="上一张">‹</button><div class="stage"><img class="after" alt="右侧对比图"/><div class="before-wrap"><img class="before" alt="左侧对比图"/></div><div class="handle">↔</div><span class="badge left"></span><span class="badge right"></span></div><button type="button" class="single-nav single-next" aria-label="下一张">›</button></div></div></div>`;
+    return `<div class="modal" role="dialog" aria-modal="true"><div class="modal-panel"><div class="modal-head"><div class="modal-title"><strong></strong></div><div class="zoom-controls"><button type="button" data-group-prev title="上一组">↑</button><button type="button" data-group-next title="下一组">↓</button><a class="source-link" target="_blank" rel="noopener">原文件</a><button type="button" data-zoom-out title="缩小" aria-label="缩小">−</button><button type="button" data-one-to-one title="1:1 原尺寸">1:1</button><button type="button" data-zoom-in title="放大" aria-label="放大">+</button><button type="button" data-reset title="适应窗口">适应</button><span class="zoom-readout">100%</span></div><button type="button" class="modal-close" aria-label="关闭">×</button></div><div class="stage-wrap"><button type="button" class="single-nav single-prev" aria-label="上一张">‹</button><div class="stage"><img class="after" alt="右侧对比图"/><div class="before-wrap"><img class="before" alt="左侧对比图"/></div><div class="handle">↔</div><span class="badge left"></span><span class="badge right"></span></div><button type="button" class="single-nav single-next" aria-label="下一张">›</button></div></div></div>`;
   }
 
   function bind() {
     app.querySelectorAll("[data-dataset]").forEach((button) => button.addEventListener("click", () => {
-      dataset = button.dataset.dataset; query = ""; render();
+      dataset = button.dataset.dataset; query = ""; singleState = null; interaction = null; render();
     }));
     const search = app.querySelector(".search");
     search.addEventListener("input", () => { query = search.value; render(); app.querySelector(".search").focus(); });
@@ -116,6 +124,8 @@
       const image = event.target.closest("[data-single]");
       if (image && !image.contains(event.relatedTarget)) window.clearTimeout(image._prefetchTimer);
     });
+    app.querySelector("[data-group-prev]").addEventListener("click", () => changeGroup(-1));
+    app.querySelector("[data-group-next]").addEventListener("click", () => changeGroup(1));
     app.querySelector(".single-prev").addEventListener("click", () => changeSingle(-1));
     app.querySelector(".single-next").addEventListener("click", () => changeSingle(1));
     app.querySelector(".modal-close").addEventListener("click", closeModal);
@@ -216,22 +226,34 @@
   function endInteraction(event) { if (!interaction || interaction.pointerId !== event.pointerId) return; interaction.stage.classList.remove("dragging"); interaction = null; }
 
   function openCompare(data) {
+    compareState = { ...data };
+    app.querySelector(".source-link").href = sceneById(data.compare).images[data.right];
     const scene = sceneById(data.compare), modal = app.querySelector(".modal"), stage = modal.querySelector(".stage"); singleState = null; modal.classList.remove("single");
-    modal.querySelector(".modal-title strong").textContent = `${String(scene.number).padStart(2, "0")} · ${data.leftLabel} / ${data.rightLabel}`;
+    modal.querySelector(".modal-title strong").textContent = `${String(scene.number).padStart(3, "0")} · ${data.leftLabel} / ${data.rightLabel}`;
     modal.querySelector(".badge.left").textContent = data.leftLabel; modal.querySelector(".badge.right").textContent = data.rightLabel; stage.style.setProperty("--split", "50%"); reset(stage); modal.classList.add("open");
     beginStageLoad(stage, [
       { image: modal.querySelector(".before"), preview: scene.previews?.[data.left] || scene.thumbs?.[data.left], full: scene.images[data.left] },
       { image: modal.querySelector(".after"), preview: scene.previews?.[data.right] || scene.thumbs?.[data.right], full: scene.images[data.right] },
     ]);
   }
-  function openSingle(id, key) { singleState = { id, index: Math.max(0, columns.findIndex(([columnKey]) => columnKey === key)) }; showSingle(); }
+  function openSingle(id, key) { compareState = null; singleState = { id, index: Math.max(0, columns.findIndex(([columnKey]) => columnKey === key)) }; showSingle(); }
   function showSingle() {
     const { id, index } = singleState, [key] = columns[index], scene = sceneById(id), modal = app.querySelector(".modal"), stage = modal.querySelector(".stage");
-    modal.classList.add("single", "open"); modal.querySelector(".modal-title strong").textContent = `${String(scene.number).padStart(2, "0")} · ${fullLabel(key)} · ${index + 1}/7`; reset(stage);
+    app.querySelector(".source-link").href = scene.images[key];
+    modal.classList.add("single", "open"); modal.querySelector(".modal-title strong").textContent = `${String(scene.number).padStart(3, "0")} · ${fullLabel(key)} · ${index + 1}/${columns.length}`; reset(stage);
     beginStageLoad(stage, [{ image: modal.querySelector(".after"), preview: scene.previews?.[key] || scene.thumbs?.[key], full: scene.images[key] }]);
   }
   function changeSingle(delta) { if (singleState) { singleState.index = (singleState.index + delta + columns.length) % columns.length; showSingle(); } }
-  function closeModal() { app.querySelector(".modal").classList.remove("open"); singleState = null; interaction = null; }
+  function changeGroup(delta) {
+    const id = singleState?.id || compareState?.compare;
+    if (!id) return;
+    const scenes = datasetScenes();
+    const index = scenes.findIndex(scene => scene.id === id);
+    const next = scenes[(index + delta + scenes.length) % scenes.length];
+    if (singleState) { singleState.id = next.id; showSingle(); }
+    else openCompare({ ...compareState, compare: next.id });
+  }
+  function closeModal() { compareState = null; app.querySelector(".modal").classList.remove("open"); singleState = null; interaction = null; }
 
   window.addEventListener("keydown", (event) => {
     if (!app.querySelector(".modal.open")) return;
@@ -239,6 +261,6 @@
     if (singleState && event.key === "ArrowLeft") changeSingle(-1);
     if (singleState && event.key === "ArrowRight") changeSingle(1);
   });
-  Promise.resolve(window.REVIEW_DATA).then((data) => { manifest = data; dataset = data.meta?.defaultDataset || "0923"; render(); })
+  Promise.resolve(window.REVIEW_DATA).then((data) => { manifest = data; const requested = new URLSearchParams(location.search).get("dataset"); dataset = data.datasets[requested] ? requested : (data.meta?.defaultDataset || "1014"); render(); })
     .catch((error) => { app.innerHTML = `<div class="loading">页面加载失败：${esc(error.message)}</div>`; });
 })();

@@ -24,3 +24,8 @@ body.sync-open{overflow:hidden}
 .sync-viewport img{position:absolute;left:50%;top:50%;display:block;max-width:none;object-fit:contain;transform-origin:center;translate:-50% -50%;pointer-events:none;user-select:none}
 .sync-header button:focus-visible,.sync-viewport:focus-visible{outline:2px solid #8fb4ff;outline-offset:-2px}
 @media(max-width:900px){.sync-dialog{padding:6px}.sync-header{flex-wrap:wrap;gap:4px;padding:6px 8px}.sync-title{width:100%}.sync-controls{gap:3px}.sync-header button{min-width:30px;height:30px;padding:0 5px}.sync-grid{min-width:1540px}.sync-panel{overflow-x:auto}.sync-column figcaption{font-size:10px}}
+
+.sync-dialog.four-columns .sync-column figcaption{color:#234d76;background:#d8e8ff}
+.sync-dialog.four-columns .sync-column:nth-child(1) figcaption{background:#f8fafc;color:#172026}
+.sync-dialog.four-columns .sync-column:nth-child(3) figcaption{background:#f9e5cc;color:#784b22}
+@media(max-width:900px){.sync-dialog.four-columns .sync-grid{min-width:880px}}
