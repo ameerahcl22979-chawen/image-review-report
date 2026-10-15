@@ -5,8 +5,8 @@ body.sync-open{overflow:hidden}
 .sync-dialog.open{display:flex}
 .sync-panel{width:min(1880px,100%);height:min(930px,100%);display:flex;flex-direction:column;overflow:hidden;border:1px solid #d8e0ea;border-radius:8px;background:#fff;color:#172026;box-shadow:0 26px 80px rgba(0,0,0,.3)}
 .sync-header{min-height:58px;display:flex;align-items:center;gap:10px;padding:0 12px 0 18px;background:#fff;border-bottom:1px solid #e8edf3}
-.sync-title{min-width:0;margin-right:auto;overflow:hidden;color:#172026;font-size:14px;white-space:nowrap;text-overflow:ellipsis}
-.sync-controls{display:flex;align-items:center;gap:5px}
+.sync-title{min-width:0;margin-right:0;overflow:hidden;color:#172026;font-size:14px;white-space:nowrap;text-overflow:ellipsis}
+.sync-controls{display:flex;align-items:center;gap:5px;margin-left:auto}
 .sync-header button{min-width:36px;height:36px;padding:0 9px;border:1px solid #d8e0ea;border-radius:7px;color:#29333d;background:#fff;font-weight:800}
 .sync-header button:hover:not(:disabled){border-color:#8fb4ff;background:#eff6ff;color:#1d4ed8}
 .sync-header button:disabled{opacity:.36;cursor:default}
@@ -31,7 +31,7 @@ body.sync-open{overflow:hidden}
 .sync-dialog.four-columns .sync-column:nth-child(3) figcaption{background:#fff8e1;color:#8a6d1f}
 @media(max-width:900px){.sync-dialog.four-columns .sync-grid{min-width:880px}}
 
-.sync-versions{display:flex;gap:5px;flex-wrap:wrap;margin-right:auto}
+.sync-versions{display:flex;gap:5px;flex-wrap:wrap}
 .sync-versions button{font-size:12px;font-weight:700}
 .sync-header .sync-versions button.active{background:#344a61;border-color:#344a61;color:#fff}
 .sync-header .sync-versions button.active:hover{background:#253d55;color:#fff}
